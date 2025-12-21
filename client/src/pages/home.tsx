@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,7 +25,7 @@ import {
   Mail
 } from "lucide-react";
 import { SiGithub, SiX, SiDiscord, SiLinkedin } from "react-icons/si";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 
 function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -300,46 +300,59 @@ function ProblemSolutionSection() {
 
 function ToolCard({ tool, index }: { tool: typeof preKitTools[0]; index: number }) {
   const Icon = tool.icon;
-  return (
-    <Link href={`/tool/${tool.id}`}>
-      <Card 
-        className="group transition-all duration-200 hover:shadow-md hover:border-primary/30 cursor-pointer h-full"
-        data-testid={`card-tool-${tool.id}`}
-      >
-        <CardContent className="p-6 space-y-4">
-          <div className="flex items-start justify-between gap-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-              <Icon className="w-6 h-6 text-primary" />
-            </div>
-            <Badge variant="secondary" className="text-xs">
-              {String(index + 1).padStart(2, '0')}
-            </Badge>
-          </div>
-          
-          <div className="space-y-2">
-            <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{tool.title}</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">{tool.description}</p>
-          </div>
+  const [, setLocation] = useLocation();
 
-          <div className="flex flex-wrap gap-1.5 pt-2" onClick={(e) => e.preventDefault()}>
-            {tool.integrations.map((integration) => {
-              const integrationId = integration.toLowerCase().replace(/\s+/g, '-');
-              return (
-                <Link key={integration} href={`/integration/${integrationId}`}>
-                  <Badge 
-                    variant="outline" 
-                    className="text-xs font-normal cursor-pointer hover:bg-primary/10 hover:border-primary/30 transition-colors"
-                    data-testid={`badge-integration-${integrationId}`}
-                  >
-                    {integration}
-                  </Badge>
-                </Link>
-              );
-            })}
+  const handleCardClick = (e: MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('[data-integration-badge]')) {
+      return;
+    }
+    setLocation(`/tool/${tool.id}`);
+  };
+
+  return (
+    <Card 
+      className="group transition-all duration-200 hover:shadow-md hover:border-primary/30 cursor-pointer h-full"
+      data-testid={`card-tool-${tool.id}`}
+      onClick={handleCardClick}
+    >
+      <CardContent className="p-6 space-y-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+            <Icon className="w-6 h-6 text-primary" />
           </div>
-        </CardContent>
-      </Card>
-    </Link>
+          <Badge variant="secondary" className="text-xs">
+            {String(index + 1).padStart(2, '0')}
+          </Badge>
+        </div>
+        
+        <div className="space-y-2">
+          <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{tool.title}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed">{tool.description}</p>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5 pt-2">
+          {tool.integrations.map((integration) => {
+            const integrationId = integration.toLowerCase().replace(/\s+/g, '-');
+            return (
+              <Badge 
+                key={integration}
+                variant="outline" 
+                className="text-xs font-normal cursor-pointer hover:bg-primary/10 hover:border-primary/30 transition-colors"
+                data-testid={`badge-integration-${integrationId}`}
+                data-integration-badge="true"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLocation(`/integration/${integrationId}`);
+                }}
+              >
+                {integration}
+              </Badge>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
