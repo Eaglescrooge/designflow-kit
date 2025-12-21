@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
 import ToolDetail from "@/pages/tool-detail";
+import IntegrationDetail from "@/pages/integration-detail";
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/tool/:id" component={ToolDetail} />
+      <Route path="/integration/:id" component={IntegrationDetail} />
       <Route component={NotFound} />
     </Switch>
   );

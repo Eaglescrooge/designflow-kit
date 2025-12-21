@@ -321,12 +321,21 @@ function ToolCard({ tool, index }: { tool: typeof preKitTools[0]; index: number 
             <p className="text-sm text-muted-foreground leading-relaxed">{tool.description}</p>
           </div>
 
-          <div className="flex flex-wrap gap-1.5 pt-2">
-            {tool.integrations.map((integration) => (
-              <Badge key={integration} variant="outline" className="text-xs font-normal">
-                {integration}
-              </Badge>
-            ))}
+          <div className="flex flex-wrap gap-1.5 pt-2" onClick={(e) => e.preventDefault()}>
+            {tool.integrations.map((integration) => {
+              const integrationId = integration.toLowerCase().replace(/\s+/g, '-');
+              return (
+                <Link key={integration} href={`/integration/${integrationId}`}>
+                  <Badge 
+                    variant="outline" 
+                    className="text-xs font-normal cursor-pointer hover:bg-primary/10 hover:border-primary/30 transition-colors"
+                    data-testid={`badge-integration-${integrationId}`}
+                  >
+                    {integration}
+                  </Badge>
+                </Link>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
@@ -400,23 +409,27 @@ function IntegrationsSection() {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {integrations.map((integration) => (
-            <Card 
-              key={integration.name} 
-              className="group hover:border-primary/30 transition-colors"
-              data-testid={`card-integration-${integration.name.toLowerCase()}`}
-            >
-              <CardContent className="p-4 text-center space-y-2">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                  <span className="text-lg font-bold text-muted-foreground group-hover:text-primary transition-colors">
-                    {integration.name.charAt(0)}
-                  </span>
-                </div>
-                <p className="font-medium text-sm">{integration.name}</p>
-                <p className="text-xs text-muted-foreground">{integration.category}</p>
-              </CardContent>
-            </Card>
-          ))}
+          {integrations.map((integration) => {
+            const integrationId = integration.name.toLowerCase().replace(/\s+/g, '-');
+            return (
+              <Link key={integration.name} href={`/integration/${integrationId}`}>
+                <Card 
+                  className="group hover:border-primary/30 transition-colors cursor-pointer h-full"
+                  data-testid={`card-integration-${integration.name.toLowerCase()}`}
+                >
+                  <CardContent className="p-4 text-center space-y-2">
+                    <div className="w-12 h-12 mx-auto rounded-xl bg-muted flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                      <span className="text-lg font-bold text-muted-foreground group-hover:text-primary transition-colors">
+                        {integration.name.charAt(0)}
+                      </span>
+                    </div>
+                    <p className="font-medium text-sm group-hover:text-primary transition-colors">{integration.name}</p>
+                    <p className="text-xs text-muted-foreground">{integration.category}</p>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
 
         <div className="text-center">
