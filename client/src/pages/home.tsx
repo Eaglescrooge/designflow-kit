@@ -301,34 +301,36 @@ function ProblemSolutionSection() {
 function ToolCard({ tool, index }: { tool: typeof preKitTools[0]; index: number }) {
   const Icon = tool.icon;
   return (
-    <Card 
-      className="group transition-all duration-200 hover:shadow-md hover:border-primary/30"
-      data-testid={`card-tool-${tool.id}`}
-    >
-      <CardContent className="p-6 space-y-4">
-        <div className="flex items-start justify-between gap-4">
-          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-            <Icon className="w-6 h-6 text-primary" />
-          </div>
-          <Badge variant="secondary" className="text-xs">
-            {String(index + 1).padStart(2, '0')}
-          </Badge>
-        </div>
-        
-        <div className="space-y-2">
-          <h3 className="font-semibold text-lg">{tool.title}</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">{tool.description}</p>
-        </div>
-
-        <div className="flex flex-wrap gap-1.5 pt-2">
-          {tool.integrations.map((integration) => (
-            <Badge key={integration} variant="outline" className="text-xs font-normal">
-              {integration}
+    <Link href={`/tool/${tool.id}`}>
+      <Card 
+        className="group transition-all duration-200 hover:shadow-md hover:border-primary/30 cursor-pointer h-full"
+        data-testid={`card-tool-${tool.id}`}
+      >
+        <CardContent className="p-6 space-y-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+              <Icon className="w-6 h-6 text-primary" />
+            </div>
+            <Badge variant="secondary" className="text-xs">
+              {String(index + 1).padStart(2, '0')}
             </Badge>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+          </div>
+          
+          <div className="space-y-2">
+            <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{tool.title}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{tool.description}</p>
+          </div>
+
+          <div className="flex flex-wrap gap-1.5 pt-2">
+            {tool.integrations.map((integration) => (
+              <Badge key={integration} variant="outline" className="text-xs font-normal">
+                {integration}
+              </Badge>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 

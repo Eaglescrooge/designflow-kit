@@ -7,12 +7,14 @@ import { ThemeProvider } from "@/components/theme-provider";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
+import ToolDetail from "@/pages/tool-detail";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/tool/:id" component={ToolDetail} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -15,7 +15,8 @@ import {
   Circle, 
   Rocket,
   ClipboardList,
-  TrendingUp
+  TrendingUp,
+  ExternalLink
 } from "lucide-react";
 
 interface ChecklistItem {
@@ -268,12 +269,20 @@ function ChecklistCard({ item, index, onToggle }: ChecklistCardProps) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 flex-wrap">
-            <div className={`w-8 h-8 rounded-md flex items-center justify-center ${item.completed ? 'bg-chart-2/20' : 'bg-primary/10'}`}>
-              <Icon className={`w-4 h-4 ${item.completed ? 'text-chart-2' : 'text-primary'}`} />
-            </div>
-            <h3 className={`font-semibold ${item.completed ? 'line-through text-muted-foreground' : ''}`}>
-              {item.title}
-            </h3>
+            <Link href={`/tool/${item.id}`}>
+              <div className={`w-8 h-8 rounded-md flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-primary/30 transition-all ${item.completed ? 'bg-chart-2/20' : 'bg-primary/10'}`}>
+                <Icon className={`w-4 h-4 ${item.completed ? 'text-chart-2' : 'text-primary'}`} />
+              </div>
+            </Link>
+            <Link href={`/tool/${item.id}`}>
+              <h3 
+                className={`font-semibold cursor-pointer hover:text-primary transition-colors ${item.completed ? 'line-through text-muted-foreground' : ''}`}
+                data-testid={`link-tool-${item.id}`}
+              >
+                {item.title}
+                <ExternalLink className="w-3 h-3 inline-block ml-1.5 opacity-50" />
+              </h3>
+            </Link>
             <Badge variant="outline" className="text-xs">
               Step {index + 1}
             </Badge>
