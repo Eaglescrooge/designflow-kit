@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -67,9 +68,11 @@ function Navigation() {
               <Star className="w-3 h-3" />
               <span>8.5k</span>
             </Button>
-            <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
-              Get Started
-            </Button>
+            <Link href="/dashboard">
+              <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
+                Get Started
+              </Button>
+            </Link>
             <Button 
               variant="ghost" 
               size="icon" 
@@ -101,9 +104,11 @@ function Navigation() {
                   <SiGithub className="w-4 h-4" />
                   GitHub
                 </Button>
-                <Button size="sm" className="flex-1" data-testid="button-get-started-mobile">
-                  Get Started
-                </Button>
+                <Link href="/dashboard" className="flex-1">
+                  <Button size="sm" className="w-full" data-testid="button-get-started-mobile">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -135,10 +140,12 @@ function HeroSection() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="gap-2" data-testid="button-get-started-hero">
-                Get Started Free
-                <ArrowRight className="w-4 h-4" />
-              </Button>
+              <Link href="/dashboard">
+                <Button size="lg" className="gap-2" data-testid="button-get-started-hero">
+                  Get Started Free
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
               <Button variant="outline" size="lg" className="gap-2" data-testid="button-github-hero">
                 <SiGithub className="w-5 h-5" />
                 View on GitHub
