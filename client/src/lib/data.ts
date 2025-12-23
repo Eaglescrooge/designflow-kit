@@ -378,6 +378,20 @@ npx designflow init
 # Start the development server
 npm run designflow`;
 
+export interface ApiEndpoint {
+  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  path: string;
+  description: string;
+}
+
+export interface ApiDocs {
+  authMethod: string;
+  baseUrl: string;
+  endpoints: ApiEndpoint[];
+  codeExample: string;
+  docsUrl: string;
+}
+
 export interface IntegrationTool {
   id: string;
   name: string;
@@ -389,6 +403,7 @@ export interface IntegrationTool {
   signupUrl: string;
   signupLabel: string;
   usedIn: string[];
+  apiDocs: ApiDocs;
 }
 
 export const integrationTools: IntegrationTool[] = [
@@ -408,7 +423,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "o3HqoHKYs_s",
     signupUrl: "https://www.typeform.com/signup/",
     signupLabel: "Start Free with Typeform",
-    usedIn: ["Research Tools"]
+    usedIn: ["Research Tools"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate a Personal Access Token from your Typeform account settings",
+      baseUrl: "https://api.typeform.com",
+      endpoints: [
+        { method: "GET", path: "/forms", description: "List all forms in your account" },
+        { method: "GET", path: "/forms/{form_id}", description: "Get details of a specific form" },
+        { method: "GET", path: "/forms/{form_id}/responses", description: "Retrieve form responses" }
+      ],
+      codeExample: `const response = await fetch('https://api.typeform.com/forms', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const forms = await response.json();`,
+      docsUrl: "https://developer.typeform.com/get-started/"
+    }
   },
   {
     id: "google-forms",
@@ -426,7 +457,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "BtoOHhA3aPk",
     signupUrl: "https://forms.google.com/",
     signupLabel: "Create Free Form",
-    usedIn: ["Research Tools"]
+    usedIn: ["Research Tools"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Use Google Apps Script or Google Forms API with service account",
+      baseUrl: "https://forms.googleapis.com",
+      endpoints: [
+        { method: "GET", path: "/v1/forms/{formId}", description: "Get form metadata and questions" },
+        { method: "GET", path: "/v1/forms/{formId}/responses", description: "List all form responses" },
+        { method: "POST", path: "/v1/forms", description: "Create a new form" }
+      ],
+      codeExample: `const response = await fetch('https://forms.googleapis.com/v1/forms/{formId}', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const form = await response.json();`,
+      docsUrl: "https://developers.google.com/forms/api/reference/rest"
+    }
   },
   {
     id: "airtable",
@@ -444,7 +491,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "r0lsyTaAuJE",
     signupUrl: "https://airtable.com/signup",
     signupLabel: "Try Airtable Free",
-    usedIn: ["Research Tools"]
+    usedIn: ["Research Tools"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate a Personal Access Token from your Airtable account",
+      baseUrl: "https://api.airtable.com/v0",
+      endpoints: [
+        { method: "GET", path: "/{baseId}/{tableName}", description: "List records in a table" },
+        { method: "POST", path: "/{baseId}/{tableName}", description: "Create new records" },
+        { method: "PATCH", path: "/{baseId}/{tableName}", description: "Update existing records" }
+      ],
+      codeExample: `const response = await fetch('https://api.airtable.com/v0/YOUR_BASE_ID/YOUR_TABLE', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+});
+const records = await response.json();`,
+      docsUrl: "https://airtable.com/developers/web/api/introduction"
+    }
   },
   {
     id: "notion",
@@ -462,7 +526,27 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "oTahLEX3NXo",
     signupUrl: "https://www.notion.so/signup",
     signupLabel: "Get Notion Free",
-    usedIn: ["Research Tools", "Design Documentation"]
+    usedIn: ["Research Tools", "Design Documentation"],
+    apiDocs: {
+      authMethod: "Bearer Token - Create an integration and get secret token from Notion settings",
+      baseUrl: "https://api.notion.com/v1",
+      endpoints: [
+        { method: "POST", path: "/pages", description: "Create a new page" },
+        { method: "GET", path: "/pages/{page_id}", description: "Retrieve a page" },
+        { method: "POST", path: "/databases/{database_id}/query", description: "Query a database" }
+      ],
+      codeExample: `const response = await fetch('https://api.notion.com/v1/pages', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_INTEGRATION_TOKEN',
+    'Notion-Version': '2022-06-28',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ parent: { database_id: 'DB_ID' }, properties: {} })
+});
+const page = await response.json();`,
+      docsUrl: "https://developers.notion.com/reference/intro"
+    }
   },
   {
     id: "miro",
@@ -480,7 +564,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "pULLAEmhSho",
     signupUrl: "https://miro.com/signup/",
     signupLabel: "Start Free with Miro",
-    usedIn: ["Synthesize Data", "Journey Maps"]
+    usedIn: ["Synthesize Data", "Journey Maps"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Create an app in Miro Developer Portal for access tokens",
+      baseUrl: "https://api.miro.com/v2",
+      endpoints: [
+        { method: "GET", path: "/boards", description: "Get list of boards" },
+        { method: "GET", path: "/boards/{board_id}", description: "Get specific board details" },
+        { method: "POST", path: "/boards/{board_id}/sticky_notes", description: "Create a sticky note on a board" }
+      ],
+      codeExample: `const response = await fetch('https://api.miro.com/v2/boards', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const boards = await response.json();`,
+      docsUrl: "https://developers.miro.com/reference/api-reference"
+    }
   },
   {
     id: "dovetail",
@@ -498,7 +598,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "gNbE5ECTF0A",
     signupUrl: "https://dovetailapp.com/",
     signupLabel: "Try Dovetail Free",
-    usedIn: ["Synthesize Data"]
+    usedIn: ["Synthesize Data"],
+    apiDocs: {
+      authMethod: "No public API - Use Dovetail integrations and Zapier",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Dovetail does not offer a public API
+// Use Zapier integration or built-in integrations
+// Visit the official documentation for integration guides`,
+      docsUrl: "https://dovetailapp.com/help/integrations"
+    }
   },
   {
     id: "google-sheets",
@@ -516,7 +625,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "N2opj8XzYBY",
     signupUrl: "https://sheets.google.com/",
     signupLabel: "Open Google Sheets",
-    usedIn: ["Synthesize Data"]
+    usedIn: ["Synthesize Data"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Use Google Sheets API with service account or OAuth credentials",
+      baseUrl: "https://sheets.googleapis.com/v4",
+      endpoints: [
+        { method: "GET", path: "/spreadsheets/{spreadsheetId}", description: "Get spreadsheet metadata" },
+        { method: "GET", path: "/spreadsheets/{spreadsheetId}/values/{range}", description: "Read cell values" },
+        { method: "PUT", path: "/spreadsheets/{spreadsheetId}/values/{range}", description: "Update cell values" }
+      ],
+      codeExample: `const response = await fetch(
+  'https://sheets.googleapis.com/v4/spreadsheets/SPREADSHEET_ID/values/Sheet1!A1:D10',
+  {
+    headers: { 'Authorization': 'Bearer YOUR_ACCESS_TOKEN' }
+  }
+);
+const data = await response.json();`,
+      docsUrl: "https://developers.google.com/sheets/api/reference/rest"
+    }
   },
   {
     id: "figma",
@@ -534,7 +660,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "FTFaQWZBqQ8",
     signupUrl: "https://www.figma.com/signup",
     signupLabel: "Start Designing in Figma",
-    usedIn: ["Create Personas", "Lo-Fi Wireframes", "Design System", "Hi-Fi Mockups", "Interactive Prototypes", "Version Control", "Developer Handoff"]
+    usedIn: ["Create Personas", "Lo-Fi Wireframes", "Design System", "Hi-Fi Mockups", "Interactive Prototypes", "Version Control", "Developer Handoff"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate a Personal Access Token from Figma account settings",
+      baseUrl: "https://api.figma.com/v1",
+      endpoints: [
+        { method: "GET", path: "/files/{file_key}", description: "Get file contents and metadata" },
+        { method: "GET", path: "/files/{file_key}/nodes", description: "Get specific nodes from a file" },
+        { method: "GET", path: "/images/{file_key}", description: "Export images from a file" }
+      ],
+      codeExample: `const response = await fetch('https://api.figma.com/v1/files/FILE_KEY', {
+  headers: {
+    'X-Figma-Token': 'YOUR_ACCESS_TOKEN'
+  }
+});
+const file = await response.json();`,
+      docsUrl: "https://www.figma.com/developers/api"
+    }
   },
   {
     id: "canva",
@@ -552,7 +694,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "zJSgUx5K6V0",
     signupUrl: "https://www.canva.com/signup",
     signupLabel: "Create with Canva",
-    usedIn: ["Create Personas"]
+    usedIn: ["Create Personas"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Create an app in Canva Developer Portal",
+      baseUrl: "https://api.canva.com/rest/v1",
+      endpoints: [
+        { method: "GET", path: "/users/me", description: "Get current user profile" },
+        { method: "GET", path: "/designs", description: "List user designs" },
+        { method: "POST", path: "/designs", description: "Create a new design" }
+      ],
+      codeExample: `const response = await fetch('https://api.canva.com/rest/v1/users/me', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const user = await response.json();`,
+      docsUrl: "https://www.canva.dev/docs/connect/"
+    }
   },
   {
     id: "hubspot",
@@ -570,7 +728,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "VENocHPMGrc",
     signupUrl: "https://www.hubspot.com/products/get-started",
     signupLabel: "Get HubSpot Free",
-    usedIn: ["Create Personas"]
+    usedIn: ["Create Personas"],
+    apiDocs: {
+      authMethod: "Bearer Token - Create a private app in HubSpot for access tokens",
+      baseUrl: "https://api.hubapi.com",
+      endpoints: [
+        { method: "GET", path: "/crm/v3/objects/contacts", description: "List all contacts" },
+        { method: "POST", path: "/crm/v3/objects/contacts", description: "Create a new contact" },
+        { method: "GET", path: "/crm/v3/objects/companies", description: "List all companies" }
+      ],
+      codeExample: `const response = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json'
+  }
+});
+const contacts = await response.json();`,
+      docsUrl: "https://developers.hubspot.com/docs/api/overview"
+    }
   },
   {
     id: "lucidchart",
@@ -588,7 +763,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "5EWRv7nuNVE",
     signupUrl: "https://www.lucidchart.com/pages/signup",
     signupLabel: "Try Lucidchart Free",
-    usedIn: ["Journey Maps"]
+    usedIn: ["Journey Maps"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Use Lucid Developer Portal for app credentials",
+      baseUrl: "https://api.lucid.co",
+      endpoints: [
+        { method: "GET", path: "/documents", description: "List all documents" },
+        { method: "GET", path: "/documents/{documentId}", description: "Get document details" },
+        { method: "POST", path: "/documents", description: "Create a new document" }
+      ],
+      codeExample: `const response = await fetch('https://api.lucid.co/documents', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Lucid-Api-Version': '1'
+  }
+});
+const documents = await response.json();`,
+      docsUrl: "https://developer.lucid.co/api-reference/"
+    }
   },
   {
     id: "smaply",
@@ -606,7 +798,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "wFPjKD91l_g",
     signupUrl: "https://www.smaply.com/",
     signupLabel: "Start Journey Mapping",
-    usedIn: ["Journey Maps"]
+    usedIn: ["Journey Maps"],
+    apiDocs: {
+      authMethod: "No public API - Use export and embed features",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Smaply does not offer a public REST API
+// Use export features (PDF, PNG) and embed codes
+// Visit the official documentation for integration guides`,
+      docsUrl: "https://www.smaply.com/help"
+    }
   },
   {
     id: "balsamiq",
@@ -624,7 +825,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "b4-0X8MEZHI",
     signupUrl: "https://balsamiq.cloud/",
     signupLabel: "Try Balsamiq Free",
-    usedIn: ["Lo-Fi Wireframes"]
+    usedIn: ["Lo-Fi Wireframes"],
+    apiDocs: {
+      authMethod: "No public API - Use Balsamiq Cloud sharing and export",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Balsamiq does not offer a public REST API
+// Use Balsamiq Cloud for sharing and collaboration
+// Export wireframes as PNG or PDF for integration`,
+      docsUrl: "https://balsamiq.com/wireframes/cloud/docs/"
+    }
   },
   {
     id: "whimsical",
@@ -642,7 +852,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "tz9cPkkeFbs",
     signupUrl: "https://whimsical.com/signup",
     signupLabel: "Start with Whimsical",
-    usedIn: ["Lo-Fi Wireframes"]
+    usedIn: ["Lo-Fi Wireframes"],
+    apiDocs: {
+      authMethod: "No public API - Use embed and share features",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Whimsical does not offer a public REST API
+// Use embed codes for integration into documentation
+// Share links provide view and edit access`,
+      docsUrl: "https://whimsical.com/help"
+    }
   },
   {
     id: "usertesting",
@@ -660,7 +879,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "VvlPLUCjLYw",
     signupUrl: "https://www.usertesting.com/",
     signupLabel: "Start Testing",
-    usedIn: ["Concept Testing"]
+    usedIn: ["Concept Testing"],
+    apiDocs: {
+      authMethod: "API Key - Enterprise customers can request API access",
+      baseUrl: "https://api.usertesting.com/v1",
+      endpoints: [
+        { method: "GET", path: "/tests", description: "List all tests" },
+        { method: "GET", path: "/tests/{test_id}/videos", description: "Get video results for a test" },
+        { method: "POST", path: "/tests", description: "Create a new test" }
+      ],
+      codeExample: `const response = await fetch('https://api.usertesting.com/v1/tests', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+});
+const tests = await response.json();`,
+      docsUrl: "https://www.usertesting.com/resources/api"
+    }
   },
   {
     id: "lookback",
@@ -678,7 +914,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "zGN-IoOSsYk",
     signupUrl: "https://lookback.io/",
     signupLabel: "Try Lookback",
-    usedIn: ["Concept Testing"]
+    usedIn: ["Concept Testing"],
+    apiDocs: {
+      authMethod: "No public API - Use integrations and export features",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Lookback does not offer a public REST API
+// Use Slack, Trello, and other built-in integrations
+// Export recordings and insights manually`,
+      docsUrl: "https://help.lookback.com/"
+    }
   },
   {
     id: "optimal-workshop",
@@ -696,7 +941,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "j6P86uQ--bI",
     signupUrl: "https://www.optimalworkshop.com/",
     signupLabel: "Start Free Trial",
-    usedIn: ["Concept Testing"]
+    usedIn: ["Concept Testing"],
+    apiDocs: {
+      authMethod: "API Key - Available on Team and Enterprise plans",
+      baseUrl: "https://api.optimalworkshop.com/v1",
+      endpoints: [
+        { method: "GET", path: "/studies", description: "List all studies" },
+        { method: "GET", path: "/studies/{study_id}/results", description: "Get study results" },
+        { method: "GET", path: "/studies/{study_id}/participants", description: "Get participant data" }
+      ],
+      codeExample: `const response = await fetch('https://api.optimalworkshop.com/v1/studies', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY'
+  }
+});
+const studies = await response.json();`,
+      docsUrl: "https://www.optimalworkshop.com/api/"
+    }
   },
   {
     id: "optimalsort",
@@ -714,7 +975,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "DdGe2chQ0Zw",
     signupUrl: "https://www.optimalworkshop.com/optimalsort/",
     signupLabel: "Try OptimalSort",
-    usedIn: ["Priority & Workshop"]
+    usedIn: ["Priority & Workshop"],
+    apiDocs: {
+      authMethod: "API Key - Part of Optimal Workshop API access",
+      baseUrl: "https://api.optimalworkshop.com/v1",
+      endpoints: [
+        { method: "GET", path: "/optimalsort/studies", description: "List card sort studies" },
+        { method: "GET", path: "/optimalsort/studies/{id}/results", description: "Get card sort results" },
+        { method: "GET", path: "/optimalsort/studies/{id}/similarity-matrix", description: "Get similarity matrix data" }
+      ],
+      codeExample: `const response = await fetch('https://api.optimalworkshop.com/v1/optimalsort/studies', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY'
+  }
+});
+const studies = await response.json();`,
+      docsUrl: "https://www.optimalworkshop.com/api/"
+    }
   },
   {
     id: "mural",
@@ -732,7 +1009,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "P5wULiWQjE0",
     signupUrl: "https://www.mural.co/",
     signupLabel: "Start with Mural",
-    usedIn: ["Priority & Workshop"]
+    usedIn: ["Priority & Workshop"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Create an app in MURAL Developer Portal",
+      baseUrl: "https://api.mural.co/api/public/v1",
+      endpoints: [
+        { method: "GET", path: "/murals", description: "List all murals" },
+        { method: "GET", path: "/murals/{muralId}", description: "Get mural details" },
+        { method: "POST", path: "/murals/{muralId}/widgets/sticky-note", description: "Create a sticky note" }
+      ],
+      codeExample: `const response = await fetch('https://api.mural.co/api/public/v1/murals', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const murals = await response.json();`,
+      docsUrl: "https://developers.mural.co/public/docs"
+    }
   },
   {
     id: "mentimeter",
@@ -750,7 +1043,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "5UXNXbJns3U",
     signupUrl: "https://www.mentimeter.com/",
     signupLabel: "Create Free Presentation",
-    usedIn: ["Priority & Workshop"]
+    usedIn: ["Priority & Workshop"],
+    apiDocs: {
+      authMethod: "No public API - Use embed and export features",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Mentimeter does not offer a public REST API
+// Use embed codes to display results in other platforms
+// Export data as Excel or PDF from the dashboard`,
+      docsUrl: "https://www.mentimeter.com/features"
+    }
   },
   {
     id: "zeroheight",
@@ -768,7 +1070,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "T_6YyKAOBMY",
     signupUrl: "https://zeroheight.com/",
     signupLabel: "Try Zeroheight",
-    usedIn: ["Design System"]
+    usedIn: ["Design System"],
+    apiDocs: {
+      authMethod: "No public API - Use Figma sync and embed features",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Zeroheight syncs directly with Figma and Storybook
+// Use built-in integrations for design system documentation
+// Embed code blocks and live components automatically`,
+      docsUrl: "https://zeroheight.com/help/integrations/"
+    }
   },
   {
     id: "storybook",
@@ -786,7 +1097,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "BySFuXgG-ow",
     signupUrl: "https://storybook.js.org/",
     signupLabel: "Get Started Free",
-    usedIn: ["Design System"]
+    usedIn: ["Design System"],
+    apiDocs: {
+      authMethod: "No authentication - Storybook runs locally or is self-hosted",
+      baseUrl: "http://localhost:6006",
+      endpoints: [
+        { method: "GET", path: "/stories.json", description: "Get all stories metadata" },
+        { method: "GET", path: "/iframe.html?id={storyId}", description: "Render a specific story" }
+      ],
+      codeExample: `// Storybook is a development tool, not a hosted API
+// Install in your project:
+// npx storybook@latest init
+
+// Access stories programmatically via the manager API
+import { addons } from '@storybook/manager-api';
+const channel = addons.getChannel();`,
+      docsUrl: "https://storybook.js.org/docs/react/get-started/introduction"
+    }
   },
   {
     id: "sketch",
@@ -804,7 +1131,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "ilcwjXTqyNM",
     signupUrl: "https://www.sketch.com/",
     signupLabel: "Try Sketch Free",
-    usedIn: ["Hi-Fi Mockups"]
+    usedIn: ["Hi-Fi Mockups"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 - Use Sketch Cloud API with OAuth tokens",
+      baseUrl: "https://api.sketch.cloud/v1",
+      endpoints: [
+        { method: "GET", path: "/shares/{shortId}", description: "Get shared document info" },
+        { method: "GET", path: "/shares/{shortId}/versions", description: "List document versions" },
+        { method: "GET", path: "/shares/{shortId}/artboards", description: "Get artboards from a share" }
+      ],
+      codeExample: `const response = await fetch('https://api.sketch.cloud/v1/shares/SHORT_ID', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const share = await response.json();`,
+      docsUrl: "https://developer.sketch.com/"
+    }
   },
   {
     id: "adobe-xd",
@@ -822,7 +1165,21 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "WEljsc2jorI",
     signupUrl: "https://www.adobe.com/products/xd.html",
     signupLabel: "Start with Adobe XD",
-    usedIn: ["Hi-Fi Mockups"]
+    usedIn: ["Hi-Fi Mockups"],
+    apiDocs: {
+      authMethod: "No public API - Use Creative Cloud integrations and plugins",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Adobe XD does not offer a public REST API
+// Use the XD Plugin API for extending functionality
+// https://adobexdplatform.com/plugin-docs/
+
+const { editDocument } = require("application");
+editDocument({ editLabel: "My Plugin" }, async (selection) => {
+  // Plugin code here
+});`,
+      docsUrl: "https://adobexdplatform.com/plugin-docs/"
+    }
   },
   {
     id: "protopie",
@@ -840,7 +1197,20 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "fWxYWOTfuPQ",
     signupUrl: "https://www.protopie.io/",
     signupLabel: "Try ProtoPie Free",
-    usedIn: ["Interactive Prototypes"]
+    usedIn: ["Interactive Prototypes"],
+    apiDocs: {
+      authMethod: "No public API - Use ProtoPie Connect for integrations",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// ProtoPie does not offer a public REST API
+// Use ProtoPie Connect for hardware and software integrations
+// Connect via WebSocket or serial communication
+
+// ProtoPie Connect WebSocket example:
+const ws = new WebSocket('ws://localhost:9981');
+ws.send(JSON.stringify({ messageId: 'trigger', value: 'data' }));`,
+      docsUrl: "https://www.protopie.io/learn/docs/"
+    }
   },
   {
     id: "principle",
@@ -858,7 +1228,17 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "vFrivX021-A",
     signupUrl: "https://principleformac.com/",
     signupLabel: "Download Principle",
-    usedIn: ["Interactive Prototypes"]
+    usedIn: ["Interactive Prototypes"],
+    apiDocs: {
+      authMethod: "No public API - Desktop application for Mac only",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Principle is a Mac-only desktop application
+// No REST API available
+// Export animations as video, GIF, or native iOS code
+// Use the import feature for Sketch and Figma files`,
+      docsUrl: "https://principleformac.com/docs.html"
+    }
   },
   {
     id: "calendly",
@@ -876,7 +1256,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "xFCKEVfqr6E",
     signupUrl: "https://calendly.com/signup",
     signupLabel: "Get Calendly Free",
-    usedIn: ["Test Scheduling"]
+    usedIn: ["Test Scheduling"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate Personal Access Token from Calendly integrations",
+      baseUrl: "https://api.calendly.com",
+      endpoints: [
+        { method: "GET", path: "/users/me", description: "Get current user info" },
+        { method: "GET", path: "/event_types", description: "List all event types" },
+        { method: "GET", path: "/scheduled_events", description: "List scheduled events" }
+      ],
+      codeExample: `const response = await fetch('https://api.calendly.com/users/me', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Content-Type': 'application/json'
+  }
+});
+const user = await response.json();`,
+      docsUrl: "https://developer.calendly.com/api-docs"
+    }
   },
   {
     id: "zoom",
@@ -894,7 +1291,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "9guqRELB4dg",
     signupUrl: "https://zoom.us/signup",
     signupLabel: "Sign Up for Zoom",
-    usedIn: ["Test Scheduling"]
+    usedIn: ["Test Scheduling"],
+    apiDocs: {
+      authMethod: "OAuth 2.0 or Server-to-Server OAuth - Create an app in Zoom Marketplace",
+      baseUrl: "https://api.zoom.us/v2",
+      endpoints: [
+        { method: "GET", path: "/users/me", description: "Get current user info" },
+        { method: "POST", path: "/users/{userId}/meetings", description: "Create a meeting" },
+        { method: "GET", path: "/users/{userId}/recordings", description: "List user recordings" }
+      ],
+      codeExample: `const response = await fetch('https://api.zoom.us/v2/users/me', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const user = await response.json();`,
+      docsUrl: "https://developers.zoom.us/docs/api/"
+    }
   },
   {
     id: "loom",
@@ -912,7 +1325,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "CfZvb0D5qwE",
     signupUrl: "https://www.loom.com/signup",
     signupLabel: "Get Loom Free",
-    usedIn: ["Test Scheduling"]
+    usedIn: ["Test Scheduling"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate Developer API key from Loom settings",
+      baseUrl: "https://api.loom.com",
+      endpoints: [
+        { method: "GET", path: "/v1/videos", description: "List all videos" },
+        { method: "GET", path: "/v1/videos/{id}", description: "Get video details" },
+        { method: "POST", path: "/v1/videos/{id}/transcriptions", description: "Get video transcript" }
+      ],
+      codeExample: `const response = await fetch('https://api.loom.com/v1/videos', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+});
+const videos = await response.json();`,
+      docsUrl: "https://dev.loom.com/docs/api-reference"
+    }
   },
   {
     id: "abstract",
@@ -930,7 +1360,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "e5jz3lKqU6k",
     signupUrl: "https://www.abstract.com/",
     signupLabel: "Try Abstract",
-    usedIn: ["Version Control"]
+    usedIn: ["Version Control"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate API token from Abstract settings",
+      baseUrl: "https://api.abstract.com",
+      endpoints: [
+        { method: "GET", path: "/projects", description: "List all projects" },
+        { method: "GET", path: "/projects/{projectId}/branches", description: "List project branches" },
+        { method: "GET", path: "/projects/{projectId}/commits", description: "List project commits" }
+      ],
+      codeExample: `const response = await fetch('https://api.abstract.com/projects', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN',
+    'Abstract-Api-Version': '2020-01-01'
+  }
+});
+const projects = await response.json();`,
+      docsUrl: "https://sdk.abstract.com/"
+    }
   },
   {
     id: "github",
@@ -948,7 +1395,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "iv8rSLsi1xo",
     signupUrl: "https://github.com/signup",
     signupLabel: "Join GitHub Free",
-    usedIn: ["Version Control"]
+    usedIn: ["Version Control"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate Personal Access Token from GitHub settings",
+      baseUrl: "https://api.github.com",
+      endpoints: [
+        { method: "GET", path: "/repos/{owner}/{repo}", description: "Get repository info" },
+        { method: "GET", path: "/repos/{owner}/{repo}/issues", description: "List repository issues" },
+        { method: "POST", path: "/repos/{owner}/{repo}/issues", description: "Create an issue" }
+      ],
+      codeExample: `const response = await fetch('https://api.github.com/repos/owner/repo', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN',
+    'Accept': 'application/vnd.github.v3+json'
+  }
+});
+const repo = await response.json();`,
+      docsUrl: "https://docs.github.com/en/rest"
+    }
   },
   {
     id: "zeplin",
@@ -966,7 +1430,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "x1RPNvlOF8k",
     signupUrl: "https://zeplin.io/",
     signupLabel: "Start with Zeplin",
-    usedIn: ["Developer Handoff"]
+    usedIn: ["Developer Handoff"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate Personal Access Token from Zeplin account",
+      baseUrl: "https://api.zeplin.dev/v1",
+      endpoints: [
+        { method: "GET", path: "/projects", description: "List all projects" },
+        { method: "GET", path: "/projects/{project_id}/screens", description: "List screens in a project" },
+        { method: "GET", path: "/projects/{project_id}/components", description: "List project components" }
+      ],
+      codeExample: `const response = await fetch('https://api.zeplin.dev/v1/projects', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const projects = await response.json();`,
+      docsUrl: "https://docs.zeplin.dev/"
+    }
   },
   {
     id: "avocode",
@@ -984,7 +1464,16 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "E5p5I0lbsVo",
     signupUrl: "https://avocode.com/",
     signupLabel: "Try Avocode Free",
-    usedIn: ["Developer Handoff"]
+    usedIn: ["Developer Handoff"],
+    apiDocs: {
+      authMethod: "No public API - Use export and share features",
+      baseUrl: "N/A",
+      endpoints: [],
+      codeExample: `// Avocode does not offer a public REST API
+// Use the desktop app to open and export designs
+// Integrates with Slack for notifications`,
+      docsUrl: "https://help.avocode.com/"
+    }
   },
   {
     id: "jira",
@@ -1002,7 +1491,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "GWxMTvRGIpc",
     signupUrl: "https://www.atlassian.com/software/jira/free",
     signupLabel: "Get Jira Free",
-    usedIn: ["QA Integration"]
+    usedIn: ["QA Integration"],
+    apiDocs: {
+      authMethod: "Bearer Token or Basic Auth - Create API token from Atlassian account",
+      baseUrl: "https://your-domain.atlassian.net/rest/api/3",
+      endpoints: [
+        { method: "GET", path: "/issue/{issueIdOrKey}", description: "Get issue details" },
+        { method: "POST", path: "/issue", description: "Create a new issue" },
+        { method: "GET", path: "/search", description: "Search for issues using JQL" }
+      ],
+      codeExample: `const response = await fetch('https://your-domain.atlassian.net/rest/api/3/issue/PROJ-123', {
+  headers: {
+    'Authorization': 'Basic ' + btoa('email@example.com:YOUR_API_TOKEN'),
+    'Accept': 'application/json'
+  }
+});
+const issue = await response.json();`,
+      docsUrl: "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/"
+    }
   },
   {
     id: "trello",
@@ -1020,7 +1526,21 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "xky48zyL9iA",
     signupUrl: "https://trello.com/signup",
     signupLabel: "Start with Trello",
-    usedIn: ["QA Integration"]
+    usedIn: ["QA Integration"],
+    apiDocs: {
+      authMethod: "API Key + Token - Generate from Trello Developer Portal",
+      baseUrl: "https://api.trello.com/1",
+      endpoints: [
+        { method: "GET", path: "/boards/{id}", description: "Get board details" },
+        { method: "GET", path: "/boards/{id}/cards", description: "List cards on a board" },
+        { method: "POST", path: "/cards", description: "Create a new card" }
+      ],
+      codeExample: `const response = await fetch(
+  'https://api.trello.com/1/boards/BOARD_ID?key=YOUR_API_KEY&token=YOUR_TOKEN'
+);
+const board = await response.json();`,
+      docsUrl: "https://developer.atlassian.com/cloud/trello/rest/"
+    }
   },
   {
     id: "asana",
@@ -1038,7 +1558,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "VG5KV2Gg8sA",
     signupUrl: "https://asana.com/create-account",
     signupLabel: "Try Asana Free",
-    usedIn: ["QA Integration"]
+    usedIn: ["QA Integration"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate Personal Access Token from Asana settings",
+      baseUrl: "https://app.asana.com/api/1.0",
+      endpoints: [
+        { method: "GET", path: "/users/me", description: "Get current user info" },
+        { method: "GET", path: "/projects/{project_gid}/tasks", description: "List tasks in a project" },
+        { method: "POST", path: "/tasks", description: "Create a new task" }
+      ],
+      codeExample: `const response = await fetch('https://app.asana.com/api/1.0/users/me', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const user = await response.json();`,
+      docsUrl: "https://developers.asana.com/docs/overview"
+    }
   },
   {
     id: "maze",
@@ -1056,7 +1592,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "5UOWUEC_H4c",
     signupUrl: "https://maze.co/",
     signupLabel: "Start Testing with Maze",
-    usedIn: ["Analytics & Feedback"]
+    usedIn: ["Analytics & Feedback"],
+    apiDocs: {
+      authMethod: "API Key - Available on Organization plans",
+      baseUrl: "https://api.maze.co/v1",
+      endpoints: [
+        { method: "GET", path: "/mazes", description: "List all mazes (tests)" },
+        { method: "GET", path: "/mazes/{maze_id}/results", description: "Get test results" },
+        { method: "GET", path: "/mazes/{maze_id}/missions", description: "Get tasks/missions in a test" }
+      ],
+      codeExample: `const response = await fetch('https://api.maze.co/v1/mazes', {
+  headers: {
+    'X-Api-Key': 'YOUR_API_KEY'
+  }
+});
+const mazes = await response.json();`,
+      docsUrl: "https://developers.maze.co/"
+    }
   },
   {
     id: "hotjar",
@@ -1074,7 +1626,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "xqTfJH8L0HU",
     signupUrl: "https://www.hotjar.com/",
     signupLabel: "Get Hotjar Free",
-    usedIn: ["Analytics & Feedback"]
+    usedIn: ["Analytics & Feedback"],
+    apiDocs: {
+      authMethod: "API Key - Available on Business and Scale plans",
+      baseUrl: "https://api.hotjar.com",
+      endpoints: [
+        { method: "GET", path: "/v1/sites/{site_id}/heatmaps", description: "List heatmaps for a site" },
+        { method: "GET", path: "/v1/sites/{site_id}/recordings", description: "List session recordings" },
+        { method: "GET", path: "/v1/sites/{site_id}/feedback", description: "Get feedback responses" }
+      ],
+      codeExample: `const response = await fetch('https://api.hotjar.com/v1/sites/SITE_ID/heatmaps', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY'
+  }
+});
+const heatmaps = await response.json();`,
+      docsUrl: "https://help.hotjar.com/hc/en-us/articles/360056546854-Hotjar-API"
+    }
   },
   {
     id: "optimizely",
@@ -1092,7 +1660,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "Bxj0wKOsmnk",
     signupUrl: "https://www.optimizely.com/",
     signupLabel: "Start Experimenting",
-    usedIn: ["Analytics & Feedback"]
+    usedIn: ["Analytics & Feedback"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate Personal Access Token from Optimizely settings",
+      baseUrl: "https://api.optimizely.com/v2",
+      endpoints: [
+        { method: "GET", path: "/experiments", description: "List all experiments" },
+        { method: "GET", path: "/experiments/{experiment_id}/results", description: "Get experiment results" },
+        { method: "POST", path: "/experiments", description: "Create a new experiment" }
+      ],
+      codeExample: `const response = await fetch('https://api.optimizely.com/v2/experiments', {
+  headers: {
+    'Authorization': 'Bearer YOUR_ACCESS_TOKEN'
+  }
+});
+const experiments = await response.json();`,
+      docsUrl: "https://docs.developers.optimizely.com/web-experimentation/reference"
+    }
   },
   {
     id: "confluence",
@@ -1110,7 +1694,24 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "J1OneTYc_TI",
     signupUrl: "https://www.atlassian.com/software/confluence/free",
     signupLabel: "Get Confluence Free",
-    usedIn: ["Design Documentation"]
+    usedIn: ["Design Documentation"],
+    apiDocs: {
+      authMethod: "Bearer Token or Basic Auth - Create API token from Atlassian account",
+      baseUrl: "https://your-domain.atlassian.net/wiki/rest/api",
+      endpoints: [
+        { method: "GET", path: "/content", description: "List all content" },
+        { method: "GET", path: "/content/{id}", description: "Get specific page content" },
+        { method: "POST", path: "/content", description: "Create new page" }
+      ],
+      codeExample: `const response = await fetch('https://your-domain.atlassian.net/wiki/rest/api/content', {
+  headers: {
+    'Authorization': 'Basic ' + btoa('email@example.com:YOUR_API_TOKEN'),
+    'Accept': 'application/json'
+  }
+});
+const content = await response.json();`,
+      docsUrl: "https://developer.atlassian.com/cloud/confluence/rest/v1/intro/"
+    }
   },
   {
     id: "gitbook",
@@ -1128,7 +1729,23 @@ export const integrationTools: IntegrationTool[] = [
     youtubeId: "inyY0U2RBuM",
     signupUrl: "https://www.gitbook.com/",
     signupLabel: "Start with GitBook",
-    usedIn: ["Design Documentation"]
+    usedIn: ["Design Documentation"],
+    apiDocs: {
+      authMethod: "Bearer Token - Generate API token from GitBook settings",
+      baseUrl: "https://api.gitbook.com/v1",
+      endpoints: [
+        { method: "GET", path: "/spaces", description: "List all spaces" },
+        { method: "GET", path: "/spaces/{spaceId}/content", description: "Get space content" },
+        { method: "POST", path: "/spaces/{spaceId}/content/page", description: "Create a new page" }
+      ],
+      codeExample: `const response = await fetch('https://api.gitbook.com/v1/spaces', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_TOKEN'
+  }
+});
+const spaces = await response.json();`,
+      docsUrl: "https://developer.gitbook.com/gitbook-api/reference"
+    }
   }
 ];
 
