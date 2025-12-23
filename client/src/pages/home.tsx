@@ -10,7 +10,8 @@ import {
   integrations, 
   stats, 
   quickStartCode,
-  footerLinks 
+  footerLinks,
+  uxAutomationTools 
 } from "@/lib/data";
 import { 
   Github, 
@@ -22,10 +23,24 @@ import {
   X,
   ChevronRight,
   ExternalLink,
-  Mail
+  Mail,
+  Sparkles,
+  Wand2,
+  Layout,
+  Palette,
+  TestTube,
+  FileText
 } from "lucide-react";
 import { SiGithub, SiX, SiDiscord, SiLinkedin } from "react-icons/si";
 import { useState, type MouseEvent } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -73,6 +88,79 @@ function Navigation() {
                 Get Started
               </Button>
             </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size="sm" variant="outline" className="hidden sm:flex gap-2" data-testid="button-ux-automation-menu">
+                  <Sparkles className="w-4 h-4" />
+                  UX Automation
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <DropdownMenuLabel className="flex items-center gap-2">
+                  <Wand2 className="w-4 h-4" />
+                  AI Design Workflows & GPTs
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Wireframing & Sitemaps</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "wireframing").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <Layout className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        {tool.gptUrl && (
+                          <Badge variant="secondary" className="ml-auto text-xs">GPT</Badge>
+                        )}
+                        <ExternalLink className="w-3 h-3 text-muted-foreground" />
+                      </div>
+                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">UI Generation</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "ui-generation").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <Palette className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
+                      </div>
+                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Prototyping & Testing</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "prototyping" || t.category === "testing").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <TestTube className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
+                      </div>
+                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">UX Copywriting</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "copywriting").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <FileText className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
+                      </div>
+                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Button 
               variant="ghost" 
               size="icon" 
@@ -86,7 +174,7 @@ function Navigation() {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border">
+          <div className="md:hidden py-4 border-t border-border max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
                 <a
@@ -109,6 +197,29 @@ function Navigation() {
                     Get Started
                   </Button>
                 </Link>
+              </div>
+              <div className="mt-4 px-3">
+                <div className="flex items-center gap-2 mb-3">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="font-medium text-sm">UX Automation Tools</span>
+                </div>
+                <div className="space-y-2">
+                  {uxAutomationTools.slice(0, 6).map((tool) => (
+                    <a
+                      key={tool.id}
+                      href={tool.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-2 py-1.5 text-sm text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                      data-testid={`link-mobile-automation-${tool.id}`}
+                    >
+                      <Layout className="w-3 h-3" />
+                      <span>{tool.name}</span>
+                      {tool.gptUrl && <Badge variant="secondary" className="text-xs ml-auto">GPT</Badge>}
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

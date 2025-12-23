@@ -1753,6 +1753,129 @@ export function getIntegrationById(id: string): IntegrationTool | undefined {
   return integrationTools.find(tool => tool.id === id);
 }
 
+export interface UXAutomationTool {
+  id: string;
+  name: string;
+  description: string;
+  category: "wireframing" | "ui-generation" | "prototyping" | "research" | "testing" | "copywriting";
+  url: string;
+  gptUrl?: string;
+  features: string[];
+  pricing: string;
+}
+
+export const uxAutomationTools: UXAutomationTool[] = [
+  {
+    id: "relume",
+    name: "Relume",
+    description: "AI-powered sitemap and wireframe generator with 1,000+ components",
+    category: "wireframing",
+    url: "https://www.relume.io/",
+    gptUrl: "https://chatgpt.com/g/g-EJQjr3clF-relume-ai-website-builder",
+    features: ["AI sitemap generation", "Wireframe builder", "Figma & Webflow export", "AI copywriting"],
+    pricing: "Free tier / $32/mo"
+  },
+  {
+    id: "ux-pilot",
+    name: "UX Pilot",
+    description: "UX research and wireframing with usability audits and high-fidelity UI generation",
+    category: "wireframing",
+    url: "https://uxpilot.ai/",
+    features: ["Wireframe generation", "Usability audits", "High-fidelity UI", "Interview generator"],
+    pricing: "Free tier available"
+  },
+  {
+    id: "uizard",
+    name: "Uizard",
+    description: "Convert hand-drawn sketches and screenshots into polished digital designs",
+    category: "ui-generation",
+    url: "https://uizard.io/",
+    features: ["Sketch-to-UI", "Screenshot-to-theme", "AI templates", "Real-time collaboration"],
+    pricing: "Free / $12/mo"
+  },
+  {
+    id: "galileo-ai",
+    name: "Galileo AI",
+    description: "Generate pixel-perfect, high-fidelity UI designs from text descriptions",
+    category: "ui-generation",
+    url: "https://usegalileo.ai/",
+    features: ["Text-to-UI", "Design system integration", "Figma export", "Responsive layouts"],
+    pricing: "Waitlist / Paid"
+  },
+  {
+    id: "framer-ai",
+    name: "Framer AI",
+    description: "Generate entire website layouts, interactions, and optimized user flows from prompts",
+    category: "prototyping",
+    url: "https://framer.com/",
+    features: ["AI layout generation", "Interaction suggestions", "User flow optimization", "React export"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "figma-ai",
+    name: "Figma AI",
+    description: "AI-powered plugins and features inside Figma for automated design tasks",
+    category: "ui-generation",
+    url: "https://figma.com/",
+    features: ["Magician plugin", "Wireframe Designer", "AI content fill", "First Draft"],
+    pricing: "Free (plugins vary)"
+  },
+  {
+    id: "maze",
+    name: "Maze",
+    description: "Test interactive prototypes with AI-powered feedback analysis",
+    category: "testing",
+    url: "https://maze.co/",
+    features: ["Prototype testing", "User path analysis", "Tree testing", "AI feedback theming"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "adobe-firefly",
+    name: "Adobe Firefly",
+    description: "Generative AI for visual assets including fill, cropping, and content generation",
+    category: "ui-generation",
+    url: "https://adobe.com/products/firefly.html",
+    features: ["Generative fill", "Smart cropping", "Content generation", "Creative Cloud integration"],
+    pricing: "$20.99/mo (CC)"
+  },
+  {
+    id: "midjourney",
+    name: "Midjourney",
+    description: "High-quality AI image generation for mood boards, concept art, and visual assets",
+    category: "ui-generation",
+    url: "https://midjourney.com/",
+    features: ["Text-to-image", "Style variations", "Mood boards", "Brand visuals"],
+    pricing: "$10/mo"
+  },
+  {
+    id: "chatgpt-ux",
+    name: "ChatGPT for UX",
+    description: "AI assistant for UX copy, personas, research synthesis, and ideation",
+    category: "copywriting",
+    url: "https://chat.openai.com/",
+    features: ["UX copywriting", "Persona generation", "Research synthesis", "Brainstorming"],
+    pricing: "Free / $20/mo"
+  },
+  {
+    id: "writer",
+    name: "Writer",
+    description: "AI writing platform with brand voice consistency and UX microcopy generation",
+    category: "copywriting",
+    url: "https://writer.com/",
+    features: ["Brand voice AI", "Microcopy generation", "Style guide enforcement", "Team collaboration"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "visily",
+    name: "Visily",
+    description: "AI-powered wireframe and mockup tool with screenshot-to-design capabilities",
+    category: "wireframing",
+    url: "https://www.visily.ai/",
+    features: ["Screenshot to design", "AI wireframing", "Sketch to mockup", "Template library"],
+    pricing: "Free tier / Paid"
+  }
+];
+
 export const footerLinks = {
   product: [
     { label: "Pre-Kit", href: "#pre-kit" },
