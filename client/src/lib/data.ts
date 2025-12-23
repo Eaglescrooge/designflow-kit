@@ -1757,7 +1757,7 @@ export interface UXAutomationTool {
   id: string;
   name: string;
   description: string;
-  category: "wireframing" | "ui-generation" | "prototyping" | "research" | "testing" | "copywriting";
+  category: "wireframing" | "ui-generation" | "prototyping" | "research" | "testing" | "copywriting" | "gpt" | "design-system";
   url: string;
   gptUrl?: string;
   features: string[];
@@ -1873,6 +1873,185 @@ export const uxAutomationTools: UXAutomationTool[] = [
     url: "https://www.visily.ai/",
     features: ["Screenshot to design", "AI wireframing", "Sketch to mockup", "Template library"],
     pricing: "Free tier / Paid"
+  },
+  {
+    id: "designer-gpt",
+    name: "Designer GPT",
+    description: "Custom GPT by Pietro Schirano for design problem-solving and critique",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-2Eo3NxuS7-designergpt",
+    gptUrl: "https://chatgpt.com/g/g-2Eo3NxuS7-designergpt",
+    features: ["Design critique", "Problem solving", "UI/UX guidance", "Creative direction"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "wireframe-gpt",
+    name: "Wireframe Critique GPT",
+    description: "GPT specialized in reviewing wireframes using usability heuristics",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-wireframe-critique",
+    gptUrl: "https://chatgpt.com/g/g-wireframe-critique",
+    features: ["Wireframe review", "Nielsen heuristics", "Accessibility check", "Layout feedback"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "ux-researcher-gpt",
+    name: "UX Researcher GPT",
+    description: "AI assistant for user research planning, interview scripts, and synthesis",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-ux-researcher",
+    gptUrl: "https://chatgpt.com/g/g-ux-researcher",
+    features: ["Research planning", "Interview scripts", "Affinity mapping", "Insight synthesis"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "persona-generator-gpt",
+    name: "Persona Generator GPT",
+    description: "Generate detailed user personas with demographics, goals, and pain points",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-persona-generator",
+    gptUrl: "https://chatgpt.com/g/g-persona-generator",
+    features: ["Persona creation", "User demographics", "Behavioral patterns", "Journey scenarios"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "qoqo-ai",
+    name: "QoQo.ai",
+    description: "Figma plugin for AI-generated journey maps, user flows, and personas",
+    category: "research",
+    url: "https://qoqo.ai/",
+    features: ["Journey map generation", "User flow creation", "Persona builder", "Figma integration"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "visual-electric",
+    name: "Visual Electric",
+    description: "AI image generation designed specifically for creative professionals",
+    category: "ui-generation",
+    url: "https://visualelectric.com/",
+    features: ["Design-focused generation", "Brand asset creation", "Style consistency", "Canvas editing"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "magician-figma",
+    name: "Magician for Figma",
+    description: "AI-powered Figma plugin for icons, copy, and image generation",
+    category: "ui-generation",
+    url: "https://magician.design/",
+    features: ["Icon generation", "AI copywriting", "Image creation", "Design automation"],
+    pricing: "$5/mo"
+  },
+  {
+    id: "diagram-ai",
+    name: "Diagram",
+    description: "AI design tools for Figma including Genius and Automator plugins",
+    category: "design-system",
+    url: "https://diagram.com/",
+    features: ["Genius AI naming", "Automator workflows", "Design tokens", "Component suggestions"],
+    pricing: "Free / Paid"
+  },
+  {
+    id: "perplexity-research",
+    name: "Perplexity AI",
+    description: "AI-powered search for competitive analysis and design research",
+    category: "research",
+    url: "https://perplexity.ai/",
+    features: ["AI search", "Source citations", "Research synthesis", "Competitive analysis"],
+    pricing: "Free / $20/mo"
+  },
+  {
+    id: "claude-ai",
+    name: "Claude",
+    description: "Anthropic's AI for complex research analysis and design documentation",
+    category: "copywriting",
+    url: "https://claude.ai/",
+    features: ["Long-form analysis", "Documentation writing", "Research synthesis", "Design briefs"],
+    pricing: "Free / $20/mo"
+  },
+  {
+    id: "v0-dev",
+    name: "v0 by Vercel",
+    description: "AI-powered UI component generator with React and Tailwind code export",
+    category: "prototyping",
+    url: "https://v0.dev/",
+    features: ["Text-to-UI", "React components", "Tailwind CSS", "Code export"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "locofy",
+    name: "Locofy.ai",
+    description: "Convert Figma designs to production-ready React, Vue, or HTML code",
+    category: "prototyping",
+    url: "https://locofy.ai/",
+    features: ["Figma to code", "React/Vue/HTML", "Responsive export", "Component mapping"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "anima",
+    name: "Anima",
+    description: "Transform Figma designs into developer-friendly code with AI assistance",
+    category: "prototyping",
+    url: "https://animaapp.com/",
+    features: ["Design to code", "Interactive prototypes", "React export", "Developer handoff"],
+    pricing: "Free tier / Paid"
+  },
+  {
+    id: "usability-gpt",
+    name: "Usability Test GPT",
+    description: "Generate usability test plans, tasks, and interview questions",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-usability-test",
+    gptUrl: "https://chatgpt.com/g/g-usability-test",
+    features: ["Test planning", "Task creation", "Interview scripts", "Success metrics"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "design-system-gpt",
+    name: "Design System GPT",
+    description: "AI assistant for design tokens, component specs, and documentation",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-design-system",
+    gptUrl: "https://chatgpt.com/g/g-design-system",
+    features: ["Token generation", "Component specs", "Documentation", "Naming conventions"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "userflows-gpt",
+    name: "User Flow GPT",
+    description: "Generate detailed user flows and journey maps from product descriptions",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-user-flow",
+    gptUrl: "https://chatgpt.com/g/g-user-flow",
+    features: ["Flow generation", "Journey mapping", "Edge cases", "Error states"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "microcopy-gpt",
+    name: "UX Microcopy GPT",
+    description: "Generate button labels, error messages, and UI text with tone guidelines",
+    category: "gpt",
+    url: "https://chatgpt.com/g/g-microcopy",
+    gptUrl: "https://chatgpt.com/g/g-microcopy",
+    features: ["Button labels", "Error messages", "Onboarding text", "Tone of voice"],
+    pricing: "ChatGPT Plus"
+  },
+  {
+    id: "tokens-studio",
+    name: "Tokens Studio",
+    description: "Design tokens management for Figma with Git sync and theme support",
+    category: "design-system",
+    url: "https://tokens.studio/",
+    features: ["Token management", "Theme support", "Git sync", "Figma plugin"],
+    pricing: "Free / Paid"
+  },
+  {
+    id: "storybook-ai",
+    name: "Storybook",
+    description: "Component documentation and testing with AI-powered accessibility checks",
+    category: "design-system",
+    url: "https://storybook.js.org/",
+    features: ["Component docs", "Visual testing", "Accessibility", "Design review"],
+    pricing: "Free / Paid"
   }
 ];
 

@@ -29,7 +29,9 @@ import {
   Layout,
   Palette,
   TestTube,
-  FileText
+  FileText,
+  Search,
+  Layers
 } from "lucide-react";
 import { SiGithub, SiX, SiDiscord, SiLinkedin } from "react-icons/si";
 import { useState, type MouseEvent } from "react";
@@ -81,11 +83,25 @@ function Navigation() {
                   <ChevronRight className="w-3 h-3 rotate-90" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-80">
+              <DropdownMenuContent align="center" className="w-80 max-h-[70vh] overflow-y-auto">
                 <DropdownMenuLabel className="flex items-center gap-2">
                   <Wand2 className="w-4 h-4" />
                   AI Design Workflows & GPTs
                 </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Custom GPTs</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "gpt").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        <Badge variant="secondary" className="ml-auto text-xs">GPT</Badge>
+                        <ExternalLink className="w-3 h-3 text-muted-foreground" />
+                      </div>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
                 <DropdownMenuSeparator />
                 <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Wireframing & Sitemaps</DropdownMenuLabel>
                 {uxAutomationTools.filter(t => t.category === "wireframing").map((tool) => (
@@ -99,7 +115,6 @@ function Navigation() {
                         )}
                         <ExternalLink className="w-3 h-3 text-muted-foreground" />
                       </div>
-                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
                     </a>
                   </DropdownMenuItem>
                 ))}
@@ -113,13 +128,12 @@ function Navigation() {
                         <span className="font-medium">{tool.name}</span>
                         <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
                       </div>
-                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
                     </a>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Prototyping & Testing</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "prototyping" || t.category === "testing").map((tool) => (
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Prototyping & Code</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "prototyping").map((tool) => (
                   <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
                       <div className="flex items-center gap-2 w-full">
@@ -127,12 +141,37 @@ function Navigation() {
                         <span className="font-medium">{tool.name}</span>
                         <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
                       </div>
-                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
                     </a>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">UX Copywriting</DropdownMenuLabel>
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Research & Testing</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "research" || t.category === "testing").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <Search className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
+                      </div>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Design Systems</DropdownMenuLabel>
+                {uxAutomationTools.filter(t => t.category === "design-system").map((tool) => (
+                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
+                      <div className="flex items-center gap-2 w-full">
+                        <Layers className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="font-medium">{tool.name}</span>
+                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
+                      </div>
+                    </a>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Copywriting</DropdownMenuLabel>
                 {uxAutomationTools.filter(t => t.category === "copywriting").map((tool) => (
                   <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
                     <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
@@ -141,7 +180,6 @@ function Navigation() {
                         <span className="font-medium">{tool.name}</span>
                         <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
                       </div>
-                      <span className="text-xs text-muted-foreground pl-6">{tool.description}</span>
                     </a>
                   </DropdownMenuItem>
                 ))}
