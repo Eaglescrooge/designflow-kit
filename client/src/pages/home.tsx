@@ -74,28 +74,14 @@ function Navigation() {
                 {link.label}
               </a>
             ))}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <Button variant="outline" size="sm" className="hidden sm:flex gap-2" data-testid="button-github-nav">
-              <SiGithub className="w-4 h-4" />
-              <Star className="w-3 h-3" />
-              <span>8.5k</span>
-            </Button>
-            <Link href="/dashboard">
-              <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
-                Get Started
-              </Button>
-            </Link>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button size="sm" variant="outline" className="hidden sm:flex gap-2" data-testid="button-ux-automation-menu">
-                  <Sparkles className="w-4 h-4" />
+                <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="button-ux-automation-menu">
                   UX Automation
-                </Button>
+                  <ChevronRight className="w-3 h-3 rotate-90" />
+                </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80">
+              <DropdownMenuContent align="center" className="w-80">
                 <DropdownMenuLabel className="flex items-center gap-2">
                   <Wand2 className="w-4 h-4" />
                   AI Design Workflows & GPTs
@@ -161,6 +147,20 @@ function Navigation() {
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button variant="outline" size="sm" className="hidden sm:flex gap-2" data-testid="button-github-nav">
+              <SiGithub className="w-4 h-4" />
+              <Star className="w-3 h-3" />
+              <span>8.5k</span>
+            </Button>
+            <Link href="/dashboard">
+              <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
+                Get Started
+              </Button>
+            </Link>
             <Button 
               variant="ghost" 
               size="icon" 
