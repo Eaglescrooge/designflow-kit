@@ -13,7 +13,11 @@ import {
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
-  Layers
+  Layers,
+  Code2,
+  Key,
+  Globe,
+  FileText
 } from "lucide-react";
 
 export default function IntegrationDetail() {
@@ -97,6 +101,89 @@ export default function IntegrationDetail() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="font-heading text-2xl font-semibold mb-4 flex items-center gap-2">
+            <Code2 className="w-6 h-6 text-primary" />
+            API Documentation
+          </h2>
+          <Card>
+            <CardContent className="py-6 space-y-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="flex items-start gap-3" data-testid="api-auth-method">
+                  <Key className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium mb-1">Authentication</h4>
+                    <p className="text-sm text-muted-foreground" data-testid="text-auth-method">{integration.apiDocs.authMethod}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3" data-testid="api-base-url">
+                  <Globe className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-medium mb-1">Base URL</h4>
+                    <code className="text-sm bg-muted px-2 py-0.5 rounded" data-testid="text-base-url">{integration.apiDocs.baseUrl}</code>
+                  </div>
+                </div>
+              </div>
+
+              {integration.apiDocs.endpoints.length > 0 && (
+                <div>
+                  <h4 className="font-medium mb-3">Key Endpoints</h4>
+                  <div className="space-y-2">
+                    {integration.apiDocs.endpoints.map((endpoint, index) => (
+                      <div key={index} className="flex items-start gap-3 p-3 rounded-md bg-muted/50" data-testid={`api-endpoint-${index}`}>
+                        <Badge 
+                          variant="outline" 
+                          className={`flex-shrink-0 font-mono text-xs ${
+                            endpoint.method === "GET" ? "text-green-600 dark:text-green-400 border-green-600/50" :
+                            endpoint.method === "POST" ? "text-blue-600 dark:text-blue-400 border-blue-600/50" :
+                            endpoint.method === "PUT" ? "text-yellow-600 dark:text-yellow-400 border-yellow-600/50" :
+                            endpoint.method === "PATCH" ? "text-orange-600 dark:text-orange-400 border-orange-600/50" :
+                            "text-red-600 dark:text-red-400 border-red-600/50"
+                          }`}
+                          data-testid={`badge-endpoint-method-${index}`}
+                        >
+                          {endpoint.method}
+                        </Badge>
+                        <div>
+                          <code className="text-sm font-mono" data-testid={`text-endpoint-path-${index}`}>{endpoint.path}</code>
+                          <p className="text-sm text-muted-foreground mt-1" data-testid={`text-endpoint-desc-${index}`}>{endpoint.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <h4 className="font-medium mb-3">Code Example</h4>
+                <div className="relative">
+                  <pre className="bg-muted p-4 rounded-md overflow-x-auto text-sm font-mono">
+                    <code data-testid="code-example">{integration.apiDocs.codeExample}</code>
+                  </pre>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-4 border-t gap-4 flex-wrap">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <FileText className="w-4 h-4" />
+                  <span className="text-sm">View complete API documentation</span>
+                </div>
+                <a 
+                  href={integration.apiDocs.docsUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  data-testid="link-api-docs"
+                >
+                  <Button variant="outline" size="sm">
+                    API Docs
+                    <ExternalLink className="w-4 h-4 ml-2" />
+                  </Button>
+                </a>
+              </div>
+            </CardContent>
+          </Card>
         </section>
 
         <section className="mb-10">
