@@ -9,12 +9,14 @@ import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
 import ToolDetail from "@/pages/tool-detail";
 import IntegrationDetail from "@/pages/integration-detail";
+import DocsPage from "@/pages/docs";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/docs" component={DocsPage} />
       <Route path="/tool/:id" component={ToolDetail} />
       <Route path="/integration/:id" component={IntegrationDetail} />
       <Route component={NotFound} />

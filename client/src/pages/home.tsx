@@ -51,7 +51,7 @@ function Navigation() {
     { label: "Pre-Kit", href: "#pre-kit" },
     { label: "Post-Kit", href: "#post-kit" },
     { label: "Integrations", href: "#integrations" },
-    { label: "Docs", href: "#getting-started" }
+    { label: "Docs", href: "/docs" }
   ];
 
   return (
@@ -67,14 +67,25 @@ function Navigation() {
 
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                data-testid={`link-nav-${link.label.toLowerCase().replace(' ', '-')}`}
-              >
-                {link.label}
-              </a>
+              link.href.startsWith('/') ? (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid={`link-nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  data-testid={`link-nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                >
+                  {link.label}
+                </a>
+              )
             ))}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -217,15 +228,27 @@ function Navigation() {
           <div className="md:hidden py-4 border-t border-border max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                  data-testid={`link-mobile-nav-${link.label.toLowerCase().replace(' ', '-')}`}
-                >
-                  {link.label}
-                </a>
+                link.href.startsWith('/') ? (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid={`link-mobile-nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-testid={`link-mobile-nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                  >
+                    {link.label}
+                  </a>
+                )
               ))}
               <div className="flex gap-2 pt-2 px-3">
                 <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer" className="flex-1">
@@ -645,13 +668,17 @@ function GettingStartedSection() {
             </p>
             
             <div className="flex flex-wrap gap-4">
-              <Button size="lg" className="gap-2" data-testid="button-read-docs">
-                Read the docs
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-              <Button variant="outline" size="lg" data-testid="button-view-examples">
-                View examples
-              </Button>
+              <Link href="/docs">
+                <Button size="lg" className="gap-2" data-testid="button-read-docs">
+                  Read the docs
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+              <Link href="/dashboard">
+                <Button variant="outline" size="lg" data-testid="button-view-examples">
+                  View examples
+                </Button>
+              </Link>
             </div>
           </div>
 
