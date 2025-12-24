@@ -189,11 +189,13 @@ function Navigation() {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="outline" size="sm" className="hidden sm:flex gap-2" data-testid="button-github-nav">
-              <SiGithub className="w-4 h-4" />
-              <Star className="w-3 h-3" />
-              <span>8.5k</span>
-            </Button>
+            <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm" className="hidden sm:flex gap-2" data-testid="button-github-nav">
+                <SiGithub className="w-4 h-4" />
+                <Star className="w-3 h-3" />
+                <span>Star</span>
+              </Button>
+            </a>
             <Link href="/dashboard">
               <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
                 Get Started
@@ -226,10 +228,12 @@ function Navigation() {
                 </a>
               ))}
               <div className="flex gap-2 pt-2 px-3">
-                <Button variant="outline" size="sm" className="flex-1 gap-2" data-testid="button-github-mobile">
-                  <SiGithub className="w-4 h-4" />
-                  GitHub
-                </Button>
+                <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <Button variant="outline" size="sm" className="w-full gap-2" data-testid="button-github-mobile">
+                    <SiGithub className="w-4 h-4" />
+                    GitHub
+                  </Button>
+                </a>
                 <Link href="/dashboard" className="flex-1">
                   <Button size="sm" className="w-full" data-testid="button-get-started-mobile">
                     Get Started
@@ -295,10 +299,12 @@ function HeroSection() {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="gap-2" data-testid="button-github-hero">
-                <SiGithub className="w-5 h-5" />
-                View on GitHub
-              </Button>
+              <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="lg" className="gap-2" data-testid="button-github-hero">
+                  <SiGithub className="w-5 h-5" />
+                  View on GitHub
+                </Button>
+              </a>
             </div>
 
             <div className="flex items-center gap-6 pt-4">
@@ -692,10 +698,12 @@ function OpenSourceCTASection() {
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
-          <Button size="lg" className="gap-2" data-testid="button-star-github">
-            <Star className="w-5 h-5" />
-            Star on GitHub
-          </Button>
+          <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
+            <Button size="lg" className="gap-2" data-testid="button-star-github">
+              <Star className="w-5 h-5" />
+              Star on GitHub
+            </Button>
+          </a>
           <Button variant="outline" size="lg" className="gap-2" data-testid="button-contribute">
             <SiDiscord className="w-5 h-5" />
             Join Discord
@@ -739,9 +747,11 @@ function Footer() {
               Open source UX/Product design toolkit. Built by designers, for designers.
             </p>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-github">
-                <SiGithub className="w-5 h-5" />
-              </Button>
+              <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-github">
+                  <SiGithub className="w-5 h-5" />
+                </Button>
+              </a>
               <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-twitter">
                 <SiX className="w-5 h-5" />
               </Button>
