@@ -33,7 +33,7 @@ import {
   Search,
   Layers
 } from "lucide-react";
-import { SiGithub, SiX, SiDiscord, SiLinkedin } from "react-icons/si";
+import { SiGithub, SiX, SiLinkedin } from "react-icons/si";
 import { useState, type MouseEvent } from "react";
 import {
   DropdownMenu,
@@ -731,10 +731,12 @@ function OpenSourceCTASection() {
               Star on GitHub
             </Button>
           </a>
-          <Button variant="outline" size="lg" className="gap-2" data-testid="button-contribute">
-            <SiDiscord className="w-5 h-5" />
-            Join Discord
-          </Button>
+          <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="lg" className="gap-2" data-testid="button-contribute">
+              <Github className="w-5 h-5" />
+              Contribute
+            </Button>
+          </a>
         </div>
 
         <div className="flex items-center justify-center gap-8 pt-8">
@@ -781,9 +783,6 @@ function Footer() {
               </a>
               <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-twitter">
                 <SiX className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-discord">
-                <SiDiscord className="w-5 h-5" />
               </Button>
               <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-linkedin">
                 <SiLinkedin className="w-5 h-5" />
