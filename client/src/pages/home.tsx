@@ -784,9 +784,11 @@ function Footer() {
               <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-twitter">
                 <SiX className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-linkedin">
-                <SiLinkedin className="w-5 h-5" />
-              </Button>
+              <a href="https://www.linkedin.com/company/designflowkit/" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-linkedin">
+                  <SiLinkedin className="w-5 h-5" />
+                </Button>
+              </a>
             </div>
           </div>
 
