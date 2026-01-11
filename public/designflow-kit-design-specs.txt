@@ -1,0 +1,411 @@
+================================================================================
+                    DESIGNFLOW KIT - DESIGN SPECIFICATIONS
+                         For Figma Recreation
+================================================================================
+
+OVERVIEW
+--------
+DesignFlow Kit is an open-source UX/Product Design toolkit with a modern,
+clean aesthetic inspired by Linear, Notion, and Figma. The design prioritizes
+functionality while exemplifying excellent design standards.
+
+
+================================================================================
+                              TYPOGRAPHY
+================================================================================
+
+FONT FAMILIES
+-------------
+Primary (Body):     Inter (Google Fonts)
+                    https://fonts.google.com/specimen/Inter
+                    
+Accent (Headings):  Space Grotesk (Google Fonts)
+                    https://fonts.google.com/specimen/Space+Grotesk
+                    
+Monospace:          JetBrains Mono (Google Fonts)
+                    https://fonts.google.com/specimen/JetBrains+Mono
+
+
+TYPE SCALE
+----------
+Hero Headline:      48px - 72px (responsive), Bold, Space Grotesk
+Section Headings:   30px - 36px, Bold, Space Grotesk, Letter-spacing: -0.025em
+Subsections:        20px - 24px, Semibold, Inter
+Body Text:          16px - 18px, Normal, Inter, Line-height: 1.625
+UI Elements:        14px - 16px, Medium, Inter
+Captions/Labels:    12px - 14px, Normal, Inter, Opacity: 70%
+
+
+FONT WEIGHTS
+------------
+Normal:     400
+Medium:     500
+Semibold:   600
+Bold:       700
+
+
+================================================================================
+                           COLOR PALETTE
+================================================================================
+
+LIGHT MODE
+----------
+Background:                 #FFFFFF (HSL: 0, 0%, 100%)
+Foreground (Text):          #1A1A1A (HSL: 0, 0%, 10%)
+Border:                     #E5E5E5 (HSL: 0, 0%, 90%)
+
+Card Background:            #FAFAFA (HSL: 0, 0%, 98%)
+Card Foreground:            #1A1A1A (HSL: 0, 0%, 10%)
+Card Border:                #F0F0F0 (HSL: 0, 0%, 94%)
+
+Sidebar Background:         #F5F5F5 (HSL: 0, 0%, 96%)
+Sidebar Foreground:         #1A1A1A (HSL: 0, 0%, 10%)
+Sidebar Border:             #EBEBEB (HSL: 0, 0%, 92%)
+
+Primary:                    #3B82F6 (HSL: 217, 91%, 60%)
+Primary Foreground:         #FAFAFA (HSL: 0, 0%, 98%)
+
+Secondary:                  #D9DCE0 (HSL: 217, 8%, 86%)
+Secondary Foreground:       #1A1A1A (HSL: 0, 0%, 10%)
+
+Muted:                      #DEE1E5 (HSL: 217, 10%, 88%)
+Muted Foreground:           #595959 (HSL: 0, 0%, 35%)
+
+Accent:                     #E3E6EB (HSL: 217, 12%, 90%)
+Accent Foreground:          #1A1A1A (HSL: 0, 0%, 10%)
+
+Destructive:                #EF4444 (HSL: 0, 84%, 60%)
+Destructive Foreground:     #FAFAFA (HSL: 0, 0%, 98%)
+
+Input Border:               #BFBFBF (HSL: 0, 0%, 75%)
+Ring (Focus):               #3B82F6 (HSL: 217, 91%, 60%)
+
+Popover Background:         #F0F0F0 (HSL: 0, 0%, 94%)
+Popover Foreground:         #1A1A1A (HSL: 0, 0%, 10%)
+Popover Border:             #E0E0E0 (HSL: 0, 0%, 88%)
+
+
+DARK MODE
+---------
+Background:                 #141414 (HSL: 0, 0%, 8%)
+Foreground (Text):          #F2F2F2 (HSL: 0, 0%, 95%)
+Border:                     #2E2E2E (HSL: 0, 0%, 18%)
+
+Card Background:            #1A1A1A (HSL: 0, 0%, 10%)
+Card Foreground:            #F2F2F2 (HSL: 0, 0%, 95%)
+Card Border:                #242424 (HSL: 0, 0%, 14%)
+
+Sidebar Background:         #0F0F0F (HSL: 0, 0%, 6%)
+Sidebar Foreground:         #F2F2F2 (HSL: 0, 0%, 95%)
+Sidebar Border:             #1A1A1A (HSL: 0, 0%, 10%)
+
+Primary:                    #3B82F6 (HSL: 217, 91%, 60%)
+Primary Foreground:         #FAFAFA (HSL: 0, 0%, 98%)
+
+Secondary:                  #2A2D33 (HSL: 217, 8%, 18%)
+Secondary Foreground:       #F2F2F2 (HSL: 0, 0%, 95%)
+
+Muted:                      #262A30 (HSL: 217, 10%, 16%)
+Muted Foreground:           #A6A6A6 (HSL: 0, 0%, 65%)
+
+Accent:                     #222528 (HSL: 217, 12%, 14%)
+Accent Foreground:          #F2F2F2 (HSL: 0, 0%, 95%)
+
+Destructive:                #EF4444 (HSL: 0, 84%, 60%)
+Destructive Foreground:     #FAFAFA (HSL: 0, 0%, 98%)
+
+Input Border:               #4D4D4D (HSL: 0, 0%, 30%)
+Ring (Focus):               #3B82F6 (HSL: 217, 91%, 60%)
+
+Popover Background:         #1F1F1F (HSL: 0, 0%, 12%)
+Popover Foreground:         #F2F2F2 (HSL: 0, 0%, 95%)
+Popover Border:             #292929 (HSL: 0, 0%, 16%)
+
+
+CHART COLORS
+------------
+Chart 1 (Blue):     Light: #1D4ED8 / Dark: #60A5FA
+Chart 2 (Green):    Light: #16A34A / Dark: #4ADE80
+Chart 3 (Purple):   Light: #A855F7 / Dark: #C084FC
+Chart 4 (Orange):   Light: #D97706 / Dark: #FBBF24
+Chart 5 (Pink):     Light: #EC4899 / Dark: #F472B6
+
+
+================================================================================
+                              SPACING
+================================================================================
+
+BASE UNIT: 4px (0.25rem)
+
+SPACING SCALE
+-------------
+2:      8px   (0.5rem)
+4:      16px  (1rem)
+6:      24px  (1.5rem)
+8:      32px  (2rem)
+12:     48px  (3rem)
+16:     64px  (4rem)
+20:     80px  (5rem)
+24:     96px  (6rem)
+32:     128px (8rem)
+
+
+SECTION SPACING
+---------------
+Vertical Padding (Mobile):      80px (py-20)
+Vertical Padding (Desktop):     128px (py-32)
+Horizontal Padding (Mobile):    24px (px-6)
+Horizontal Padding (Desktop):   32px (px-8)
+
+
+COMPONENT SPACING
+-----------------
+Card Internal Padding:          24px - 32px (p-6 to p-8)
+Grid Gap (Mobile):              32px (gap-8)
+Grid Gap (Desktop):             48px (gap-12)
+Content Blocks:                 24px vertical (space-y-6)
+
+
+================================================================================
+                           BORDER RADIUS
+================================================================================
+
+Base Radius:            8px (0.5rem)
+Small (Badges):         999px (rounded-full for pills)
+Medium (Buttons):       8px (rounded-md)
+Large (Cards):          12px (rounded-xl)
+Extra Large (Modals):   16px (rounded-2xl)
+
+
+================================================================================
+                             SHADOWS
+================================================================================
+
+Note: Minimal shadow usage - design is mostly flat/borderless
+
+Card Hover:             0 4px 6px -1px rgba(0,0,0,0.1)
+Dropdown:               0 10px 15px -3px rgba(0,0,0,0.1)
+Modal:                  0 25px 50px -12px rgba(0,0,0,0.25)
+
+
+================================================================================
+                            COMPONENTS
+================================================================================
+
+NAVIGATION (Header)
+-------------------
+Height:                 64px
+Position:               Fixed, top: 0
+Background:             Background color with 80% opacity
+Backdrop:               blur(16px)
+Border:                 1px bottom border
+Logo Size:              32px x 32px
+Nav Link Size:          14px, Medium weight
+CTA Button:             Primary variant, default size
+
+
+HERO SECTION
+------------
+Layout:                 Two columns (60/40 split on desktop)
+Min Height:             100vh - header height
+Left Column:            Headline, description, dual CTAs
+Right Column:           Feature preview card
+Headline Size:          48px - 72px (responsive)
+Description:            18px, Muted foreground color
+
+
+BUTTONS
+-------
+Default Size:
+  - Height:             36px (h-9)
+  - Padding:            16px horizontal (px-4)
+  - Font:               14px, Medium
+
+Small Size:
+  - Height:             32px (h-8)
+  - Padding:            12px horizontal (px-3)
+  - Font:               14px, Medium
+
+Large Size:
+  - Height:             40px (h-10)
+  - Padding:            32px horizontal (px-8)
+  - Font:               14px, Medium
+
+Icon Size:
+  - Width/Height:       36px (h-9 w-9)
+  - Icon:               16px x 16px
+
+Variants:
+  - Default:            Primary background, Primary foreground
+  - Secondary:          Secondary background, Secondary foreground
+  - Outline:            Transparent background, Border, Foreground text
+  - Ghost:              Transparent background, Accent on hover
+  - Destructive:        Destructive background, Destructive foreground
+
+
+CARDS
+-----
+Background:             Card color
+Border:                 1px, Card border color
+Border Radius:          12px (rounded-xl)
+Padding:                24px - 32px (p-6 to p-8)
+Hover Transform:        scale(1.02)
+Transition:             200ms ease
+
+
+BADGES
+------
+Height:                 24px
+Padding:                12px horizontal, 4px vertical (px-3 py-1)
+Border Radius:          999px (rounded-full)
+Font:                   12px, Medium
+
+Variants:
+  - Default:            Primary background
+  - Secondary:          Secondary background
+  - Outline:            Transparent, 1px border
+  - Destructive:        Destructive background
+
+
+INPUT FIELDS
+------------
+Height:                 40px (h-10)
+Padding:                12px horizontal (px-3)
+Border:                 1px, Input border color
+Border Radius:          8px (rounded-md)
+Font:                   14px
+Focus Ring:             2px, Primary color, 2px offset
+
+
+TOOL CARDS (Dashboard)
+----------------------
+Grid Layout:            1 column mobile, 2 columns desktop
+Card Padding:           24px (p-6)
+Icon Size:              40px x 40px container, 20px icon
+Title:                  18px, Semibold
+Description:            14px, Muted foreground
+Integration Badges:     12px, Secondary variant
+
+
+FOOTER
+------
+Layout:                 5-column grid on desktop
+Padding:                64px - 80px vertical
+Sections:               Logo + tagline, Product, Resources, Community, Legal
+Social Icons:           20px x 20px, Ghost button variant
+Copyright:              12px, Muted foreground
+
+
+================================================================================
+                          PAGE STRUCTURE
+================================================================================
+
+LANDING PAGE SECTIONS
+---------------------
+1. Hero Section          - Full-height, two-column layout
+2. Problem/Solution      - Two-column explaining the need
+3. Pre-Kit Tools         - 3-column grid (10 tools)
+4. Post-Kit Tools        - 3-column grid (7 tools)
+5. Integration Ecosystem - Logo grid with 41+ tools
+6. Community Stats       - 4-column metrics display
+7. Getting Started       - Code snippet + quick start
+8. Open Source CTA       - GitHub contribution call-to-action
+9. Footer                - Multi-column navigation
+
+
+DASHBOARD
+---------
+Layout:                 Single page with phase tabs
+Phase Tabs:             Pre-Design Kit, Post-Design Kit
+Progress Display:       Progress bar + completion count
+Tool Grid:              2-column on desktop
+Tool Card Actions:      Click to toggle completion
+
+
+DOCUMENTATION
+-------------
+Layout:                 Sidebar (desktop) + Content area
+Sidebar:                280px width, sticky
+Tabs:                   Mobile navigation alternative
+Content Width:          Max 65ch for readability
+
+
+================================================================================
+                           ANIMATIONS
+================================================================================
+
+TRANSITIONS
+-----------
+Default Duration:       200ms
+Easing:                 ease-out
+
+Card Hover:             transform scale(1.02), 200ms
+Button Hover:           Background elevation effect
+Link Hover:             Color transition, 150ms
+Page Load:              Fade-in, 300ms
+
+
+MICRO-INTERACTIONS
+------------------
+Progress Bar:           Width transition, 300ms ease
+Toggle State:           Scale + color, 150ms
+Focus Ring:             Ring appearance, 150ms
+
+
+================================================================================
+                         BREAKPOINTS
+================================================================================
+
+Mobile:                 < 768px
+Tablet:                 768px - 1023px
+Desktop:                >= 1024px
+Large Desktop:          >= 1280px
+
+Max Content Width:      1280px (max-w-7xl)
+
+
+================================================================================
+                          ICON SYSTEM
+================================================================================
+
+Library:                Lucide React (https://lucide.dev)
+Default Size:           16px - 20px
+Button Icons:           16px (w-4 h-4)
+Feature Icons:          24px (w-6 h-6)
+Hero Icons:             32px - 40px
+
+Company Logos:          React Icons - Simple Icons (react-icons/si)
+
+
+================================================================================
+                         BRAND ASSETS
+================================================================================
+
+Logo:                   Box icon inside rounded square container
+Logo Container:         32px x 32px, Primary background, 8px radius
+Logo Icon:              20px x 20px, Primary foreground
+Brand Name:             "DesignFlow" - Space Grotesk, Bold, 18px
+
+Primary CTA:            "Star on GitHub" with Star icon
+Secondary CTA:          "Get Started" or "Contribute"
+
+
+================================================================================
+                           RESOURCES
+================================================================================
+
+Figma Community:        For recreating components
+GitHub Repo:            https://github.com/Eaglescrooge/designflow-kit
+LinkedIn:               https://www.linkedin.com/company/designflowkit/
+
+Google Fonts:
+- Inter:                https://fonts.google.com/specimen/Inter
+- Space Grotesk:        https://fonts.google.com/specimen/Space+Grotesk
+- JetBrains Mono:       https://fonts.google.com/specimen/JetBrains+Mono
+
+Icon Library:           https://lucide.dev/icons
+
+
+================================================================================
+                    END OF DESIGN SPECIFICATIONS
+================================================================================
