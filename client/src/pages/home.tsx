@@ -59,9 +59,7 @@ function Navigation() {
       <nav className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16">
           <a href="#" className="flex items-center gap-2" data-testid="link-logo">
-            <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center">
-              <Box className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <img src="/logo.png" alt="DesignFlow Logo" className="w-8 h-8 rounded-md" />
             <span className="font-serif font-bold text-lg tracking-tight">DesignFlow</span>
           </a>
 
@@ -767,9 +765,7 @@ function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <a href="#" className="flex items-center gap-2" data-testid="link-footer-logo">
-              <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center">
-                <Box className="w-5 h-5 text-primary-foreground" />
-              </div>
+              <img src="/logo.png" alt="DesignFlow Logo" className="w-8 h-8 rounded-md" />
               <span className="font-serif font-bold text-lg">DesignFlow</span>
             </a>
             <p className="text-sm text-muted-foreground">
