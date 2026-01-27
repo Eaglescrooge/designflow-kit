@@ -85,10 +85,11 @@ export default function UXResearch() {
     setMessages((prev) => [...prev, assistantMessage]);
 
     try {
-      const response = await fetch("/api/ux-research/chat", {
+      const response = await fetch("/api/ux-automation/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          type: "ux-research",
           messages: [...messages, userMessage].map((m) => ({
             role: m.role,
             content: m.content,
