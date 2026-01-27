@@ -10,6 +10,7 @@ import Dashboard from "@/pages/dashboard";
 import ToolDetail from "@/pages/tool-detail";
 import IntegrationDetail from "@/pages/integration-detail";
 import DocsPage from "@/pages/docs";
+import AutomateUX from "@/pages/automate-ux";
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/docs" component={DocsPage} />
+      <Route path="/automate-ux" component={AutomateUX} />
       <Route path="/tool/:id" component={ToolDetail} />
       <Route path="/integration/:id" component={IntegrationDetail} />
       <Route component={NotFound} />

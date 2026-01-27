@@ -31,13 +31,7 @@ import {
   TestTube,
   FileText,
   Search,
-  Layers,
-  Users,
-  Map,
-  GitBranch,
-  PenTool,
-  MessageSquare,
-  Brain
+  Layers
 } from "lucide-react";
 import { SiGithub, SiX, SiLinkedin } from "react-icons/si";
 import { useState, type MouseEvent } from "react";
@@ -49,89 +43,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-const uxAutomationOptions = [
-  {
-    id: "ux-research",
-    title: "UX Research",
-    description: "Conduct user interviews, surveys, and competitive analysis",
-    icon: Search,
-    color: "text-blue-500",
-    bgColor: "bg-blue-500/10",
-    subOptions: ["User Interviews", "Surveys", "Competitive Analysis", "Usability Studies"]
-  },
-  {
-    id: "personas",
-    title: "Create Personas",
-    description: "Build detailed user personas based on research data",
-    icon: Users,
-    color: "text-purple-500",
-    bgColor: "bg-purple-500/10",
-    subOptions: ["Demographic Profiles", "Behavioral Patterns", "Goals & Pain Points"]
-  },
-  {
-    id: "journey-maps",
-    title: "Journey Maps & Flow Charts",
-    description: "Visualize user journeys, flow charts, and mind maps",
-    icon: Map,
-    color: "text-green-500",
-    bgColor: "bg-green-500/10",
-    subOptions: ["Customer Journey Maps", "User Flows", "Mind Mapping", "Service Blueprints"]
-  },
-  {
-    id: "ux-testing",
-    title: "UX Testing",
-    description: "Run usability tests and gather user feedback",
-    icon: TestTube,
-    color: "text-orange-500",
-    bgColor: "bg-orange-500/10",
-    subOptions: ["A/B Testing", "Usability Testing", "Heuristic Evaluation", "Accessibility Audits"]
-  },
-  {
-    id: "workshops",
-    title: "Design Workshops",
-    description: "Facilitate collaborative design thinking sessions",
-    icon: MessageSquare,
-    color: "text-pink-500",
-    bgColor: "bg-pink-500/10",
-    subOptions: ["Design Sprints", "Ideation Sessions", "Stakeholder Workshops", "Co-creation"]
-  },
-  {
-    id: "wireframes",
-    title: "Low Fidelity Wireframes",
-    description: "Create quick wireframes and sketches for validation",
-    icon: PenTool,
-    color: "text-cyan-500",
-    bgColor: "bg-cyan-500/10",
-    subOptions: ["Sketches", "Paper Prototypes", "Digital Wireframes", "Rapid Prototyping"]
-  },
-  {
-    id: "information-architecture",
-    title: "Information Architecture",
-    description: "Organize and structure content effectively",
-    icon: GitBranch,
-    color: "text-amber-500",
-    bgColor: "bg-amber-500/10",
-    subOptions: ["Site Maps", "Card Sorting", "Navigation Design", "Content Strategy"]
-  },
-  {
-    id: "ai-analysis",
-    title: "AI-Powered Analysis",
-    description: "Leverage AI for pattern recognition and insights",
-    icon: Brain,
-    color: "text-indigo-500",
-    bgColor: "bg-indigo-500/10",
-    subOptions: ["Sentiment Analysis", "Pattern Recognition", "Predictive UX", "Auto-Insights"]
-  }
-];
 
 function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -409,50 +320,12 @@ function HeroSection() {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="lg" className="gap-2" data-testid="button-automate-ux">
-                    <Sparkles className="w-5 h-5" />
-                    Automate UX
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle className="font-serif text-2xl">What would you like to achieve?</DialogTitle>
-                    <DialogDescription>
-                      Select a UX automation workflow to get started with AI-powered design tools
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                    {uxAutomationOptions.map((option) => (
-                      <Card 
-                        key={option.id} 
-                        className="hover-elevate cursor-pointer transition-all"
-                        data-testid={`card-ux-option-${option.id}`}
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-4">
-                            <div className={`w-12 h-12 rounded-lg ${option.bgColor} flex items-center justify-center flex-shrink-0`}>
-                              <option.icon className={`w-6 h-6 ${option.color}`} />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-base mb-1">{option.title}</h3>
-                              <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {option.subOptions.map((sub) => (
-                                  <Badge key={sub} variant="secondary" className="text-xs">
-                                    {sub}
-                                  </Badge>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <Link href="/automate-ux">
+                <Button variant="outline" size="lg" className="gap-2" data-testid="button-automate-ux">
+                  <Sparkles className="w-5 h-5" />
+                  Automate UX
+                </Button>
+              </Link>
               <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
                 <Button variant="outline" size="lg" className="gap-2" data-testid="button-github-hero">
                   <SiGithub className="w-5 h-5" />
