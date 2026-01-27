@@ -11,6 +11,7 @@ import ToolDetail from "@/pages/tool-detail";
 import IntegrationDetail from "@/pages/integration-detail";
 import DocsPage from "@/pages/docs";
 import AutomateUX from "@/pages/automate-ux";
+import UXResearch from "@/pages/ux-research";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/docs" component={DocsPage} />
       <Route path="/automate-ux" component={AutomateUX} />
+      <Route path="/automate-ux/research" component={UXResearch} />
       <Route path="/tool/:id" component={ToolDetail} />
       <Route path="/integration/:id" component={IntegrationDetail} />
       <Route component={NotFound} />

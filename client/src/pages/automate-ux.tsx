@@ -24,7 +24,8 @@ const uxAutomationOptions = [
     icon: Search,
     color: "text-blue-500",
     bgColor: "bg-blue-500/10",
-    subOptions: ["User Interviews", "Surveys", "Competitive Analysis", "Usability Studies"]
+    subOptions: ["User Interviews", "Surveys", "Competitive Analysis", "Usability Studies"],
+    href: "/automate-ux/research"
   },
   {
     id: "personas",
@@ -33,7 +34,8 @@ const uxAutomationOptions = [
     icon: Users,
     color: "text-purple-500",
     bgColor: "bg-purple-500/10",
-    subOptions: ["Demographic Profiles", "Behavioral Patterns", "Goals & Pain Points"]
+    subOptions: ["Demographic Profiles", "Behavioral Patterns", "Goals & Pain Points"],
+    href: null
   },
   {
     id: "journey-maps",
@@ -42,7 +44,8 @@ const uxAutomationOptions = [
     icon: Map,
     color: "text-green-500",
     bgColor: "bg-green-500/10",
-    subOptions: ["Customer Journey Maps", "User Flows", "Mind Mapping", "Service Blueprints"]
+    subOptions: ["Customer Journey Maps", "User Flows", "Mind Mapping", "Service Blueprints"],
+    href: null
   },
   {
     id: "ux-testing",
@@ -51,7 +54,8 @@ const uxAutomationOptions = [
     icon: TestTube,
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
-    subOptions: ["A/B Testing", "Usability Testing", "Heuristic Evaluation", "Accessibility Audits"]
+    subOptions: ["A/B Testing", "Usability Testing", "Heuristic Evaluation", "Accessibility Audits"],
+    href: null
   },
   {
     id: "workshops",
@@ -60,7 +64,8 @@ const uxAutomationOptions = [
     icon: MessageSquare,
     color: "text-pink-500",
     bgColor: "bg-pink-500/10",
-    subOptions: ["Design Sprints", "Ideation Sessions", "Stakeholder Workshops", "Co-creation"]
+    subOptions: ["Design Sprints", "Ideation Sessions", "Stakeholder Workshops", "Co-creation"],
+    href: null
   },
   {
     id: "wireframes",
@@ -69,7 +74,8 @@ const uxAutomationOptions = [
     icon: PenTool,
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/10",
-    subOptions: ["Sketches", "Paper Prototypes", "Digital Wireframes", "Rapid Prototyping"]
+    subOptions: ["Sketches", "Paper Prototypes", "Digital Wireframes", "Rapid Prototyping"],
+    href: null
   },
   {
     id: "information-architecture",
@@ -78,7 +84,8 @@ const uxAutomationOptions = [
     icon: GitBranch,
     color: "text-amber-500",
     bgColor: "bg-amber-500/10",
-    subOptions: ["Site Maps", "Card Sorting", "Navigation Design", "Content Strategy"]
+    subOptions: ["Site Maps", "Card Sorting", "Navigation Design", "Content Strategy"],
+    href: null
   },
   {
     id: "ai-analysis",
@@ -87,7 +94,8 @@ const uxAutomationOptions = [
     icon: Brain,
     color: "text-indigo-500",
     bgColor: "bg-indigo-500/10",
-    subOptions: ["Sentiment Analysis", "Pattern Recognition", "Predictive UX", "Auto-Insights"]
+    subOptions: ["Sentiment Analysis", "Pattern Recognition", "Predictive UX", "Auto-Insights"],
+    href: null
   }
 ];
 
@@ -124,32 +132,44 @@ export default function AutomateUX() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {uxAutomationOptions.map((option) => (
-            <Card 
-              key={option.id} 
-              className="hover-elevate cursor-pointer transition-all"
-              data-testid={`card-ux-option-${option.id}`}
-            >
-              <CardContent className="p-6">
-                <div className="flex flex-col gap-4">
-                  <div className={`w-14 h-14 rounded-xl ${option.bgColor} flex items-center justify-center`}>
-                    <option.icon className={`w-7 h-7 ${option.color}`} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-2">{option.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4">{option.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {option.subOptions.map((sub) => (
-                        <Badge key={sub} variant="secondary" className="text-xs">
-                          {sub}
-                        </Badge>
-                      ))}
+          {uxAutomationOptions.map((option) => {
+            const cardContent = (
+              <Card 
+                className={`hover-elevate transition-all ${option.href ? 'cursor-pointer' : 'opacity-70'}`}
+                data-testid={`card-ux-option-${option.id}`}
+              >
+                <CardContent className="p-6">
+                  <div className="flex flex-col gap-4">
+                    <div className={`w-14 h-14 rounded-xl ${option.bgColor} flex items-center justify-center`}>
+                      <option.icon className={`w-7 h-7 ${option.color}`} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-lg mb-2">{option.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-4">{option.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {option.subOptions.map((sub) => (
+                          <Badge key={sub} variant="secondary" className="text-xs">
+                            {sub}
+                          </Badge>
+                        ))}
+                      </div>
+                      {!option.href && (
+                        <p className="text-xs text-muted-foreground mt-3 italic">Coming soon</p>
+                      )}
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+
+            return option.href ? (
+              <Link key={option.id} href={option.href}>
+                {cardContent}
+              </Link>
+            ) : (
+              <div key={option.id}>{cardContent}</div>
+            );
+          })}
         </div>
       </main>
     </div>
