@@ -50,6 +50,7 @@ function Navigation() {
   const navLinks = [
     { label: "Pre-Kit", href: "#pre-kit" },
     { label: "Post-Kit", href: "#post-kit" },
+    { label: "Automate UX", href: "/automate-ux" },
     { label: "Integrations", href: "#integrations" },
     { label: "Docs", href: "/docs" }
   ];
@@ -318,12 +319,6 @@ function HeroSection() {
                 <Button size="lg" className="gap-2" data-testid="button-get-started-hero">
                   Get Started Free
                   <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
-              <Link href="/automate-ux">
-                <Button variant="outline" size="lg" className="gap-2" data-testid="button-automate-ux">
-                  <Sparkles className="w-5 h-5" />
-                  Automate UX
                 </Button>
               </Link>
               <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
