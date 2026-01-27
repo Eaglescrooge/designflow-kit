@@ -35,7 +35,7 @@ const uxAutomationOptions = [
     color: "text-purple-500",
     bgColor: "bg-purple-500/10",
     subOptions: ["Demographic Profiles", "Behavioral Patterns", "Goals & Pain Points"],
-    href: null
+    href: "/automate-ux/personas"
   },
   {
     id: "journey-maps",
@@ -45,7 +45,7 @@ const uxAutomationOptions = [
     color: "text-green-500",
     bgColor: "bg-green-500/10",
     subOptions: ["Customer Journey Maps", "User Flows", "Mind Mapping", "Service Blueprints"],
-    href: null
+    href: "/automate-ux/journey-maps"
   },
   {
     id: "ux-testing",
@@ -55,7 +55,7 @@ const uxAutomationOptions = [
     color: "text-orange-500",
     bgColor: "bg-orange-500/10",
     subOptions: ["A/B Testing", "Usability Testing", "Heuristic Evaluation", "Accessibility Audits"],
-    href: null
+    href: "/automate-ux/testing"
   },
   {
     id: "workshops",
@@ -65,7 +65,7 @@ const uxAutomationOptions = [
     color: "text-pink-500",
     bgColor: "bg-pink-500/10",
     subOptions: ["Design Sprints", "Ideation Sessions", "Stakeholder Workshops", "Co-creation"],
-    href: null
+    href: "/automate-ux/workshops"
   },
   {
     id: "wireframes",
@@ -75,7 +75,7 @@ const uxAutomationOptions = [
     color: "text-cyan-500",
     bgColor: "bg-cyan-500/10",
     subOptions: ["Sketches", "Paper Prototypes", "Digital Wireframes", "Rapid Prototyping"],
-    href: null
+    href: "/automate-ux/wireframes"
   },
   {
     id: "information-architecture",
@@ -85,7 +85,7 @@ const uxAutomationOptions = [
     color: "text-amber-500",
     bgColor: "bg-amber-500/10",
     subOptions: ["Site Maps", "Card Sorting", "Navigation Design", "Content Strategy"],
-    href: null
+    href: "/automate-ux/information-architecture"
   },
   {
     id: "ai-analysis",
@@ -95,7 +95,7 @@ const uxAutomationOptions = [
     color: "text-indigo-500",
     bgColor: "bg-indigo-500/10",
     subOptions: ["Sentiment Analysis", "Pattern Recognition", "Predictive UX", "Auto-Insights"],
-    href: null
+    href: "/automate-ux/ai-analysis"
   }
 ];
 
@@ -135,7 +135,7 @@ export default function AutomateUX() {
           {uxAutomationOptions.map((option) => {
             const cardContent = (
               <Card 
-                className={`hover-elevate transition-all ${option.href ? 'cursor-pointer' : 'opacity-70'}`}
+                className="hover-elevate cursor-pointer transition-all"
                 data-testid={`card-ux-option-${option.id}`}
               >
                 <CardContent className="p-6">
@@ -153,21 +153,16 @@ export default function AutomateUX() {
                           </Badge>
                         ))}
                       </div>
-                      {!option.href && (
-                        <p className="text-xs text-muted-foreground mt-3 italic">Coming soon</p>
-                      )}
                     </div>
                   </div>
                 </CardContent>
               </Card>
             );
 
-            return option.href ? (
+            return (
               <Link key={option.id} href={option.href}>
                 {cardContent}
               </Link>
-            ) : (
-              <div key={option.id}>{cardContent}</div>
             );
           })}
         </div>
