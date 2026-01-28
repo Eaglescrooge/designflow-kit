@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ChatMessage } from "@/components/chat-message";
 import { ArrowLeft, Send, Upload, X, FileText, GitBranch, Loader2 } from "lucide-react";
 
 interface Message { id: string; role: "user" | "assistant"; content: string; }
@@ -95,7 +96,7 @@ export default function UXInformationArchitecture() {
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-            {messages.map((m) => (<div key={m.id} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}><div className={`max-w-[80%] rounded-2xl px-4 py-3 ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`}><p className="whitespace-pre-wrap">{m.content || (isLoading ? "..." : "")}</p></div></div>))}
+            {messages.map((m, index) => (<div key={m.id} data-testid={`message-${m.role}-${m.id}`}><ChatMessage role={m.role} content={m.content} isLoading={isLoading && index === messages.length - 1 && m.role === "assistant"} /></div>))}
             <div ref={messagesEndRef} />
           </div>
         )}

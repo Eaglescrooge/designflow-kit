@@ -97,7 +97,43 @@ async function handleUXChat(
     }
 
     const basePrompt = systemPrompts[type] || systemPrompts["ux-research"];
+    const chartInstructions = `
+
+CHART GENERATION:
+When the user asks for charts, graphs, or visualizations, generate them using this exact format:
+
+\`\`\`chart
+{
+  "type": "bar|line|pie|area",
+  "title": "Chart Title",
+  "data": [
+    {"name": "Category1", "value": 100},
+    {"name": "Category2", "value": 200}
+  ],
+  "xKey": "name",
+  "yKey": "value"
+}
+\`\`\`
+
+For multi-series data:
+\`\`\`chart
+{
+  "type": "bar",
+  "title": "Comparison Chart",
+  "data": [
+    {"name": "Q1", "desktop": 100, "mobile": 80},
+    {"name": "Q2", "desktop": 120, "mobile": 90}
+  ],
+  "xKey": "name",
+  "dataKeys": ["desktop", "mobile"]
+}
+\`\`\`
+
+Chart types: "bar" for comparisons, "line" for trends over time, "area" for volume trends, "pie" for proportions.
+Always provide realistic sample data when creating example charts. Include explanatory text before or after the chart.`;
+
     const systemPrompt = `${basePrompt}
+${chartInstructions}
 
 ${documentContent ? `The user has uploaded a document with the following content:\n\n${documentContent}\n\nUse this document context to inform your responses.` : ''}
 

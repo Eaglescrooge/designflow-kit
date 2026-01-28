@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ChatMessage } from "@/components/chat-message";
 import {
   ArrowLeft,
   Send,
@@ -157,11 +158,9 @@ export default function UXPersonas() {
           </div>
         ) : (
           <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-            {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`} data-testid={`message-${message.role}-${message.id}`}>
-                  <p className="whitespace-pre-wrap">{message.content || (isLoading ? "..." : "")}</p>
-                </div>
+            {messages.map((message, index) => (
+              <div key={message.id} data-testid={`message-${message.role}-${message.id}`}>
+                <ChatMessage role={message.role} content={message.content} isLoading={isLoading && index === messages.length - 1 && message.role === "assistant"} />
               </div>
             ))}
             <div ref={messagesEndRef} />
