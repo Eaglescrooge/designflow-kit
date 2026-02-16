@@ -48,8 +48,6 @@ function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const navLinks = [
-    { label: "Pre-Kit", href: "#pre-kit" },
-    { label: "Post-Kit", href: "#post-kit" },
     { label: "Sprint Board", href: "/sprint-board" },
     { label: "Automate UX", href: "/automate-ux" },
     { label: "Integrations", href: "#integrations" },
@@ -66,6 +64,28 @@ function Navigation() {
           </a>
 
           <div className="hidden md:flex items-center gap-8">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="button-kits-menu">
+                  Kits
+                  <ChevronRight className="w-3 h-3 rotate-90" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild data-testid="menu-item-pre-kit">
+                  <a href="#pre-kit" className="cursor-pointer">
+                    <Box className="w-4 h-4 mr-2" />
+                    Pre-Kit
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild data-testid="menu-item-post-kit">
+                  <a href="#post-kit" className="cursor-pointer">
+                    <Zap className="w-4 h-4 mr-2" />
+                    Post-Kit
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             {navLinks.map((link) => (
               link.href.startsWith('/') ? (
                 <Link
@@ -227,6 +247,26 @@ function Navigation() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col gap-2">
+              <div className="px-3 py-1">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Kits</span>
+              </div>
+              <a
+                href="#pre-kit"
+                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors flex items-center gap-2"
+                onClick={() => setMobileMenuOpen(false)}
+                data-testid="link-mobile-nav-pre-kit"
+              >
+                <Box className="w-4 h-4" /> Pre-Kit
+              </a>
+              <a
+                href="#post-kit"
+                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors flex items-center gap-2"
+                onClick={() => setMobileMenuOpen(false)}
+                data-testid="link-mobile-nav-post-kit"
+              >
+                <Zap className="w-4 h-4" /> Post-Kit
+              </a>
+              <div className="border-t border-border my-1" />
               {navLinks.map((link) => (
                 link.href.startsWith('/') ? (
                   <Link
