@@ -43,8 +43,8 @@
   --chart-3: 271 81% 56%;
   --chart-4: 36 77% 49%;
   --chart-5: 340 82% 52%;
-  --font-sans: 'Alegreya', serif;
-  --font-serif: 'Alegreya', serif;
+  --font-sans: 'Lato', sans-serif;
+  --font-serif: 'Lato', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --radius: .5rem;
   --shadow-2xs: 0px 2px 0px 0px hsl(0 0% 0% / 0.00);
