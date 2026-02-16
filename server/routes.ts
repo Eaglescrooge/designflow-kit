@@ -1,12 +1,15 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import OpenAI from "openai";
+import OpenAI, { toFile } from "openai";
+import multer from "multer";
 
 const openai = new OpenAI({
   apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY,
   baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
 });
+
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 export async function registerRoutes(
   httpServer: Server,
@@ -78,6 +81,27 @@ export async function registerRoutes(
   // Unified UX Automation Chat endpoint
   app.post("/api/ux-automation/chat", async (req: Request, res: Response) => {
     return handleUXChat(req, res, systemPrompts, openai);
+  });
+
+  // Audio transcription endpoint
+  app.post("/api/transcribe", upload.single("audio"), async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No audio file provided" });
+      }
+
+      const file = await toFile(req.file.buffer, "audio.webm", { type: req.file.mimetype });
+
+      const transcription = await openai.audio.transcriptions.create({
+        file,
+        model: "whisper-1",
+      });
+
+      res.json({ text: transcription.text });
+    } catch (error: any) {
+      console.error("Transcription error:", error);
+      res.status(500).json({ error: "Failed to transcribe audio" });
+    }
   });
 
   return httpServer;

@@ -262,6 +262,7 @@ export default function SprintBoardPage() {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiTargetCard, setAiTargetCard] = useState<SprintCard | null>(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [isTranscribing, setIsTranscribing] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [boardNameEditing, setBoardNameEditing] = useState(false);
   const [boardNameValue, setBoardNameValue] = useState(board.name);
@@ -443,44 +444,73 @@ export default function SprintBoardPage() {
     setAiDialog(false);
   };
 
-  const handleVoice = (card: SprintCard) => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-      alert("Speech recognition is not supported in your browser. Try Chrome or Edge.");
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const recordingCardRef = useRef<string | null>(null);
+
+  const handleVoice = async (card: SprintCard) => {
+    if (isRecording) {
+      mediaRecorderRef.current?.stop();
       return;
     }
 
-    const recognition = new SpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = "en-US";
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+      recordingCardRef.current = card.id;
 
-    recognition.onstart = () => setIsRecording(true);
-    recognition.onend = () => setIsRecording(false);
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) audioChunksRef.current.push(event.data);
+      };
 
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      persistFn((prev) => ({
-        ...prev,
-        lanes: prev.lanes.map((l) => ({
-          ...l,
-          cards: l.cards.map((c) =>
-            c.id === card.id
-              ? { ...c, description: c.description ? `${c.description}\n${transcript}` : transcript }
-              : c
-          ),
-        })),
-      }));
-      setEditingCard((prev) => {
-        if (prev && prev.id === card.id) {
-          return { ...prev, description: prev.description ? `${prev.description}\n${transcript}` : transcript };
+      mediaRecorder.onstop = async () => {
+        setIsRecording(false);
+        stream.getTracks().forEach((t) => t.stop());
+
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        if (audioBlob.size < 100) return;
+
+        setIsTranscribing(true);
+        try {
+          const formData = new FormData();
+          formData.append("audio", audioBlob, "recording.webm");
+          const res = await fetch("/api/transcribe", { method: "POST", body: formData });
+          if (!res.ok) throw new Error("Transcription failed");
+          const { text } = await res.json();
+          if (!text) return;
+
+          const cardId = recordingCardRef.current;
+          persistFn((prev) => ({
+            ...prev,
+            lanes: prev.lanes.map((l) => ({
+              ...l,
+              cards: l.cards.map((c) =>
+                c.id === cardId
+                  ? { ...c, description: c.description ? `${c.description}\n${text}` : text }
+                  : c
+              ),
+            })),
+          }));
+          setEditingCard((prev) => {
+            if (prev && prev.id === cardId) {
+              return { ...prev, description: prev.description ? `${prev.description}\n${text}` : text };
+            }
+            return prev;
+          });
+        } catch (err) {
+          console.error("Transcription error:", err);
+        } finally {
+          setIsTranscribing(false);
         }
-        return prev;
-      });
-    };
+      };
 
-    recognition.onerror = () => setIsRecording(false);
-    recognition.start();
+      mediaRecorder.start();
+      setIsRecording(true);
+    } catch (err) {
+      console.error("Microphone access error:", err);
+    }
   };
 
   const selectTemplate = (template: SprintTemplate) => {
@@ -655,7 +685,12 @@ export default function SprintBoardPage() {
             <div className="flex items-center gap-1.5 flex-shrink-0">
               {isRecording && (
                 <Badge variant="destructive" className="animate-pulse gap-1" data-testid="badge-recording">
-                  <MicOff className="w-3 h-3" /> Recording
+                  <MicOff className="w-3 h-3" /> Recording... click mic to stop
+                </Badge>
+              )}
+              {isTranscribing && (
+                <Badge variant="secondary" className="animate-pulse gap-1" data-testid="badge-transcribing">
+                  <Loader2 className="w-3 h-3 animate-spin" /> Transcribing...
                 </Badge>
               )}
               <Button variant="ghost" size="sm" onClick={() => setTemplateDialog(true)} data-testid="button-templates">
