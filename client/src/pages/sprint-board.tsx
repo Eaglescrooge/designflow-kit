@@ -128,17 +128,17 @@ function SortableCard({
               </>
             )}
           </div>
-          <div className="flex items-center gap-0.5 invisible group-hover:visible flex-shrink-0">
-            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onAiSuggest(card); }} data-testid={`button-ai-suggest-${card.id}`}>
+          <div className="flex items-center gap-0.5 invisible group-hover:visible flex-shrink-0" onPointerDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
+            <Button variant="ghost" size="icon" onClick={() => onAiSuggest(card)} data-testid={`button-ai-suggest-${card.id}`}>
               <Sparkles className="w-3 h-3 text-amber-500" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onVoice(card); }} data-testid={`button-voice-${card.id}`}>
+            <Button variant="ghost" size="icon" onClick={() => onVoice(card)} data-testid={`button-voice-${card.id}`}>
               <Mic className="w-3 h-3 text-blue-500" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onEdit(card); }} data-testid={`button-edit-card-${card.id}`}>
+            <Button variant="ghost" size="icon" onClick={() => onEdit(card)} data-testid={`button-edit-card-${card.id}`}>
               <Pencil className="w-3 h-3" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(card.id); }} data-testid={`button-delete-card-${card.id}`}>
+            <Button variant="ghost" size="icon" onClick={() => onDelete(card.id)} data-testid={`button-delete-card-${card.id}`}>
               <Trash2 className="w-3 h-3 text-destructive" />
             </Button>
           </div>
