@@ -50,6 +50,7 @@ function Navigation() {
   const navLinks = [
     { label: "Pre-Kit", href: "#pre-kit" },
     { label: "Post-Kit", href: "#post-kit" },
+    { label: "Sprint Board", href: "/sprint-board" },
     { label: "Automate UX", href: "/automate-ux" },
     { label: "Integrations", href: "#integrations" },
     { label: "Docs", href: "/docs" }

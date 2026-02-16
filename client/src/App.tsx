@@ -19,6 +19,7 @@ import UXWorkshops from "@/pages/ux-workshops";
 import UXWireframes from "@/pages/ux-wireframes";
 import UXInformationArchitecture from "@/pages/ux-information-architecture";
 import UXAIAnalysis from "@/pages/ux-ai-analysis";
+import SprintBoard from "@/pages/sprint-board";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/docs" component={DocsPage} />
+      <Route path="/sprint-board" component={SprintBoard} />
       <Route path="/automate-ux" component={AutomateUX} />
       <Route path="/automate-ux/research" component={UXResearch} />
       <Route path="/automate-ux/personas" component={UXPersonas} />
