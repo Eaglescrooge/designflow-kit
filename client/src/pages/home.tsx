@@ -34,7 +34,7 @@ import {
   Layers
 } from "lucide-react";
 import { SiGithub, SiX, SiLinkedin } from "react-icons/si";
-import { useState, type MouseEvent } from "react";
+import { useState, useRef, useEffect, type MouseEvent } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,16 +46,59 @@ import {
 
 function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
+  const megaMenuRef = useRef<HTMLDivElement>(null);
+  const megaMenuTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   const navLinks = [
     { label: "Sprint Board", href: "/sprint-board" },
-    { label: "Automate UX", href: "/automate-ux" },
     { label: "Integrations", href: "#integrations" },
     { label: "Docs", href: "/docs" }
   ];
 
+  useEffect(() => {
+    function handleClickOutside(event: globalThis.MouseEvent) {
+      if (megaMenuRef.current && !megaMenuRef.current.contains(event.target as Node)) {
+        setMegaMenuOpen(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleMegaMenuEnter = (menu: string) => {
+    if (megaMenuTimerRef.current) clearTimeout(megaMenuTimerRef.current);
+    setMegaMenuOpen(menu);
+  };
+
+  const handleMegaMenuLeave = () => {
+    megaMenuTimerRef.current = setTimeout(() => {
+      setMegaMenuOpen(null);
+    }, 200);
+  };
+
+  const handlePanelEnter = () => {
+    if (megaMenuTimerRef.current) clearTimeout(megaMenuTimerRef.current);
+  };
+
+  const handlePanelLeave = () => {
+    megaMenuTimerRef.current = setTimeout(() => {
+      setMegaMenuOpen(null);
+    }, 200);
+  };
+
+  const uxCategories = [
+    { key: "gpt", label: "Custom GPTs", icon: Sparkles },
+    { key: "wireframing", label: "Wireframing & Sitemaps", icon: Layout },
+    { key: "ui-generation", label: "UI Generation", icon: Palette },
+    { key: "prototyping", label: "Prototyping & Code", icon: TestTube },
+    { key: "research", label: "Research & Testing", icon: Search, also: "testing" },
+    { key: "design-system", label: "Design Systems", icon: Layers },
+    { key: "copywriting", label: "Copywriting", icon: FileText },
+  ];
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border" ref={megaMenuRef}>
       <nav className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16">
           <a href="#" className="flex items-center gap-2" data-testid="link-logo">
@@ -64,28 +107,16 @@ function Navigation() {
           </a>
 
           <div className="hidden md:flex items-center gap-8">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="button-kits-menu">
-                  Kits
-                  <ChevronRight className="w-3 h-3 rotate-90" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem asChild data-testid="menu-item-pre-kit">
-                  <a href="#pre-kit" className="cursor-pointer">
-                    <Box className="w-4 h-4 mr-2" />
-                    Pre-Kit
-                  </a>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild data-testid="menu-item-post-kit">
-                  <a href="#post-kit" className="cursor-pointer">
-                    <Zap className="w-4 h-4 mr-2" />
-                    Post-Kit
-                  </a>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <button
+              className={`flex items-center gap-1 text-sm font-medium transition-colors ${megaMenuOpen === 'kits' ? 'text-foreground border-b-2 border-primary' : 'text-muted-foreground hover:text-foreground'}`}
+              onMouseEnter={() => handleMegaMenuEnter('kits')}
+              onMouseLeave={handleMegaMenuLeave}
+              onClick={() => setMegaMenuOpen(megaMenuOpen === 'kits' ? null : 'kits')}
+              data-testid="button-kits-menu"
+            >
+              Kits
+              <ChevronRight className={`w-3 h-3 transition-transform ${megaMenuOpen === 'kits' ? 'rotate-90' : 'rotate-90'}`} />
+            </button>
             {navLinks.map((link) => (
               link.href.startsWith('/') ? (
                 <Link
@@ -107,115 +138,16 @@ function Navigation() {
                 </a>
               )
             ))}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors" data-testid="button-ux-automation-menu">
-                  UX Automation
-                  <ChevronRight className="w-3 h-3 rotate-90" />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="center" className="w-80 max-h-[70vh] overflow-y-auto">
-                <DropdownMenuLabel className="flex items-center gap-2">
-                  <Wand2 className="w-4 h-4" />
-                  AI Design Workflows & GPTs
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Custom GPTs</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "gpt").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        <Badge variant="secondary" className="ml-auto text-xs">GPT</Badge>
-                        <ExternalLink className="w-3 h-3 text-muted-foreground" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Wireframing & Sitemaps</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "wireframing").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <Layout className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        {tool.gptUrl && (
-                          <Badge variant="secondary" className="ml-auto text-xs">GPT</Badge>
-                        )}
-                        <ExternalLink className="w-3 h-3 text-muted-foreground" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">UI Generation</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "ui-generation").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <Palette className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Prototyping & Code</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "prototyping").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <TestTube className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Research & Testing</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "research" || t.category === "testing").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <Search className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Design Systems</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "design-system").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <Layers className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="text-xs text-muted-foreground font-normal">Copywriting</DropdownMenuLabel>
-                {uxAutomationTools.filter(t => t.category === "copywriting").map((tool) => (
-                  <DropdownMenuItem key={tool.id} asChild data-testid={`menu-item-${tool.id}`}>
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer" className="flex flex-col items-start gap-1 cursor-pointer">
-                      <div className="flex items-center gap-2 w-full">
-                        <FileText className="w-4 h-4 text-primary flex-shrink-0" />
-                        <span className="font-medium">{tool.name}</span>
-                        <ExternalLink className="w-3 h-3 text-muted-foreground ml-auto" />
-                      </div>
-                    </a>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <button
+              className={`flex items-center gap-1 text-sm font-medium transition-colors ${megaMenuOpen === 'ux' ? 'text-foreground border-b-2 border-primary' : 'text-muted-foreground hover:text-foreground'}`}
+              onMouseEnter={() => handleMegaMenuEnter('ux')}
+              onMouseLeave={handleMegaMenuLeave}
+              onClick={() => setMegaMenuOpen(megaMenuOpen === 'ux' ? null : 'ux')}
+              data-testid="button-ux-automation-menu"
+            >
+              UX Automation
+              <ChevronRight className="w-3 h-3 rotate-90" />
+            </button>
           </div>
 
           <div className="flex items-center gap-2">
@@ -243,6 +175,149 @@ function Navigation() {
             </Button>
           </div>
         </div>
+      </nav>
+
+      {megaMenuOpen === 'kits' && (
+        <div
+          className="hidden md:block absolute left-0 right-0 top-16 bg-background border-b border-border shadow-lg z-50"
+          onMouseEnter={handlePanelEnter}
+          onMouseLeave={handlePanelLeave}
+          data-testid="mega-menu-kits"
+        >
+          <div className="flex max-w-7xl mx-auto">
+            <div className="w-72 bg-primary text-primary-foreground p-8 flex flex-col justify-between flex-shrink-0">
+              <div>
+                <h3 className="font-serif text-xl font-bold mb-3">Design Kits</h3>
+                <p className="text-sm opacity-90 leading-relaxed">
+                  Complete toolkit covering every phase of the design process, from initial research to developer handover.
+                </p>
+              </div>
+              <Link href="/dashboard" onClick={() => setMegaMenuOpen(null)}>
+                <Button variant="outline" className="mt-6 border-primary-foreground/30 text-primary-foreground bg-transparent backdrop-blur-sm gap-2" data-testid="button-mega-get-started">
+                  Get Started <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="flex-1 grid grid-cols-2 gap-0 divide-x divide-border">
+              <div className="p-8">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Pre-Design Phase</h4>
+                <div className="space-y-1">
+                  {preKitTools.map((tool) => (
+                    <a
+                      key={tool.id}
+                      href={`#pre-kit`}
+                      onClick={() => setMegaMenuOpen(null)}
+                      className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      data-testid={`mega-link-${tool.id}`}
+                    >
+                      <tool.icon className="w-4 h-4 flex-shrink-0" />
+                      {tool.title}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div className="p-8">
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Post-Design Phase</h4>
+                <div className="space-y-1">
+                  {postKitTools.map((tool) => (
+                    <a
+                      key={tool.id}
+                      href={`#post-kit`}
+                      onClick={() => setMegaMenuOpen(null)}
+                      className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      data-testid={`mega-link-${tool.id}`}
+                    >
+                      <tool.icon className="w-4 h-4 flex-shrink-0" />
+                      {tool.title}
+                    </a>
+                  ))}
+                </div>
+                <div className="mt-6 pt-4 border-t border-border">
+                  <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">Quick Links</h4>
+                  <div className="space-y-1">
+                    <Link
+                      href="/sprint-board"
+                      onClick={() => setMegaMenuOpen(null)}
+                      className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      data-testid="mega-link-sprint-board"
+                    >
+                      <Layers className="w-4 h-4 flex-shrink-0" />
+                      Sprint Board
+                    </Link>
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setMegaMenuOpen(null)}
+                      className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      data-testid="mega-link-dashboard"
+                    >
+                      <Box className="w-4 h-4 flex-shrink-0" />
+                      Dashboard
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {megaMenuOpen === 'ux' && (
+        <div
+          className="hidden md:block absolute left-0 right-0 top-16 bg-background border-b border-border shadow-lg z-50"
+          onMouseEnter={handlePanelEnter}
+          onMouseLeave={handlePanelLeave}
+          data-testid="mega-menu-ux"
+        >
+          <div className="flex max-w-7xl mx-auto">
+            <div className="w-72 bg-primary text-primary-foreground p-8 flex flex-col justify-between flex-shrink-0">
+              <div>
+                <h3 className="font-serif text-xl font-bold mb-3">UX Automation</h3>
+                <p className="text-sm opacity-90 leading-relaxed">
+                  AI-powered design workflows and GPTs to accelerate your UX process from wireframing to testing.
+                </p>
+              </div>
+              <Link href="/automate-ux" onClick={() => setMegaMenuOpen(null)}>
+                <Button variant="outline" className="mt-6 border-primary-foreground/30 text-primary-foreground bg-transparent backdrop-blur-sm gap-2" data-testid="button-mega-automate">
+                  Explore Tools <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+            <div className="flex-1 p-8">
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                {uxCategories.map((cat) => {
+                  const Icon = cat.icon;
+                  const tools = uxAutomationTools.filter(t => t.category === cat.key || (cat.also && t.category === cat.also));
+                  if (tools.length === 0) return null;
+                  return (
+                    <div key={cat.key}>
+                      <h4 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                        <Icon className="w-3.5 h-3.5" />
+                        {cat.label}
+                      </h4>
+                      <div className="space-y-1">
+                        {tools.map((tool) => (
+                          <a
+                            key={tool.id}
+                            href={tool.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setMegaMenuOpen(null)}
+                            className="flex items-center gap-2 px-2 py-1.5 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                            data-testid={`mega-ux-${tool.id}`}
+                          >
+                            <span className="truncate">{tool.name}</span>
+                            <ExternalLink className="w-3 h-3 flex-shrink-0 opacity-50" />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-border max-h-[80vh] overflow-y-auto">
@@ -329,7 +404,6 @@ function Navigation() {
             </div>
           </div>
         )}
-      </nav>
     </header>
   );
 }
