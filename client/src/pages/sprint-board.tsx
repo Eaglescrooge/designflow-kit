@@ -113,11 +113,19 @@ function SortableCard({
         {...listeners}
         data-testid={`card-task-${card.id}`}
       >
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium leading-snug" data-testid={`text-card-title-${card.id}`}>{card.title}</p>
-            {card.description && (
-              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{card.description}</p>
+        <p className="text-sm font-medium leading-snug" data-testid={`text-card-title-${card.id}`}>{card.title}</p>
+        {card.description && (
+          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{card.description}</p>
+        )}
+        <div className="flex items-center justify-between gap-2 mt-2">
+          <div className="flex items-center gap-2">
+            <span className={`w-1.5 h-1.5 rounded-full ${PRIORITY_DOT[card.priority]}`} />
+            <span className="text-[11px] text-muted-foreground capitalize">{card.priority}</span>
+            {card.owner && (
+              <>
+                <span className="text-muted-foreground/40 text-[11px]">·</span>
+                <span className="text-[11px] text-muted-foreground truncate max-w-[80px]" data-testid={`text-owner-${card.id}`}>{card.owner}</span>
+              </>
             )}
           </div>
           <div className="flex items-center gap-0.5 invisible group-hover:visible flex-shrink-0">
@@ -134,16 +142,6 @@ function SortableCard({
               <Trash2 className="w-3 h-3 text-destructive" />
             </Button>
           </div>
-        </div>
-        <div className="flex items-center gap-2 mt-2">
-          <span className={`w-1.5 h-1.5 rounded-full ${PRIORITY_DOT[card.priority]}`} />
-          <span className="text-[11px] text-muted-foreground capitalize">{card.priority}</span>
-          {card.owner && (
-            <>
-              <span className="text-muted-foreground/40 text-[11px]">·</span>
-              <span className="text-[11px] text-muted-foreground truncate max-w-[80px]" data-testid={`text-owner-${card.id}`}>{card.owner}</span>
-            </>
-          )}
         </div>
       </div>
     </div>
