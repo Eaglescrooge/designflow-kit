@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
   ArrowLeft,
+  ArrowRight,
   Search,
   Users,
   Map,
@@ -132,39 +133,31 @@ export default function AutomateUX() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {uxAutomationOptions.map((option) => {
-            const cardContent = (
+          {uxAutomationOptions.map((option) => (
+            <Link key={option.id} href={option.href}>
               <Card 
-                className="hover-elevate cursor-pointer transition-all"
+                className="group cursor-pointer transition-all duration-200 h-full border-border/60 hover:border-primary/20"
                 data-testid={`card-ux-option-${option.id}`}
               >
-                <CardContent className="p-6">
-                  <div className="flex flex-col gap-4">
-                    <div className={`w-14 h-14 rounded-xl ${option.bgColor} flex items-center justify-center`}>
-                      <option.icon className={`w-7 h-7 ${option.color}`} />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-2">{option.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-4">{option.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {option.subOptions.map((sub) => (
-                          <Badge key={sub} variant="secondary" className="text-xs">
-                            {sub}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
+                <CardContent className="p-6 flex flex-col gap-5 h-full">
+                  <div className="w-10 h-10 rounded-lg bg-primary/8 flex items-center justify-center shrink-0">
+                    <option.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <h3 className="font-semibold text-base tracking-tight">{option.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{option.description}</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1">
+                    <span className="flex items-center gap-1.5">
+                      <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+                      <span className="group-hover:text-primary transition-colors">Learn more</span>
+                    </span>
+                    <span className="ml-auto text-muted-foreground/50">{option.subOptions.length} topics</span>
                   </div>
                 </CardContent>
               </Card>
-            );
-
-            return (
-              <Link key={option.id} href={option.href}>
-                {cardContent}
-              </Link>
-            );
-          })}
+            </Link>
+          ))}
         </div>
       </main>
     </div>
