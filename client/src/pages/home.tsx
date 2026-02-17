@@ -52,6 +52,7 @@ function Navigation() {
   
   const navLinks = [
     { label: "Sprint Board", href: "/sprint-board" },
+    { label: "Automate UX", href: "/automate-ux" },
     { label: "Integrations", href: "#integrations" },
     { label: "Docs", href: "/docs" }
   ];
