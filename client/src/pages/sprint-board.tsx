@@ -868,16 +868,15 @@ export default function SprintBoardPage() {
             {sprintTemplates.map((template) => (
               <div
                 key={template.id}
-                className="p-4 rounded-md border border-border/60 hover-elevate cursor-pointer"
+                className="group p-5 rounded-md border border-border/60 hover:border-primary/20 cursor-pointer transition-all duration-200"
                 onClick={() => selectTemplate(template)}
                 data-testid={`card-template-${template.id}`}
               >
-                <h3 className="text-sm font-semibold mb-1">{template.name}</h3>
-                <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{template.description}</p>
-                <div className="flex flex-wrap gap-1">
-                  {template.lanes.map((lane, i) => (
-                    <span key={i} className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{lane.title}</span>
-                  ))}
+                <h3 className="text-sm font-semibold tracking-tight mb-1">{template.name}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2 mb-4">{template.description}</p>
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <span className="group-hover:text-primary transition-colors">Use template</span>
+                  <span className="ml-auto text-muted-foreground/50">{template.lanes.length} phases</span>
                 </div>
               </div>
             ))}
