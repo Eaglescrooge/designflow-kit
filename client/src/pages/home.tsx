@@ -605,44 +605,26 @@ function ToolCard({ tool, index }: { tool: typeof preKitTools[0]; index: number 
 
   return (
     <Card 
-      className="group transition-all duration-200 hover:shadow-md hover:border-primary/30 cursor-pointer h-full"
+      className="group transition-all duration-200 cursor-pointer h-full border-border/60 hover:border-primary/20"
       data-testid={`card-tool-${tool.id}`}
       onClick={handleCardClick}
     >
-      <CardContent className="p-6 space-y-4">
-        <div className="flex items-start justify-between gap-4">
-          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-            <Icon className="w-6 h-6 text-primary" />
-          </div>
-          <Badge variant="secondary" className="text-xs">
-            {String(index + 1).padStart(2, '0')}
-          </Badge>
-        </div>
-        
-        <div className="space-y-2">
-          <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{tool.title}</h3>
-          <p className="text-sm text-muted-foreground leading-relaxed">{tool.description}</p>
+      <CardContent className="p-6 flex flex-col gap-5 h-full">
+        <div className="w-10 h-10 rounded-lg bg-primary/8 flex items-center justify-center shrink-0">
+          <Icon className="w-5 h-5 text-primary" />
         </div>
 
-        <div className="flex flex-wrap gap-1.5 pt-2">
-          {tool.integrations.map((integration) => {
-            const integrationId = integration.toLowerCase().replace(/\s+/g, '-');
-            return (
-              <Badge 
-                key={integration}
-                variant="outline" 
-                className="text-xs font-normal cursor-pointer hover:bg-primary/10 hover:border-primary/30 transition-colors"
-                data-testid={`badge-integration-${integrationId}`}
-                data-integration-badge="true"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setLocation(`/integration/${integrationId}`);
-                }}
-              >
-                {integration}
-              </Badge>
-            );
-          })}
+        <div className="space-y-1.5 flex-1">
+          <h3 className="font-semibold text-base tracking-tight">{tool.title}</h3>
+          <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">{tool.description}</p>
+        </div>
+
+        <div className="flex items-center gap-2 text-xs text-muted-foreground pt-1">
+          <span className="flex items-center gap-1.5">
+            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-primary" />
+            <span className="group-hover:text-primary transition-colors">Learn more</span>
+          </span>
+          <span className="ml-auto text-muted-foreground/50">{tool.integrations.length} integrations</span>
         </div>
       </CardContent>
     </Card>
