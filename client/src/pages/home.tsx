@@ -416,18 +416,18 @@ function HeroSection() {
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div className="lg:col-span-7 space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
-              <Zap className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Open Source UX Toolkit</span>
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">AI-Powered &middot; Open Source</span>
             </div>
             
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]" data-testid="text-hero-title">
-              Streamline Your
-              <span className="text-primary block mt-2">Design Workflow</span>
+              AI-Powered Tools to
+              <span className="text-primary block mt-2">Simplify Design</span>
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed" data-testid="text-hero-description">
-              A comprehensive, open-source toolkit for UX and Product designers. 
-              Pre-design research to post-launch testing, all in one integrated system.
+              An open-source, AI-powered UX toolkit that simplifies your entire design workflow. 
+              From research to handover, automate repetitive tasks and focus on what matters &mdash; great design.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -563,25 +563,25 @@ function ProblemSolutionSection() {
           <div className="space-y-6">
             <Badge variant="outline" className="text-chart-2 border-chart-2/30">The Solution</Badge>
             <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-solution-title">
-              One toolkit for your entire design lifecycle
+              AI-powered toolkit for your entire design lifecycle
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              DesignFlow Kit provides a comprehensive, integrated solution that covers 
-              every stage of the design process. From initial research to final handover, 
-              everything works together seamlessly.
+              DesignFlow Kit combines AI automation with a comprehensive design system. 
+              Chat with AI to generate personas, journey maps, and wireframes. Let AI 
+              handle the busy work so you can focus on creating great experiences.
             </p>
             <ul className="space-y-3 text-muted-foreground">
               <li className="flex items-start gap-3">
                 <ChevronRight className="w-5 h-5 text-chart-2 mt-0.5 shrink-0" />
-                <span>End-to-end coverage from research to deployment</span>
+                <span>8 AI chat tools to automate every design phase</span>
               </li>
               <li className="flex items-start gap-3">
                 <ChevronRight className="w-5 h-5 text-chart-2 mt-0.5 shrink-0" />
-                <span>API-first design integrates with your existing tools</span>
+                <span>Voice recording, AI suggestions, and smart sprint boards</span>
               </li>
               <li className="flex items-start gap-3">
                 <ChevronRight className="w-5 h-5 text-chart-2 mt-0.5 shrink-0" />
-                <span>Open source, free, and community-driven</span>
+                <span>Open source, free, and integrates with 41+ design tools</span>
               </li>
             </ul>
           </div>
