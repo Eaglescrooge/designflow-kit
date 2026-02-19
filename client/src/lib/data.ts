@@ -363,20 +363,23 @@ export const integrations = [
 ];
 
 export const stats = [
-  { label: "Downloads", value: "25K+", description: "Monthly installs" },
-  { label: "Contributors", value: "150+", description: "Active developers" },
-  { label: "GitHub Stars", value: "8.5K", description: "Growing community" },
-  { label: "Integrations", value: "40+", description: "Tools connected" }
+  { label: "AI Tools", value: "30+", description: "AI automation workflows" },
+  { label: "Chat Assistants", value: "8", description: "GPT-4o powered tools" },
+  { label: "Design Tools", value: "17", description: "Pre & post-design kits" },
+  { label: "Integrations", value: "41+", description: "Connected platforms" }
 ];
 
-export const quickStartCode = `# Install DesignFlow Kit
-npm install designflow-kit
+export const quickStartCode = `# Clone the repository
+git clone https://github.com/Eaglescrooge/designflow-kit.git
 
-# Initialize in your project
-npx designflow init
+# Navigate to the project
+cd designflow-kit
+
+# Install dependencies
+npm install
 
 # Start the development server
-npm run designflow`;
+npm run dev`;
 
 export interface ApiEndpoint {
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

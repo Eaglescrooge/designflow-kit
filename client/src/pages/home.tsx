@@ -426,8 +426,8 @@ function HeroSection() {
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed" data-testid="text-hero-description">
-              An open-source, AI-powered UX toolkit that simplifies your entire design workflow. 
-              From research to handover, automate repetitive tasks and focus on what matters &mdash; great design.
+              An open-source, AI-powered UX toolkit covering pre-design research to post-launch testing. 
+              8 AI chat tools, 30 automation workflows, drag-and-drop sprint boards, and 41+ integrations &mdash; all in one place.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -478,42 +478,42 @@ function HeroSection() {
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Box className="w-5 h-5 text-primary" />
+                        <Sparkles className="w-5 h-5 text-primary" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Pre-Kit Tools</p>
-                        <p className="text-xs text-muted-foreground">10 research & design tools</p>
+                        <p className="font-medium text-sm">8 AI Chat Tools</p>
+                        <p className="text-xs text-muted-foreground">GPT-4o powered workflows</p>
                       </div>
-                      <Badge variant="secondary" className="ml-auto">Active</Badge>
+                      <Badge variant="secondary" className="ml-auto">AI</Badge>
                     </div>
                     
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-chart-2/10 flex items-center justify-center">
-                        <Zap className="w-5 h-5 text-chart-2" />
+                        <Box className="w-5 h-5 text-chart-2" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">Post-Kit Tools</p>
-                        <p className="text-xs text-muted-foreground">6 testing & handover tools</p>
+                        <p className="font-medium text-sm">17 Design Tools</p>
+                        <p className="text-xs text-muted-foreground">Pre-design & post-design kits</p>
                       </div>
                       <Badge variant="secondary" className="ml-auto">Active</Badge>
                     </div>
 
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-chart-3/10 flex items-center justify-center">
-                        <ExternalLink className="w-5 h-5 text-chart-3" />
+                        <Zap className="w-5 h-5 text-chart-3" />
                       </div>
                       <div>
-                        <p className="font-medium text-sm">40+ Integrations</p>
-                        <p className="text-xs text-muted-foreground">Figma, Miro, Notion & more</p>
+                        <p className="font-medium text-sm">Sprint Board</p>
+                        <p className="text-xs text-muted-foreground">Drag-and-drop with AI suggestions</p>
                       </div>
-                      <Badge variant="outline" className="ml-auto">Connected</Badge>
+                      <Badge variant="outline" className="ml-auto">Live</Badge>
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-border">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">Workflow Status</span>
-                      <span className="font-medium text-chart-2">All systems active</span>
+                      <span className="text-muted-foreground">Integrations</span>
+                      <span className="font-medium text-chart-2">41+ tools connected</span>
                     </div>
                     <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
                       <div className="h-full w-full bg-gradient-to-r from-chart-2 to-primary rounded-full" />
@@ -537,25 +537,25 @@ function ProblemSolutionSection() {
           <div className="space-y-6">
             <Badge variant="outline" className="text-destructive border-destructive/30">The Problem</Badge>
             <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-problem-title">
-              Design workflows are fragmented across dozens of tools
+              Design workflows are fragmented and manual
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              Designers juggle between research platforms, prototyping tools, testing software, 
-              and handover solutions. Each tool has its own learning curve, pricing model, and 
-              data format. Context switching kills productivity and creativity.
+              Designers juggle dozens of disconnected tools, manually transfer data between 
+              platforms, and spend hours on repetitive tasks that AI could handle in seconds. 
+              Context switching kills both productivity and creativity.
             </p>
             <ul className="space-y-3 text-muted-foreground">
               <li className="flex items-start gap-3">
                 <X className="w-5 h-5 text-destructive mt-0.5 shrink-0" />
-                <span>No unified workflow between research and implementation</span>
+                <span>Manually creating personas, journey maps, and research reports</span>
               </li>
               <li className="flex items-start gap-3">
                 <X className="w-5 h-5 text-destructive mt-0.5 shrink-0" />
-                <span>Manual data transfer between different platforms</span>
+                <span>No AI assistance across the design lifecycle</span>
               </li>
               <li className="flex items-start gap-3">
                 <X className="w-5 h-5 text-destructive mt-0.5 shrink-0" />
-                <span>Inconsistent documentation and process standards</span>
+                <span>Fragmented tools with no unified sprint management</span>
               </li>
             </ul>
           </div>
@@ -563,25 +563,25 @@ function ProblemSolutionSection() {
           <div className="space-y-6">
             <Badge variant="outline" className="text-chart-2 border-chart-2/30">The Solution</Badge>
             <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-solution-title">
-              AI-powered toolkit for your entire design lifecycle
+              One AI-powered toolkit for your entire design lifecycle
             </h2>
             <p className="text-muted-foreground text-lg leading-relaxed">
-              DesignFlow Kit combines AI automation with a comprehensive design system. 
-              Chat with AI to generate personas, journey maps, and wireframes. Let AI 
-              handle the busy work so you can focus on creating great experiences.
+              DesignFlow Kit gives you 8 interactive AI chat tools, a kanban sprint board 
+              with voice recording and AI suggestions, 30 automation workflows, and 41+ 
+              tool integrations &mdash; all open source and free.
             </p>
             <ul className="space-y-3 text-muted-foreground">
               <li className="flex items-start gap-3">
                 <ChevronRight className="w-5 h-5 text-chart-2 mt-0.5 shrink-0" />
-                <span>8 AI chat tools to automate every design phase</span>
+                <span>Chat with AI to generate personas, journey maps, and wireframes</span>
               </li>
               <li className="flex items-start gap-3">
                 <ChevronRight className="w-5 h-5 text-chart-2 mt-0.5 shrink-0" />
-                <span>Voice recording, AI suggestions, and smart sprint boards</span>
+                <span>Drag-and-drop sprint board with Whisper voice notes and GPT-4o</span>
               </li>
               <li className="flex items-start gap-3">
                 <ChevronRight className="w-5 h-5 text-chart-2 mt-0.5 shrink-0" />
-                <span>Open source, free, and integrates with 41+ design tools</span>
+                <span>41+ integrations with Figma, Miro, Notion, GitHub, and more</span>
               </li>
             </ul>
           </div>
@@ -636,13 +636,13 @@ function PreKitSection() {
     <section id="pre-kit" className="py-20 lg:py-32 px-6 lg:px-8 scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="max-w-3xl space-y-4">
-          <Badge variant="default">Pre-Kit</Badge>
+          <Badge variant="default">Pre-Design Kit</Badge>
           <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-prekit-title">
             Research to Prototype
           </h2>
           <p className="text-lg text-muted-foreground">
-            Everything you need to go from initial research to interactive prototypes. 
-            Ten integrated tools covering the complete pre-design workflow.
+            10 AI-enhanced tools covering research, persona creation, journey mapping, wireframing, 
+            and prototyping. Each tool pairs with AI chat assistants to accelerate your workflow.
           </p>
         </div>
 
@@ -661,13 +661,13 @@ function PostKitSection() {
     <section id="post-kit" className="py-20 lg:py-32 px-6 lg:px-8 bg-muted/30 scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="max-w-3xl space-y-4">
-          <Badge variant="default">Post-Kit</Badge>
+          <Badge variant="default">Post-Design Kit</Badge>
           <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-postkit-title">
             Testing to Handover
           </h2>
           <p className="text-lg text-muted-foreground">
-            Seamlessly transition from design to development. Six tools for testing, 
-            shipping, and maintaining design quality in production.
+            7 tools for design reviews, developer handover, sprint management, usability testing, 
+            and documentation. AI-powered sprint boards keep your team aligned.
           </p>
         </div>
 
@@ -686,13 +686,13 @@ function IntegrationsSection() {
     <section id="integrations" className="py-20 lg:py-32 px-6 lg:px-8 scroll-mt-20">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <Badge variant="outline">Ecosystem</Badge>
+          <Badge variant="outline">41+ Integrations</Badge>
           <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-integrations-title">
-            Integrates with your favorite tools
+            Connects with the tools you already use
           </h2>
           <p className="text-lg text-muted-foreground">
-            Connect with 40+ design tools and platforms. DesignFlow Kit works 
-            seamlessly alongside your existing workflow.
+            Figma, Sketch, Miro, Notion, Slack, Jira, GitHub, Zeplin, Storybook, and 30+ more. 
+            DesignFlow Kit integrates seamlessly with your existing design and development stack.
           </p>
         </div>
 
@@ -760,8 +760,8 @@ function GettingStartedSection() {
               Get started in minutes
             </h2>
             <p className="text-lg text-muted-foreground">
-              Install DesignFlow Kit with a single command and start streamlining 
-              your design workflow immediately. Full documentation and examples included.
+              Clone the repo, install dependencies, and start building. AI-powered chat tools, 
+              sprint boards, and the full design toolkit are ready to use immediately.
             </p>
             
             <div className="flex flex-wrap gap-4">
@@ -813,12 +813,12 @@ function OpenSourceCTASection() {
         </Badge>
         
         <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-opensource-title">
-          Built by designers, for designers
+          Built with love by designers, for designers
         </h2>
         
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          DesignFlow Kit is open source and free forever. Join our growing community 
-          of contributors and help shape the future of design tooling.
+          DesignFlow Kit is open source and free forever. Contribute new AI workflows, 
+          tool integrations, or UX improvements. Help shape the future of AI-powered design.
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
@@ -843,13 +843,13 @@ function OpenSourceCTASection() {
           </div>
           <div className="w-px h-12 bg-border" />
           <div className="text-center">
-            <p className="font-serif text-2xl font-bold">150+</p>
-            <p className="text-sm text-muted-foreground">Contributors</p>
+            <p className="font-serif text-2xl font-bold">30+</p>
+            <p className="text-sm text-muted-foreground">AI Workflows</p>
           </div>
           <div className="w-px h-12 bg-border" />
           <div className="text-center">
-            <p className="font-serif text-2xl font-bold">Weekly</p>
-            <p className="text-sm text-muted-foreground">Updates</p>
+            <p className="font-serif text-2xl font-bold">41+</p>
+            <p className="text-sm text-muted-foreground">Integrations</p>
           </div>
         </div>
       </div>
@@ -868,7 +868,7 @@ function Footer() {
               <span className="font-serif font-bold text-lg">DesignFlow</span>
             </a>
             <p className="text-sm text-muted-foreground">
-              Open source UX/Product design toolkit. Built by designers, for designers.
+              AI-powered open source UX/Product design toolkit. Built by designers, for designers.
             </p>
             <div className="flex items-center gap-3">
               <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
