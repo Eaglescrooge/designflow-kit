@@ -838,8 +838,8 @@ function OpenSourceCTASection() {
 
         <div className="flex items-center justify-center gap-8 pt-8">
           <div className="text-center">
-            <p className="font-serif text-2xl font-bold">MIT</p>
-            <p className="text-sm text-muted-foreground">License</p>
+            <p className="font-serif text-2xl font-bold">8</p>
+            <p className="text-sm text-muted-foreground">AI Chat Tools</p>
           </div>
           <div className="w-px h-12 bg-border" />
           <div className="text-center">
