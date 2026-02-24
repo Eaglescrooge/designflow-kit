@@ -320,6 +320,7 @@ export default function UXResearch() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={Search}
       />
     </div>
   );

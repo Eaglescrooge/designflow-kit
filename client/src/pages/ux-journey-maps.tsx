@@ -130,6 +130,7 @@ export default function UXJourneyMaps() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={Map}
       />
     </div>
   );

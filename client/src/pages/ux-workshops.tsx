@@ -130,6 +130,7 @@ export default function UXWorkshops() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={MessageSquare}
       />
     </div>
   );

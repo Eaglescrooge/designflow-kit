@@ -213,6 +213,7 @@ export default function UXPersonas() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={Users}
       />
     </div>
   );

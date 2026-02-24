@@ -130,6 +130,7 @@ export default function UXAIAnalysis() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={Brain}
       />
     </div>
   );

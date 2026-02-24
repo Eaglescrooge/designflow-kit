@@ -5,9 +5,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { UxMethodOption } from "@/lib/ux-method-options";
+import type { LucideIcon } from "lucide-react";
 
 interface MethodSelectorModalProps {
   open: boolean;
@@ -16,7 +16,7 @@ interface MethodSelectorModalProps {
   subtitle: string;
   methods: UxMethodOption[];
   onSelect: (method: UxMethodOption) => void;
-  accentColor?: string;
+  icon?: LucideIcon;
 }
 
 export function MethodSelectorModal({
@@ -26,31 +26,35 @@ export function MethodSelectorModal({
   subtitle,
   methods,
   onSelect,
+  icon: Icon,
 }: MethodSelectorModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-lg flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-primary" />
-            {title}
-          </DialogTitle>
-          <DialogDescription>{subtitle}</DialogDescription>
+      <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto p-6">
+        <DialogHeader className="mb-4">
+          <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
+          <DialogDescription className="text-sm">{subtitle}</DialogDescription>
         </DialogHeader>
-        <div className="grid grid-cols-1 gap-2 mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {methods.map((method) => (
             <div
               key={method.label}
-              className="flex items-start gap-3 p-3 rounded-lg border border-border/60 cursor-pointer transition-colors hover:bg-muted/50"
+              className="group flex flex-col gap-3 p-5 rounded-xl border border-border/60 cursor-pointer transition-all hover:border-primary/20 hover:shadow-sm"
               onClick={() => onSelect(method)}
               data-testid={`method-option-${method.label.toLowerCase().replace(/\s+/g, '-')}`}
             >
-              <Badge variant="outline" className="mt-0.5 shrink-0 text-[10px] px-1.5 py-0 h-[18px] text-primary border-primary/30">
-                AI
-              </Badge>
+              {Icon && (
+                <Icon className="w-6 h-6 text-muted-foreground/60" />
+              )}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium">{method.label}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{method.description}</p>
+                <p className="text-sm font-semibold leading-tight">{method.label}</p>
+                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">{method.description}</p>
+              </div>
+              <div className="flex items-center justify-between text-xs text-muted-foreground pt-1">
+                <span className="flex items-center gap-1 group-hover:text-primary transition-colors">
+                  <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                  Select
+                </span>
               </div>
             </div>
           ))}

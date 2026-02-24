@@ -130,6 +130,7 @@ export default function UXTesting() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={TestTube}
       />
     </div>
   );

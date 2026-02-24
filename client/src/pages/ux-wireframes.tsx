@@ -130,6 +130,7 @@ export default function UXWireframes() {
         subtitle={workflowMethods.subtitle}
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
+        icon={PenTool}
       />
     </div>
   );
