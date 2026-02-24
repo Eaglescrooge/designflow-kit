@@ -721,10 +721,12 @@ function IntegrationsSection() {
         </div>
 
         <div className="text-center">
-          <Button variant="outline" className="gap-2" data-testid="button-view-integrations">
-            View all integrations
-            <ArrowRight className="w-4 h-4" />
-          </Button>
+          <Link href="/integrations">
+            <Button variant="outline" className="gap-2" data-testid="button-view-integrations">
+              View all integrations
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
