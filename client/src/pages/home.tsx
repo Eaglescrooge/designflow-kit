@@ -33,7 +33,7 @@ import {
   Search,
   Layers
 } from "lucide-react";
-import { SiGithub, SiLinkedin, SiInstagram } from "react-icons/si";
+import { SiGithub, SiLinkedin, SiInstagram, SiFigma, SiMiro, SiNotion, SiJira, SiSlack, SiStorybook, SiHotjar, SiAbstract, SiSketch, SiInvision, SiAdobe, SiAsana, SiTrello, SiAirtable } from "react-icons/si";
 import { useState, useRef, useEffect, type MouseEvent } from "react";
 import {
   DropdownMenu,
@@ -521,6 +521,61 @@ function HeroSection() {
                   </div>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16 lg:mt-20">
+          <p className="text-center text-xs font-medium text-muted-foreground/60 uppercase tracking-widest mb-6">
+            Works with the tools you love
+          </p>
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10" />
+            <div className="flex animate-scroll-x gap-8" data-testid="carousel-design-tools">
+              {[
+                { icon: SiFigma, name: "Figma" },
+                { icon: SiSketch, name: "Sketch" },
+                { icon: SiMiro, name: "Miro" },
+                { icon: SiNotion, name: "Notion" },
+                { icon: SiJira, name: "Jira" },
+                { icon: SiSlack, name: "Slack" },
+                { icon: SiGithub, name: "GitHub" },
+                { icon: SiHotjar, name: "Hotjar" },
+                { icon: SiStorybook, name: "Storybook" },
+                { icon: SiAbstract, name: "Abstract" },
+                { icon: SiAdobe, name: "Adobe XD" },
+                { icon: SiInvision, name: "InVision" },
+                { icon: SiAsana, name: "Asana" },
+                { icon: SiTrello, name: "Trello" },
+                { icon: SiAirtable, name: "Airtable" },
+                { icon: SiFigma, name: "Figma" },
+                { icon: SiSketch, name: "Sketch" },
+                { icon: SiMiro, name: "Miro" },
+                { icon: SiNotion, name: "Notion" },
+                { icon: SiJira, name: "Jira" },
+                { icon: SiSlack, name: "Slack" },
+                { icon: SiGithub, name: "GitHub" },
+                { icon: SiHotjar, name: "Hotjar" },
+                { icon: SiStorybook, name: "Storybook" },
+                { icon: SiAbstract, name: "Abstract" },
+                { icon: SiAdobe, name: "Adobe XD" },
+                { icon: SiInvision, name: "InVision" },
+                { icon: SiAsana, name: "Asana" },
+                { icon: SiTrello, name: "Trello" },
+                { icon: SiAirtable, name: "Airtable" },
+              ].map((tool, i) => (
+                <div
+                  key={`${tool.name}-${i}`}
+                  className="flex flex-col items-center gap-2 shrink-0"
+                  data-testid={`tool-icon-${tool.name.toLowerCase().replace(/\s+/g, '-')}-${i}`}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-muted/60 border border-border/40 flex items-center justify-center hover:bg-muted transition-colors">
+                    <tool.icon className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                  <span className="text-[11px] text-muted-foreground/70 font-medium">{tool.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
