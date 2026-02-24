@@ -2060,26 +2060,25 @@ export const uxAutomationTools: UXAutomationTool[] = [
 
 export const footerLinks = {
   product: [
-    { label: "Pre-Kit", href: "#pre-kit" },
-    { label: "Post-Kit", href: "#post-kit" },
-    { label: "Integrations", href: "#integrations" },
-    { label: "Changelog", href: "#" }
+    { label: "Pre-Design Kit", href: "/#pre-kit" },
+    { label: "Post-Design Kit", href: "/#post-kit" },
+    { label: "Integrations", href: "/#integrations" },
+    { label: "AI Automation", href: "/automate-ux" },
+    { label: "Sprint Board", href: "/sprint-board" }
   ],
   resources: [
-    { label: "Documentation", href: "#" },
-    { label: "API Reference", href: "#" },
-    { label: "Examples", href: "#" },
-    { label: "Templates", href: "#" }
+    { label: "Documentation", href: "/docs" },
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Getting Started", href: "/#getting-started" },
+    { label: "GitHub Repo", href: "https://github.com/Eaglescrooge/designflow-kit", external: true }
   ],
   community: [
-    { label: "GitHub", href: "#" },
-    { label: "Discord", href: "#" },
-    { label: "Twitter", href: "#" },
-    { label: "Contributing", href: "#" }
+    { label: "GitHub", href: "https://github.com/Eaglescrooge/designflow-kit", external: true },
+    { label: "LinkedIn", href: "https://www.linkedin.com/company/designflowkit/", external: true },
+    { label: "Contributing", href: "https://github.com/Eaglescrooge/designflow-kit", external: true }
   ],
   legal: [
-    { label: "Privacy", href: "#" },
-    { label: "Terms", href: "#" },
-    { label: "License", href: "#" }
+    { label: "Privacy", href: "/#" },
+    { label: "Terms", href: "/#" }
   ]
 };
