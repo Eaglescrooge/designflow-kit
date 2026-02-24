@@ -526,33 +526,47 @@ function HeroSection() {
         </div>
 
         <div className="mt-20 lg:mt-24">
-          <p className="text-center text-[11px] font-medium text-muted-foreground/50 uppercase tracking-[0.2em] mb-8">
+          <p className="text-center text-[11px] font-medium text-muted-foreground/50 uppercase tracking-[0.2em] mb-10">
             Works with the tools you love
           </p>
-          <div className="flex items-center justify-center gap-10 flex-wrap" data-testid="carousel-design-tools">
-            {[
-              { icon: SiFigma, name: "Figma" },
-              { icon: SiMiro, name: "Miro" },
-              { icon: SiNotion, name: "Notion" },
-              { icon: SiSlack, name: "Slack" },
-              { icon: SiGithub, name: "GitHub" },
-              { icon: SiJira, name: "Jira" },
-              { icon: SiStorybook, name: "Storybook" },
-              { icon: SiAdobe, name: "Adobe XD" },
-              { icon: SiAsana, name: "Asana" },
-              { icon: SiTrello, name: "Trello" },
-            ].map((tool, i) => (
-              <div
-                key={tool.name}
-                className="flex flex-col items-center gap-2.5"
-                data-testid={`tool-icon-${tool.name.toLowerCase().replace(/\s+/g, '-')}-${i}`}
-              >
-                <div className="w-11 h-11 rounded-full bg-muted/50 flex items-center justify-center">
-                  <tool.icon className="w-[18px] h-[18px] text-muted-foreground/70" />
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="flex animate-scroll-x w-max gap-14" data-testid="carousel-design-tools">
+              {[
+                { icon: SiFigma, name: "Figma", color: "#F24E1E" },
+                { icon: SiMiro, name: "Miro", color: "#FFD02F" },
+                { icon: SiNotion, name: "Notion", color: "#000000" },
+                { icon: SiSlack, name: "Slack", color: "#4A154B" },
+                { icon: SiGithub, name: "GitHub", color: "#181717" },
+                { icon: SiJira, name: "Jira", color: "#0052CC" },
+                { icon: SiStorybook, name: "Storybook", color: "#FF4785" },
+                { icon: SiAdobe, name: "Adobe XD", color: "#FF61F6" },
+                { icon: SiAsana, name: "Asana", color: "#F06A6A" },
+                { icon: SiTrello, name: "Trello", color: "#0052CC" },
+                { icon: SiFigma, name: "Figma", color: "#F24E1E" },
+                { icon: SiMiro, name: "Miro", color: "#FFD02F" },
+                { icon: SiNotion, name: "Notion", color: "#000000" },
+                { icon: SiSlack, name: "Slack", color: "#4A154B" },
+                { icon: SiGithub, name: "GitHub", color: "#181717" },
+                { icon: SiJira, name: "Jira", color: "#0052CC" },
+                { icon: SiStorybook, name: "Storybook", color: "#FF4785" },
+                { icon: SiAdobe, name: "Adobe XD", color: "#FF61F6" },
+                { icon: SiAsana, name: "Asana", color: "#F06A6A" },
+                { icon: SiTrello, name: "Trello", color: "#0052CC" },
+              ].map((tool, i) => (
+                <div
+                  key={`${tool.name}-${i}`}
+                  className="flex flex-col items-center gap-3 shrink-0"
+                  data-testid={`tool-icon-${tool.name.toLowerCase().replace(/\s+/g, '-')}-${i}`}
+                >
+                  <div className="w-14 h-14 rounded-full bg-muted/40 flex items-center justify-center">
+                    <tool.icon className="w-6 h-6" style={{ color: tool.color }} />
+                  </div>
+                  <span className="text-[11px] text-muted-foreground/60 font-medium">{tool.name}</span>
                 </div>
-                <span className="text-[10px] text-muted-foreground/50 font-medium">{tool.name}</span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
