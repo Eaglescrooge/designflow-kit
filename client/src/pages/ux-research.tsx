@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ChatMessage } from "@/components/chat-message";
 import { MethodSelectorModal } from "@/components/method-selector-modal";
@@ -10,8 +8,8 @@ import { uxMethodsByWorkflow } from "@/lib/ux-method-options";
 import type { UxMethodOption } from "@/lib/ux-method-options";
 import {
   ArrowLeft,
-  Send,
-  Upload,
+  ArrowUp,
+  Paperclip,
   X,
   FileText,
   Search,
@@ -34,6 +32,7 @@ export default function UXResearch() {
   const [pendingPrompt, setPendingPrompt] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const workflowMethods = uxMethodsByWorkflow["ux-research"];
 
   const scrollToBottom = () => {
@@ -44,17 +43,21 @@ export default function UXResearch() {
     scrollToBottom();
   }, [messages]);
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 200) + "px";
+    }
+  }, [input]);
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
     if (file.size > 2 * 1024 * 1024) {
       alert("File size must be less than 2MB");
       return;
     }
-
     setUploadedFile(file);
-
     const reader = new FileReader();
     reader.onload = (event) => {
       const content = event.target?.result as string;
@@ -66,9 +69,7 @@ export default function UXResearch() {
   const removeFile = () => {
     setUploadedFile(null);
     setDocumentContent("");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const handleSubmitPrompt = () => {
@@ -91,7 +92,6 @@ export default function UXResearch() {
       role: "user",
       content,
     };
-
     setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
 
@@ -127,14 +127,11 @@ export default function UXResearch() {
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split("\n");
         buffer = lines.pop() || "";
-
         for (const line of lines) {
           if (!line.startsWith("data: ")) continue;
-
           try {
             const data = JSON.parse(line.slice(6));
             if (data.content) {
@@ -147,8 +144,7 @@ export default function UXResearch() {
                 return updated;
               });
             }
-          } catch {
-          }
+          } catch {}
         }
       }
     } catch (error) {
@@ -174,144 +170,128 @@ export default function UXResearch() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between gap-4 h-16">
-            <div className="flex items-center gap-4">
+    <div className="h-screen bg-background flex flex-col">
+      <header className="shrink-0 border-b border-border/50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-14">
+            <div className="flex items-center gap-3">
               <Link href="/automate-ux">
-                <Button variant="ghost" size="icon" data-testid="button-back">
-                  <ArrowLeft className="w-5 h-5" />
+                <Button variant="ghost" size="icon" className="h-8 w-8" data-testid="button-back">
+                  <ArrowLeft className="w-4 h-4" />
                 </Button>
               </Link>
-              <div className="flex items-center gap-2">
-                <Search className="w-5 h-5 text-blue-500" />
-                <span className="font-serif font-bold text-lg">UX Research</span>
-              </div>
+              <span className="font-semibold text-sm">UX Research</span>
             </div>
             <ThemeToggle />
           </div>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col max-w-4xl mx-auto w-full px-4 sm:px-6 py-6">
-        {messages.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center text-center">
-            <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6">
-              <Search className="w-8 h-8 text-blue-500" />
-            </div>
-            <h1 className="font-serif text-2xl sm:text-3xl font-bold mb-4" data-testid="text-research-title">
-              What do you want to research?
-            </h1>
-            <p className="text-muted-foreground max-w-md mb-8" data-testid="text-research-description">
-              I can help you plan user interviews, create surveys, analyze competitors, 
-              design usability tests, and synthesize research findings.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg">
-              {[
-                "Help me plan user interviews",
-                "Create a survey for product feedback",
-                "Analyze competitor UX patterns",
-                "Design a usability test protocol"
-              ].map((suggestion) => (
-                <Button
-                  key={suggestion}
-                  variant="outline"
-                  className="text-left justify-start h-auto py-3 px-4 whitespace-normal"
-                  onClick={() => {
-                    setInput(suggestion);
-                  }}
-                  data-testid={`button-suggestion-${suggestion.slice(0, 20).replace(/\s+/g, '-').toLowerCase()}`}
-                >
-                  {suggestion}
-                </Button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="flex-1 overflow-y-auto space-y-4 mb-4">
-            {messages.map((message, index) => (
-              <div key={message.id} data-testid={`message-${message.role}-${message.id}`}>
-                <ChatMessage 
-                  role={message.role} 
-                  content={message.content} 
-                  isLoading={isLoading && index === messages.length - 1 && message.role === "assistant"} 
-                />
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6">
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)]">
+              <div className="w-12 h-12 rounded-full bg-foreground flex items-center justify-center mb-6">
+                <Search className="w-6 h-6 text-background" />
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-
-        <div className="sticky bottom-0 bg-background pt-4">
-          {uploadedFile && (
-            <div className="flex items-center gap-2 mb-3 p-2 bg-muted rounded-lg">
-              <FileText className="w-4 h-4 text-blue-500" />
-              <span className="text-sm flex-1 truncate">{uploadedFile.name}</span>
-              <span className="text-xs text-muted-foreground">
-                {(uploadedFile.size / 1024).toFixed(1)} KB
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
-                onClick={removeFile}
-                data-testid="button-remove-file"
-              >
-                <X className="w-4 h-4" />
-              </Button>
+              <h1 className="text-2xl font-semibold mb-2" data-testid="text-research-title">
+                How can I help with research?
+              </h1>
+              <p className="text-muted-foreground text-center max-w-md mb-8 text-sm" data-testid="text-research-description">
+                I can help you plan user interviews, create surveys, analyze competitors, and synthesize research findings.
+              </p>
+              <div className="grid grid-cols-2 gap-2 w-full max-w-md">
+                {[
+                  "Help me plan user interviews",
+                  "Create a survey for product feedback",
+                  "Analyze competitor UX patterns",
+                  "Design a usability test protocol"
+                ].map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    className="text-left text-sm px-3.5 py-2.5 rounded-xl border border-border/60 text-muted-foreground hover:bg-muted/50 transition-colors"
+                    onClick={() => setInput(suggestion)}
+                    data-testid={`button-suggestion-${suggestion.slice(0, 20).replace(/\s+/g, '-').toLowerCase()}`}
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="py-6 space-y-6">
+              {messages.map((message, index) => (
+                <div key={message.id} data-testid={`message-${message.role}-${message.id}`}>
+                  <ChatMessage
+                    role={message.role}
+                    content={message.content}
+                    isLoading={isLoading && index === messages.length - 1 && message.role === "assistant"}
+                  />
+                </div>
+              ))}
+              <div ref={messagesEndRef} />
             </div>
           )}
-          
-          <Card>
-            <CardContent className="p-2">
-              <div className="flex items-center gap-2">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".txt,.md,.csv,.json"
-                  className="hidden"
-                  onChange={handleFileUpload}
-                  data-testid="input-file-upload"
-                />
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={isLoading}
-                  data-testid="button-upload"
-                >
-                  <Upload className="w-5 h-5" />
-                </Button>
-                <Input
-                  placeholder="Ask about UX research..."
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  disabled={isLoading}
-                  className="flex-1 border-0 focus-visible:ring-0"
-                  data-testid="input-message"
-                />
-                <Button
-                  size="icon"
-                  onClick={handleSubmitPrompt}
-                  disabled={isLoading || (!input.trim() && !uploadedFile)}
-                  data-testid="button-send"
-                >
-                  {isLoading ? (
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                  ) : (
-                    <Send className="w-5 h-5" />
-                  )}
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground text-center mt-2">
-                Upload documents (max 2MB) for context-aware assistance
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </main>
+
+      <div className="shrink-0 pb-4 pt-2 px-4">
+        <div className="max-w-3xl mx-auto">
+          {uploadedFile && (
+            <div className="flex items-center gap-2 mb-2 mx-1 px-3 py-1.5 bg-muted/60 rounded-lg w-fit">
+              <FileText className="w-3.5 h-3.5 text-muted-foreground" />
+              <span className="text-xs truncate max-w-[200px]">{uploadedFile.name}</span>
+              <button onClick={removeFile} className="p-0.5 hover:bg-muted rounded" data-testid="button-remove-file">
+                <X className="w-3 h-3 text-muted-foreground" />
+              </button>
+            </div>
+          )}
+          <div className="relative flex items-end gap-2 rounded-2xl border border-border bg-muted/30 px-3 py-2 focus-within:border-border focus-within:ring-1 focus-within:ring-ring/20">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".txt,.md,.csv,.json"
+              className="hidden"
+              onChange={handleFileUpload}
+              data-testid="input-file-upload"
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isLoading}
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground disabled:opacity-40 shrink-0 mb-0.5"
+              data-testid="button-upload"
+            >
+              <Paperclip className="w-4 h-4" />
+            </button>
+            <textarea
+              ref={textareaRef}
+              placeholder="Message UX Research..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              disabled={isLoading}
+              rows={1}
+              className="flex-1 bg-transparent resize-none text-sm leading-relaxed placeholder:text-muted-foreground/60 focus:outline-none disabled:opacity-50 py-1.5 max-h-[200px]"
+              data-testid="input-message"
+            />
+            <button
+              onClick={handleSubmitPrompt}
+              disabled={isLoading || (!input.trim() && !uploadedFile)}
+              className="p-1.5 rounded-lg bg-foreground text-background disabled:opacity-30 transition-opacity shrink-0 mb-0.5"
+              data-testid="button-send"
+            >
+              {isLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <ArrowUp className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+          <p className="text-[11px] text-muted-foreground/50 text-center mt-2">
+            AI can make mistakes. Verify important information.
+          </p>
+        </div>
+      </div>
 
       <MethodSelectorModal
         open={showMethodModal}
