@@ -82,6 +82,23 @@ const PRIORITY_DOT: Record<string, string> = {
   low: "bg-emerald-500",
 };
 
+const PRIORITY_BG: Record<string, string> = {
+  high: "bg-red-500/5",
+  medium: "bg-amber-400/5",
+  low: "bg-emerald-500/5",
+};
+
+const LANE_COLORS = [
+  { header: "bg-violet-500/10 text-violet-700 dark:text-violet-400", dot: "bg-violet-500", border: "border-violet-500/20" },
+  { header: "bg-blue-500/10 text-blue-700 dark:text-blue-400", dot: "bg-blue-500", border: "border-blue-500/20" },
+  { header: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400", dot: "bg-emerald-500", border: "border-emerald-500/20" },
+  { header: "bg-amber-500/10 text-amber-700 dark:text-amber-400", dot: "bg-amber-500", border: "border-amber-500/20" },
+  { header: "bg-rose-500/10 text-rose-700 dark:text-rose-400", dot: "bg-rose-500", border: "border-rose-500/20" },
+  { header: "bg-cyan-500/10 text-cyan-700 dark:text-cyan-400", dot: "bg-cyan-500", border: "border-cyan-500/20" },
+  { header: "bg-orange-500/10 text-orange-700 dark:text-orange-400", dot: "bg-orange-500", border: "border-orange-500/20" },
+  { header: "bg-pink-500/10 text-pink-700 dark:text-pink-400", dot: "bg-pink-500", border: "border-pink-500/20" },
+];
+
 function SortableCard({
   card,
   onEdit,
@@ -109,23 +126,25 @@ function SortableCard({
   return (
     <div ref={setNodeRef} style={style} {...attributes}>
       <div
-        className="mb-1.5 p-3 rounded-md bg-background border border-border/60 group cursor-grab active:cursor-grabbing"
+        className={`mb-2 p-3 rounded-lg ${PRIORITY_BG[card.priority]} bg-background border border-border/40 shadow-sm group cursor-grab active:cursor-grabbing`}
         {...listeners}
         data-testid={`card-task-${card.id}`}
       >
         <p className="text-sm font-medium leading-snug" data-testid={`text-card-title-${card.id}`}>{card.title}</p>
         {card.description && (
-          <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{card.description}</p>
+          <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">{card.description}</p>
         )}
-        <div className="flex items-center justify-between gap-2 mt-2">
+        <div className="flex items-center justify-between gap-2 mt-2.5">
           <div className="flex items-center gap-2">
-            <span className={`w-1.5 h-1.5 rounded-full ${PRIORITY_DOT[card.priority]}`} />
-            <span className="text-[11px] text-muted-foreground capitalize">{card.priority}</span>
+            <Badge variant="outline" className={`text-[10px] px-1.5 py-0 h-[18px] ${
+              card.priority === 'high' ? 'border-red-300 text-red-600 dark:border-red-800 dark:text-red-400' :
+              card.priority === 'medium' ? 'border-amber-300 text-amber-600 dark:border-amber-800 dark:text-amber-400' :
+              'border-emerald-300 text-emerald-600 dark:border-emerald-800 dark:text-emerald-400'
+            }`}>
+              {card.priority}
+            </Badge>
             {card.owner && (
-              <>
-                <span className="text-muted-foreground/40 text-[11px]">·</span>
-                <span className="text-[11px] text-muted-foreground truncate max-w-[80px]" data-testid={`text-owner-${card.id}`}>{card.owner}</span>
-              </>
+              <span className="text-[11px] text-muted-foreground bg-muted/50 px-1.5 py-0.5 rounded truncate max-w-[90px]" data-testid={`text-owner-${card.id}`}>{card.owner}</span>
             )}
           </div>
           <div className="flex items-center gap-0.5 invisible group-hover:visible flex-shrink-0" onPointerDown={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
@@ -150,6 +169,7 @@ function SortableCard({
 
 function SortableLane({
   lane,
+  colorIndex,
   onAddCard,
   onEditCard,
   onDeleteCard,
@@ -160,6 +180,7 @@ function SortableLane({
   onVoice,
 }: {
   lane: SprintLane;
+  colorIndex: number;
   onAddCard: (laneId: string) => void;
   onEditCard: (card: SprintCard) => void;
   onDeleteCard: (cardId: string) => void;
@@ -180,6 +201,8 @@ function SortableLane({
     opacity: isDragging ? 0.4 : 1,
   };
 
+  const color = LANE_COLORS[colorIndex % LANE_COLORS.length];
+
   return (
     <div
       ref={setNodeRef}
@@ -188,14 +211,15 @@ function SortableLane({
       className="flex-shrink-0 w-[280px]"
       data-testid={`lane-${lane.id}`}
     >
-      <div className="rounded-lg h-full flex flex-col">
-        <div className="flex items-center justify-between gap-2 mb-3 px-1">
+      <div className={`rounded-xl border ${color.border} bg-muted/20 h-full flex flex-col`}>
+        <div className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-t-xl ${color.header}`}>
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <div {...listeners} className="cursor-grab text-muted-foreground/50">
+            <div {...listeners} className="cursor-grab opacity-50 hover:opacity-100">
               <GripVertical className="w-3.5 h-3.5" />
             </div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground truncate" data-testid={`text-lane-title-${lane.id}`}>{lane.title}</h3>
-            <span className="text-[10px] text-muted-foreground/60 tabular-nums">{lane.cards.length}</span>
+            <span className={`w-2 h-2 rounded-full ${color.dot}`} />
+            <h3 className="text-xs font-bold uppercase tracking-wider truncate" data-testid={`text-lane-title-${lane.id}`}>{lane.title}</h3>
+            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-[18px] ml-auto">{lane.cards.length}</Badge>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -217,7 +241,7 @@ function SortableLane({
           </DropdownMenu>
         </div>
 
-        <div className="flex-1 min-h-[80px]">
+        <div className="flex-1 min-h-[80px] p-2">
           <SortableContext items={lane.cards.map((c) => c.id)} strategy={verticalListSortingStrategy}>
             {lane.cards.map((card) => (
               <SortableCard
@@ -232,22 +256,30 @@ function SortableLane({
           </SortableContext>
         </div>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => onAddCard(lane.id)}
-          className="w-full mt-1 text-muted-foreground/60"
-          data-testid={`button-add-card-${lane.id}`}
-        >
-          <Plus className="w-3 h-3 mr-1" /> Add
-        </Button>
+        <div className="px-2 pb-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onAddCard(lane.id)}
+            className="w-full text-muted-foreground/60"
+            data-testid={`button-add-card-${lane.id}`}
+          >
+            <Plus className="w-3 h-3 mr-1" /> Add task
+          </Button>
+        </div>
       </div>
     </div>
   );
 }
 
 export default function SprintBoardPage() {
-  const [board, setBoard] = useState<SprintBoardType>(() => loadBoard() || createEmptyBoard());
+  const [board, setBoard] = useState<SprintBoardType>(() => {
+    const saved = loadBoard();
+    if (saved) return saved;
+    const fresh = createEmptyBoard();
+    saveBoard(fresh);
+    return fresh;
+  });
   const boardRef = useRef(board);
   boardRef.current = board;
 
@@ -715,10 +747,11 @@ export default function SprintBoardPage() {
         >
           <SortableContext items={board.lanes.map((l) => l.id)} strategy={horizontalListSortingStrategy}>
             <div className="flex gap-5 items-start min-h-[calc(100vh-7rem)]">
-              {board.lanes.map((lane) => (
+              {board.lanes.map((lane, index) => (
                 <SortableLane
                   key={lane.id}
                   lane={lane}
+                  colorIndex={index}
                   onAddCard={addCard}
                   onEditCard={openEditCard}
                   onDeleteCard={deleteCard}
