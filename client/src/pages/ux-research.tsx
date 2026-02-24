@@ -5,6 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ChatMessage } from "@/components/chat-message";
+import { MethodSelectorModal } from "@/components/method-selector-modal";
+import { uxMethodsByWorkflow } from "@/lib/ux-method-options";
+import type { UxMethodOption } from "@/lib/ux-method-options";
 import {
   ArrowLeft,
   Send,
@@ -27,8 +30,11 @@ export default function UXResearch() {
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [documentContent, setDocumentContent] = useState<string>("");
+  const [showMethodModal, setShowMethodModal] = useState(false);
+  const [pendingPrompt, setPendingPrompt] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const workflowMethods = uxMethodsByWorkflow["ux-research"];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -65,17 +71,28 @@ export default function UXResearch() {
     }
   };
 
-  const sendMessage = async () => {
+  const handleSubmitPrompt = () => {
     if (!input.trim() && !uploadedFile) return;
+    setPendingPrompt(input.trim());
+    setShowMethodModal(true);
+  };
 
+  const handleMethodSelect = (method: UxMethodOption) => {
+    setShowMethodModal(false);
+    const enrichedPrompt = `[${method.label}] ${pendingPrompt}`;
+    setInput("");
+    setPendingPrompt("");
+    sendMessageWithContent(enrichedPrompt);
+  };
+
+  const sendMessageWithContent = async (content: string) => {
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: input.trim(),
+      content,
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInput("");
     setIsLoading(true);
 
     const assistantMessage: Message = {
@@ -152,7 +169,7 @@ export default function UXResearch() {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      handleSubmitPrompt();
     }
   };
 
@@ -277,7 +294,7 @@ export default function UXResearch() {
                 />
                 <Button
                   size="icon"
-                  onClick={sendMessage}
+                  onClick={handleSubmitPrompt}
                   disabled={isLoading || (!input.trim() && !uploadedFile)}
                   data-testid="button-send"
                 >
@@ -295,6 +312,15 @@ export default function UXResearch() {
           </Card>
         </div>
       </main>
+
+      <MethodSelectorModal
+        open={showMethodModal}
+        onOpenChange={setShowMethodModal}
+        title={workflowMethods.title}
+        subtitle={workflowMethods.subtitle}
+        methods={workflowMethods.methods}
+        onSelect={handleMethodSelect}
+      />
     </div>
   );
 }

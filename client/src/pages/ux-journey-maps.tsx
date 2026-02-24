@@ -5,6 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ChatMessage } from "@/components/chat-message";
+import { MethodSelectorModal } from "@/components/method-selector-modal";
+import { uxMethodsByWorkflow } from "@/lib/ux-method-options";
+import type { UxMethodOption } from "@/lib/ux-method-options";
 import { ArrowLeft, Send, Upload, X, FileText, Map, Loader2 } from "lucide-react";
 
 interface Message { id: string; role: "user" | "assistant"; content: string; }
@@ -17,6 +20,9 @@ export default function UXJourneyMaps() {
   const [documentContent, setDocumentContent] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showMethodModal, setShowMethodModal] = useState(false);
+  const [pendingPrompt, setPendingPrompt] = useState("");
+  const workflowMethods = uxMethodsByWorkflow["journey-maps"];
 
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
 
@@ -32,11 +38,23 @@ export default function UXJourneyMaps() {
 
   const removeFile = () => { setUploadedFile(null); setDocumentContent(""); if (fileInputRef.current) fileInputRef.current.value = ""; };
 
-  const sendMessage = async () => {
+  const handleSubmitPrompt = () => {
     if (!input.trim() && !uploadedFile) return;
-    const userMessage: Message = { id: Date.now().toString(), role: "user", content: input.trim() };
-    setMessages((prev) => [...prev, userMessage]);
+    setPendingPrompt(input.trim());
+    setShowMethodModal(true);
+  };
+
+  const handleMethodSelect = (method: UxMethodOption) => {
+    setShowMethodModal(false);
+    const enrichedPrompt = `[${method.label}] ${pendingPrompt}`;
     setInput("");
+    setPendingPrompt("");
+    sendMessageWithContent(enrichedPrompt);
+  };
+
+  const sendMessageWithContent = async (content: string) => {
+    const userMessage: Message = { id: Date.now().toString(), role: "user", content };
+    setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     setMessages((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: "" }]);
 
@@ -102,9 +120,17 @@ export default function UXJourneyMaps() {
         )}
         <div className="sticky bottom-0 bg-background pt-4">
           {uploadedFile && (<div className="flex items-center gap-2 mb-3 p-2 bg-muted rounded-lg"><FileText className="w-4 h-4 text-green-500" /><span className="text-sm flex-1 truncate">{uploadedFile.name}</span><span className="text-xs text-muted-foreground">{(uploadedFile.size / 1024).toFixed(1)} KB</span><Button variant="ghost" size="icon" className="h-6 w-6" onClick={removeFile}><X className="w-4 h-4" /></Button></div>)}
-          <Card><CardContent className="p-2"><div className="flex items-center gap-2"><input ref={fileInputRef} type="file" accept=".txt,.md,.csv,.json" className="hidden" onChange={handleFileUpload} /><Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()} disabled={isLoading}><Upload className="w-5 h-5" /></Button><Input placeholder="Describe the journey or flow..." value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }} disabled={isLoading} className="flex-1 border-0 focus-visible:ring-0" /><Button size="icon" onClick={sendMessage} disabled={isLoading || (!input.trim() && !uploadedFile)}>{isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}</Button></div><p className="text-xs text-muted-foreground text-center mt-2">Upload context documents (max 2MB)</p></CardContent></Card>
+          <Card><CardContent className="p-2"><div className="flex items-center gap-2"><input ref={fileInputRef} type="file" accept=".txt,.md,.csv,.json" className="hidden" onChange={handleFileUpload} /><Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()} disabled={isLoading}><Upload className="w-5 h-5" /></Button><Input placeholder="Describe the journey or flow..." value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitPrompt(); } }} disabled={isLoading} className="flex-1 border-0 focus-visible:ring-0" /><Button size="icon" onClick={handleSubmitPrompt} disabled={isLoading || (!input.trim() && !uploadedFile)}>{isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}</Button></div><p className="text-xs text-muted-foreground text-center mt-2">Upload context documents (max 2MB)</p></CardContent></Card>
         </div>
       </main>
+      <MethodSelectorModal
+        open={showMethodModal}
+        onOpenChange={setShowMethodModal}
+        title={workflowMethods.title}
+        subtitle={workflowMethods.subtitle}
+        methods={workflowMethods.methods}
+        onSelect={handleMethodSelect}
+      />
     </div>
   );
 }

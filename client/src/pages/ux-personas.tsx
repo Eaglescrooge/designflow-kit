@@ -5,6 +5,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ChatMessage } from "@/components/chat-message";
+import { MethodSelectorModal } from "@/components/method-selector-modal";
+import { uxMethodsByWorkflow } from "@/lib/ux-method-options";
+import type { UxMethodOption } from "@/lib/ux-method-options";
 import {
   ArrowLeft,
   Send,
@@ -29,6 +32,9 @@ export default function UXPersonas() {
   const [documentContent, setDocumentContent] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showMethodModal, setShowMethodModal] = useState(false);
+  const [pendingPrompt, setPendingPrompt] = useState("");
+  const workflowMethods = uxMethodsByWorkflow["personas"];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -60,11 +66,23 @@ export default function UXPersonas() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const sendMessage = async () => {
+  const handleSubmitPrompt = () => {
     if (!input.trim() && !uploadedFile) return;
-    const userMessage: Message = { id: Date.now().toString(), role: "user", content: input.trim() };
-    setMessages((prev) => [...prev, userMessage]);
+    setPendingPrompt(input.trim());
+    setShowMethodModal(true);
+  };
+
+  const handleMethodSelect = (method: UxMethodOption) => {
+    setShowMethodModal(false);
+    const enrichedPrompt = `[${method.label}] ${pendingPrompt}`;
     setInput("");
+    setPendingPrompt("");
+    sendMessageWithContent(enrichedPrompt);
+  };
+
+  const sendMessageWithContent = async (content: string) => {
+    const userMessage: Message = { id: Date.now().toString(), role: "user", content };
+    setMessages((prev) => [...prev, userMessage]);
     setIsLoading(true);
     const assistantMessage: Message = { id: (Date.now() + 1).toString(), role: "assistant", content: "" };
     setMessages((prev) => [...prev, assistantMessage]);
@@ -121,7 +139,7 @@ export default function UXPersonas() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleSubmitPrompt(); }
   };
 
   return (
@@ -181,13 +199,21 @@ export default function UXPersonas() {
                 <input ref={fileInputRef} type="file" accept=".txt,.md,.csv,.json" className="hidden" onChange={handleFileUpload} data-testid="input-file-upload" />
                 <Button variant="ghost" size="icon" onClick={() => fileInputRef.current?.click()} disabled={isLoading} data-testid="button-upload"><Upload className="w-5 h-5" /></Button>
                 <Input placeholder="Describe the persona you need..." value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} disabled={isLoading} className="flex-1 border-0 focus-visible:ring-0" data-testid="input-message" />
-                <Button size="icon" onClick={sendMessage} disabled={isLoading || (!input.trim() && !uploadedFile)} data-testid="button-send">{isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}</Button>
+                <Button size="icon" onClick={handleSubmitPrompt} disabled={isLoading || (!input.trim() && !uploadedFile)} data-testid="button-send">{isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}</Button>
               </div>
               <p className="text-xs text-muted-foreground text-center mt-2">Upload research data (max 2MB) for personalized personas</p>
             </CardContent>
           </Card>
         </div>
       </main>
+      <MethodSelectorModal
+        open={showMethodModal}
+        onOpenChange={setShowMethodModal}
+        title={workflowMethods.title}
+        subtitle={workflowMethods.subtitle}
+        methods={workflowMethods.methods}
+        onSelect={handleMethodSelect}
+      />
     </div>
   );
 }
