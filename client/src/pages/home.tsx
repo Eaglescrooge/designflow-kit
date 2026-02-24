@@ -33,7 +33,7 @@ import {
   Search,
   Layers
 } from "lucide-react";
-import { SiGithub, SiX, SiLinkedin } from "react-icons/si";
+import { SiGithub, SiLinkedin, SiInstagram } from "react-icons/si";
 import { useState, useRef, useEffect, type MouseEvent } from "react";
 import {
   DropdownMenu,
@@ -876,9 +876,11 @@ function Footer() {
                   <SiGithub className="w-5 h-5" />
                 </Button>
               </a>
-              <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-twitter">
-                <SiX className="w-5 h-5" />
-              </Button>
+              <a href="https://www.instagram.com/designflowkit/" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-instagram">
+                  <SiInstagram className="w-5 h-5" />
+                </Button>
+              </a>
               <a href="https://www.linkedin.com/company/designflowkit/" target="_blank" rel="noopener noreferrer">
                 <Button variant="ghost" size="icon" className="hover-elevate" data-testid="button-social-linkedin">
                   <SiLinkedin className="w-5 h-5" />
