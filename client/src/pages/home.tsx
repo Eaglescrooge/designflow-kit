@@ -947,7 +947,7 @@ function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <Link href="/" className="flex items-center gap-2" data-testid="link-footer-logo">
-              <img src="/logo.png" alt="DesignFlow Logo" className="w-8 h-8 rounded-md" />
+              <img src="/logo.png" alt="DesignFlow Logo" className="w-8 h-8 rounded-full" />
               <span className="font-serif font-bold text-lg">DesignFlow</span>
             </Link>
             <p className="text-sm text-muted-foreground">
