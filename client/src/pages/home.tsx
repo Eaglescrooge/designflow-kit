@@ -421,8 +421,8 @@ function HeroSection() {
             </div>
             
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]" data-testid="text-hero-title">
-              Design Smarter,
-              <span className="text-primary block mt-2">Ship Faster</span>
+              <span className="block animate-[slideInLeft_0.7s_ease-out_both]">Design Smarter,</span>
+              <span className="text-primary block mt-2 animate-[slideInRight_0.7s_ease-out_0.3s_both]">Ship Faster</span>
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed" data-testid="text-hero-description">
