@@ -410,6 +410,15 @@ function Navigation() {
 }
 
 function HeroSection() {
+  const [animKey, setAnimKey] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAnimKey(k => k + 1);
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="min-h-screen pt-24 pb-20 lg:pt-32 lg:pb-32 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -421,8 +430,8 @@ function HeroSection() {
             </div>
             
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1]" data-testid="text-hero-title">
-              <span className="block animate-[slideInLeft_0.7s_ease-out_both]">Design Smarter,</span>
-              <span className="text-primary block mt-2 animate-[slideInRight_0.7s_ease-out_0.3s_both]">Ship Faster</span>
+              <span key={`left-${animKey}`} className="block animate-[slideInLeft_0.7s_ease-out_both]">Design Smarter,</span>
+              <span key={`right-${animKey}`} className="text-primary block mt-2 animate-[slideInRight_0.7s_ease-out_0.3s_both]">Ship Faster</span>
             </h1>
             
             <p className="text-lg lg:text-xl text-muted-foreground max-w-xl leading-relaxed" data-testid="text-hero-description">
@@ -476,7 +485,7 @@ function HeroSection() {
                 </div>
                 <CardContent className="p-6 space-y-4">
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3">
+                    <div key={`row1-${animKey}`} className="flex items-center gap-3 animate-[fadeSlideUp_0.5s_ease-out_0.1s_both]">
                       <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                         <Sparkles className="w-5 h-5 text-primary" />
                       </div>
@@ -487,7 +496,7 @@ function HeroSection() {
                       <Badge variant="secondary" className="ml-auto">AI</Badge>
                     </div>
                     
-                    <div className="flex items-center gap-3">
+                    <div key={`row2-${animKey}`} className="flex items-center gap-3 animate-[fadeSlideUp_0.5s_ease-out_0.3s_both]">
                       <div className="w-10 h-10 rounded-lg bg-chart-2/10 flex items-center justify-center">
                         <Box className="w-5 h-5 text-chart-2" />
                       </div>
@@ -498,7 +507,7 @@ function HeroSection() {
                       <Badge variant="secondary" className="ml-auto">Active</Badge>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div key={`row3-${animKey}`} className="flex items-center gap-3 animate-[fadeSlideUp_0.5s_ease-out_0.5s_both]">
                       <div className="w-10 h-10 rounded-lg bg-chart-3/10 flex items-center justify-center">
                         <Zap className="w-5 h-5 text-chart-3" />
                       </div>
@@ -510,13 +519,13 @@ function HeroSection() {
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-border">
+                  <div key={`row4-${animKey}`} className="pt-4 border-t border-border animate-[fadeSlideUp_0.5s_ease-out_0.7s_both]">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Integrations</span>
                       <span className="font-medium text-chart-2">41+ tools connected</span>
                     </div>
                     <div className="mt-2 h-2 rounded-full bg-muted overflow-hidden">
-                      <div className="h-full w-full bg-gradient-to-r from-chart-2 to-primary rounded-full" />
+                      <div key={`bar-${animKey}`} className="h-full bg-gradient-to-r from-chart-2 to-primary rounded-full animate-[growWidth_1s_ease-out_0.9s_both]" />
                     </div>
                   </div>
                 </CardContent>
