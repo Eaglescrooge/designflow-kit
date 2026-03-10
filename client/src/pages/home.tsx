@@ -31,7 +31,8 @@ import {
   TestTube,
   FileText,
   Search,
-  Layers
+  Layers,
+  GitFork
 } from "lucide-react";
 import { SiGithub, SiLinkedin, SiInstagram, SiFigma, SiMiro, SiNotion, SiJira, SiSlack, SiStorybook, SiAdobe, SiAsana, SiTrello } from "react-icons/si";
 import { useState, useRef, useEffect, type MouseEvent } from "react";
@@ -456,18 +457,35 @@ function HeroSection() {
 
             <div className="flex items-center gap-6 pt-4">
               <div className="flex -space-x-2">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div 
-                    key={i}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-primary/60 border-2 border-background flex items-center justify-center text-xs font-medium text-primary-foreground"
-                  >
-                    {String.fromCharCode(64 + i)}
-                  </div>
+                {[
+                  { bg: "bg-yellow-200", seed: "Luna" },
+                  { bg: "bg-blue-200", seed: "Felix" },
+                  { bg: "bg-green-200", seed: "Mia" },
+                  { bg: "bg-purple-200", seed: "Kai" },
+                  { bg: "bg-pink-200", seed: "Zara" },
+                  { bg: "bg-orange-200", seed: "Leo" },
+                ].map((avatar) => (
+                  <img
+                    key={avatar.seed}
+                    src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${avatar.seed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf`}
+                    alt={avatar.seed}
+                    className="w-9 h-9 rounded-full border-2 border-background"
+                    data-testid={`avatar-${avatar.seed.toLowerCase()}`}
+                  />
                 ))}
               </div>
-              <p className="text-sm text-muted-foreground">
-                <span className="font-semibold text-foreground">150+</span> contributors worldwide
-              </p>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-3 text-sm">
+                  <span className="flex items-center gap-1 font-semibold text-foreground">
+                    <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" /> 203
+                  </span>
+                  <span className="text-muted-foreground/40">·</span>
+                  <span className="flex items-center gap-1 font-semibold text-foreground">
+                    <GitFork className="w-3.5 h-3.5 text-muted-foreground" /> 158
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">stars & forks on GitHub</p>
+              </div>
             </div>
           </div>
 
@@ -894,18 +912,27 @@ function OpenSourceCTASection() {
 
         <div className="flex items-center justify-center gap-8 pt-8">
           <div className="text-center">
-            <p className="font-serif text-2xl font-bold">8</p>
-            <p className="text-sm text-muted-foreground">AI Chat Tools</p>
+            <p className="font-serif text-2xl font-bold flex items-center justify-center gap-1">
+              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" /> 203
+            </p>
+            <p className="text-sm text-muted-foreground">GitHub Stars</p>
           </div>
           <div className="w-px h-12 bg-border" />
           <div className="text-center">
-            <p className="font-serif text-2xl font-bold">30+</p>
-            <p className="text-sm text-muted-foreground">AI Workflows</p>
+            <p className="font-serif text-2xl font-bold flex items-center justify-center gap-1">
+              <GitFork className="w-4 h-4 text-muted-foreground" /> 158
+            </p>
+            <p className="text-sm text-muted-foreground">Forks</p>
           </div>
           <div className="w-px h-12 bg-border" />
           <div className="text-center">
             <p className="font-serif text-2xl font-bold">41+</p>
             <p className="text-sm text-muted-foreground">Integrations</p>
+          </div>
+          <div className="w-px h-12 bg-border" />
+          <div className="text-center">
+            <p className="font-serif text-2xl font-bold">8</p>
+            <p className="text-sm text-muted-foreground">AI Tools</p>
           </div>
         </div>
       </div>
