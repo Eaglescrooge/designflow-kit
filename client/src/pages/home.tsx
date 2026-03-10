@@ -441,13 +441,13 @@ function HeroSection() {
 
             <div className="flex flex-wrap gap-4">
               <Link href="/dashboard">
-                <Button size="lg" className="gap-2" data-testid="button-get-started-hero">
+                <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-blue-500 border-0 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" data-testid="button-get-started-hero">
                   Get Started Free
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
               <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
-                <Button variant="outline" size="lg" className="gap-2" data-testid="button-github-hero">
+                <Button variant="outline" size="lg" className="gap-2 backdrop-blur-sm" data-testid="button-github-hero">
                   <SiGithub className="w-5 h-5" />
                   View on GitHub
                 </Button>
@@ -822,13 +822,13 @@ function GettingStartedSection() {
             
             <div className="flex flex-wrap gap-4">
               <Link href="/docs">
-                <Button size="lg" className="gap-2" data-testid="button-read-docs">
+                <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-blue-500 border-0 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" data-testid="button-read-docs">
                   Read the docs
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
               <Link href="/dashboard">
-                <Button variant="outline" size="lg" data-testid="button-view-examples">
+                <Button variant="outline" size="lg" className="backdrop-blur-sm" data-testid="button-view-examples">
                   View examples
                 </Button>
               </Link>
@@ -879,13 +879,13 @@ function OpenSourceCTASection() {
 
         <div className="flex flex-wrap justify-center gap-4">
           <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
-            <Button size="lg" className="gap-2" data-testid="button-star-github">
+            <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-blue-500 border-0 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" data-testid="button-star-github">
               <Star className="w-5 h-5" />
               Star on GitHub
             </Button>
           </a>
           <a href="https://github.com/Eaglescrooge/designflow-kit" target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="lg" className="gap-2" data-testid="button-contribute">
+            <Button variant="outline" size="lg" className="gap-2 backdrop-blur-sm" data-testid="button-contribute">
               <Github className="w-5 h-5" />
               Contribute
             </Button>
