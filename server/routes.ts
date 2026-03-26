@@ -48,7 +48,12 @@ async function sendOtpEmail(email: string, code: string): Promise<boolean> {
           </div>`,
       }),
     });
-    return res.ok;
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      console.error("[OTP] Resend API error:", res.status, JSON.stringify(body));
+      return false;
+    }
+    return true;
   } catch (err) {
     console.error("[OTP] Email send failed:", err);
     return false;
