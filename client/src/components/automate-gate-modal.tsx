@@ -23,6 +23,7 @@ import {
   User,
   CheckCircle2,
   AlertTriangle,
+  Loader2,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -55,12 +56,13 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [demoOtp, setDemoOtp] = useState<string | null>(null);
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [verifying, setVerifying] = useState(false);
 
   const resetState = () => {
     setStep("email");
@@ -70,7 +72,9 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
     setOtpError("");
     setSelectedRole("");
     setOtpSent(false);
-    setGeneratedOtp("");
+    setSending(false);
+    setVerifying(false);
+    setDemoOtp(null);
   };
 
   useEffect(() => {
@@ -79,33 +83,58 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
 
   const validateEmail = (val: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
 
-  const handleSendOtp = () => {
+  const handleSendOtp = async () => {
     if (!validateEmail(email)) {
       setEmailError("Please enter a valid email address");
       return;
     }
     setEmailError("");
     setSending(true);
-    const code = String(Math.floor(100000 + Math.random() * 900000));
-    setGeneratedOtp(code);
-    setTimeout(() => {
-      setSending(false);
+    try {
+      const res = await fetch("/api/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.demo && data.code) {
+        setDemoOtp(data.code);
+      } else {
+        setDemoOtp(null);
+      }
       setOtpSent(true);
       setStep("otp");
-    }, 900);
+    } catch {
+      setEmailError("Failed to send code. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
-  const handleVerifyOtp = () => {
+  const handleVerifyOtp = async () => {
     if (otp.length !== 6) {
       setOtpError("Please enter the 6-digit code");
       return;
     }
-    if (otp !== generatedOtp) {
-      setOtpError("Incorrect code. Please try again.");
-      return;
+    setVerifying(true);
+    try {
+      const res = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, code: otp }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setOtpError(data.error || "Incorrect code. Please try again.");
+        return;
+      }
+      setOtpError("");
+      setStep("role");
+    } catch {
+      setOtpError("Verification failed. Please try again.");
+    } finally {
+      setVerifying(false);
     }
-    setOtpError("");
-    setStep("role");
   };
 
   const handleComplete = () => {
@@ -207,13 +236,20 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
                   We sent a 6-digit code to <strong className="text-foreground">{email}</strong>
                 </DialogDescription>
               </DialogHeader>
-              <div className="mb-4 p-3 rounded-xl bg-primary/5 border border-primary/20 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
-                <span className="text-xs text-muted-foreground">Your OTP code (demo):</span>
-                <span className="ml-auto font-mono font-bold text-primary tracking-widest text-sm" data-testid="text-gate-otp-demo">
-                  {generatedOtp}
-                </span>
-              </div>
+              {demoOtp ? (
+                <div className="mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0" />
+                  <span className="text-xs text-muted-foreground">Email not configured — dev code:</span>
+                  <span className="ml-auto font-mono font-bold text-amber-600 dark:text-amber-400 tracking-widest text-sm" data-testid="text-gate-otp-demo">
+                    {demoOtp}
+                  </span>
+                </div>
+              ) : (
+                <div className="mb-4 p-3 rounded-xl bg-primary/5 border border-primary/20 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
+                  <span className="text-xs text-muted-foreground">Code sent — check your inbox (and spam folder)</span>
+                </div>
+              )}
               <div className="space-y-3">
                 <div>
                   <Input
@@ -229,6 +265,7 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
                     }}
                     onKeyDown={(e) => e.key === "Enter" && handleVerifyOtp()}
                     data-testid="input-gate-otp"
+                    autoFocus
                   />
                   {otpError && (
                     <p className="text-xs text-destructive mt-1.5 ml-1 flex items-center gap-1">
@@ -239,21 +276,31 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
                 <Button
                   className="w-full gap-2 bg-gradient-to-r from-primary to-blue-500 border-0"
                   onClick={handleVerifyOtp}
+                  disabled={verifying || otp.length < 6}
                   data-testid="button-gate-verify-otp"
                 >
-                  Verify code
-                  <ChevronRight className="w-4 h-4" />
+                  {verifying ? (
+                    <><Loader2 className="w-4 h-4 animate-spin" /> Verifying…</>
+                  ) : (
+                    <>Verify code <ChevronRight className="w-4 h-4" /></>
+                  )}
                 </Button>
-                <button
-                  className="text-xs text-muted-foreground hover:text-primary w-full text-center transition-colors"
-                  onClick={() => {
-                    setStep("email");
-                    setOtp("");
-                    setOtpError("");
-                  }}
-                >
-                  Use a different email
-                </button>
+                <div className="flex items-center justify-center gap-4">
+                  <button
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                    onClick={() => { setStep("email"); setOtp(""); setOtpError(""); setDemoOtp(null); }}
+                  >
+                    Use a different email
+                  </button>
+                  <span className="w-px h-3 bg-border" />
+                  <button
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                    onClick={handleSendOtp}
+                    disabled={sending}
+                  >
+                    Resend code
+                  </button>
+                </div>
               </div>
             </>
           )}

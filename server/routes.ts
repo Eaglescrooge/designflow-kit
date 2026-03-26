@@ -11,6 +11,50 @@ const openai = new OpenAI({
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
+interface OtpRecord {
+  code: string;
+  email: string;
+  expires: number;
+}
+const otpStore = new Map<string, OtpRecord>();
+
+function generateOtp(): string {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+async function sendOtpEmail(email: string, code: string): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn("[OTP] RESEND_API_KEY not set — OTP:", code);
+    return false;
+  }
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "DesignFlow Kit <onboarding@resend.dev>",
+        to: [email],
+        subject: "Your DesignFlow Kit verification code",
+        html: `
+          <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px">
+            <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Verify your email</h2>
+            <p style="color:#6b7280;font-size:14px;margin-bottom:24px">Enter this code to complete your DesignFlow Kit sign-up. It expires in 10 minutes.</p>
+            <div style="background:#f3f4f6;border-radius:12px;padding:20px 32px;text-align:center;letter-spacing:0.2em;font-size:36px;font-weight:700;font-family:monospace;color:#111827">${code}</div>
+            <p style="color:#9ca3af;font-size:12px;margin-top:24px">If you didn't request this, you can ignore this email.</p>
+          </div>`,
+      }),
+    });
+    return res.ok;
+  } catch (err) {
+    console.error("[OTP] Email send failed:", err);
+    return false;
+  }
+}
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
@@ -102,6 +146,41 @@ export async function registerRoutes(
       console.error("Transcription error:", error);
       res.status(500).json({ error: "Failed to transcribe audio" });
     }
+  });
+
+  app.post("/api/send-otp", async (req: Request, res: Response) => {
+    const { email } = req.body;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(400).json({ error: "Invalid email address" });
+    }
+    const code = generateOtp();
+    otpStore.set(email.toLowerCase(), { code, email, expires: Date.now() + 10 * 60 * 1000 });
+    const sent = await sendOtpEmail(email, code);
+    if (!sent) {
+      const hasKey = !!process.env.RESEND_API_KEY;
+      return res.status(hasKey ? 500 : 503).json({
+        error: hasKey ? "Failed to send email" : "Email service not configured",
+        demo: !hasKey,
+        code: !hasKey ? code : undefined,
+      });
+    }
+    return res.json({ ok: true });
+  });
+
+  app.post("/api/verify-otp", (req: Request, res: Response) => {
+    const { email, code } = req.body;
+    if (!email || !code) return res.status(400).json({ error: "Missing fields" });
+    const record = otpStore.get(email.toLowerCase());
+    if (!record) return res.status(400).json({ error: "No OTP found for this email. Please request a new one." });
+    if (Date.now() > record.expires) {
+      otpStore.delete(email.toLowerCase());
+      return res.status(400).json({ error: "OTP has expired. Please request a new one." });
+    }
+    if (record.code !== String(code).trim()) {
+      return res.status(400).json({ error: "Incorrect code. Please try again." });
+    }
+    otpStore.delete(email.toLowerCase());
+    return res.json({ ok: true });
   });
 
   return httpServer;
