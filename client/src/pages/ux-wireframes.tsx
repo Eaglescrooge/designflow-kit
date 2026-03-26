@@ -8,6 +8,8 @@ import { uxMethodsByWorkflow } from "@/lib/ux-method-options";
 import type { UxMethodOption } from "@/lib/ux-method-options";
 import { useAutomateGate } from "@/hooks/use-automate-gate";
 import { AutomateGateModal, LockoutScreen } from "@/components/automate-gate-modal";
+import { useSavedPrompts } from "@/hooks/use-saved-prompts";
+import { SavedPromptsPane } from "@/components/saved-prompts-pane";
 import {
   ArrowLeft,
   ArrowUp,
@@ -15,7 +17,8 @@ import {
   X,
   FileText,
   PenTool,
-  Loader2
+  Loader2,
+  LayoutList
 } from "lucide-react";
 
 interface Message {
@@ -37,6 +40,8 @@ export default function UXWireframes() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const workflowMethods = uxMethodsByWorkflow["wireframes"];
   const { showGate, isLocked, lockedUntil, checkGate, handleUnlocked, handleDismissed } = useAutomateGate();
+  const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
+  const [paneOpen, setPaneOpen] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -88,6 +93,7 @@ export default function UXWireframes() {
     const enrichedPrompt = `[${method.label}] ${pendingPrompt}`;
     setInput("");
     setPendingPrompt("");
+    savePrompt(enrichedPrompt, "wireframes", "Wireframes");
     sendMessageWithContent(enrichedPrompt);
   };
 
@@ -187,7 +193,21 @@ export default function UXWireframes() {
               </Link>
               <span className="font-semibold text-sm">Low Fidelity Wireframes</span>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 relative"
+                onClick={() => setPaneOpen(true)}
+                data-testid="button-open-saved-pane"
+              >
+                <LayoutList className="w-4 h-4" />
+                {prompts.length > 0 && (
+                  <span className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-primary" />
+                )}
+              </Button>
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>
