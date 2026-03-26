@@ -6,6 +6,8 @@ import { ChatMessage } from "@/components/chat-message";
 import { MethodSelectorModal } from "@/components/method-selector-modal";
 import { uxMethodsByWorkflow } from "@/lib/ux-method-options";
 import type { UxMethodOption } from "@/lib/ux-method-options";
+import { useAutomateGate } from "@/hooks/use-automate-gate";
+import { AutomateGateModal, LockoutScreen } from "@/components/automate-gate-modal";
 import {
   ArrowLeft,
   ArrowUp,
@@ -34,6 +36,7 @@ export default function UXJourneyMaps() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const workflowMethods = uxMethodsByWorkflow["journey-maps"];
+  const { showGate, isLocked, lockedUntil, checkGate, handleUnlocked, handleDismissed } = useAutomateGate();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -74,8 +77,10 @@ export default function UXJourneyMaps() {
 
   const handleSubmitPrompt = () => {
     if (!input.trim() && !uploadedFile) return;
-    setPendingPrompt(input.trim());
-    setShowMethodModal(true);
+    checkGate(() => {
+      setPendingPrompt(input.trim());
+      setShowMethodModal(true);
+    });
   };
 
   const handleMethodSelect = (method: UxMethodOption) => {
@@ -187,7 +192,8 @@ export default function UXJourneyMaps() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto">
+      {isLocked && lockedUntil && <LockoutScreen lockedUntil={lockedUntil} />}
+      <main className="flex-1 overflow-y-auto" style={{ display: isLocked ? "none" : undefined }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)]">
@@ -235,7 +241,7 @@ export default function UXJourneyMaps() {
         </div>
       </main>
 
-      <div className="shrink-0 pb-4 pt-2 px-4">
+      <div className="shrink-0 pb-4 pt-2 px-4" style={{ display: isLocked ? "none" : undefined }}>
         <div className="max-w-3xl mx-auto">
           {uploadedFile && (
             <div className="flex items-center gap-2 mb-2 mx-1 px-3 py-1.5 bg-muted/60 rounded-lg w-fit">
@@ -293,6 +299,11 @@ export default function UXJourneyMaps() {
         </div>
       </div>
 
+      <AutomateGateModal
+        open={showGate}
+        onUnlocked={handleUnlocked}
+        onDismissed={handleDismissed}
+      />
       <MethodSelectorModal
         open={showMethodModal}
         onOpenChange={setShowMethodModal}
