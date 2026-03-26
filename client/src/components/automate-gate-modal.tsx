@@ -326,55 +326,49 @@ export function LockoutScreen({ lockedUntil, onUnlockNow }: LockoutScreenProps) 
   }, [lockedUntil]);
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 py-20 px-6 text-center gap-6">
-      <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
-        <Clock className="w-8 h-8 text-muted-foreground" />
+    <div className="flex flex-col items-center justify-center flex-1 px-6 text-center gap-5">
+      <Clock className="w-6 h-6 text-muted-foreground/50" />
+
+      <div>
+        <h2 className="font-semibold text-base">Access paused</h2>
+        <p className="text-muted-foreground/60 text-xs mt-1">Resumes in</p>
       </div>
-      <div className="space-y-2">
-        <h2 className="font-bold text-xl">Automate UX is paused</h2>
-        <p className="text-muted-foreground text-sm max-w-sm leading-relaxed">
-          You closed the sign-up without completing it. Access will resume in:
-        </p>
-      </div>
-      <div className="px-8 py-4 rounded-2xl bg-muted border border-border font-mono text-4xl font-bold tracking-widest text-foreground" data-testid="text-lockout-countdown">
+
+      <div className="font-mono text-5xl font-bold tracking-widest tabular-nums text-foreground" data-testid="text-lockout-countdown">
         {formatCountdown(remaining)}
       </div>
 
       {onUnlockNow && (
-        <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
-          Don't want to wait?{" "}
+        <p className="text-xs text-muted-foreground/60">
+          or{" "}
           <button
             onClick={onUnlockNow}
-            className="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors"
+            className="text-primary underline underline-offset-2 hover:text-primary/70 transition-colors"
             data-testid="button-unlock-now"
           >
-            Provide your information now
-          </button>{" "}
-          to get immediate access.
+            complete sign-up now
+          </button>
         </p>
       )}
 
-      <div className="max-w-sm space-y-3">
-        <p className="text-sm text-muted-foreground">
-          In the meantime, you can still use all other DesignFlow Kit features.
-        </p>
-        <div className="flex flex-wrap justify-center gap-2">
-          <Link href="/dashboard">
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <BarChart2 className="w-3.5 h-3.5" /> Dashboard
-            </Button>
-          </Link>
-          <Link href="/sprint-board">
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" /> Sprint Board
-            </Button>
-          </Link>
-          <Link href="/integrations">
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <Code2 className="w-3.5 h-3.5" /> Integrations
-            </Button>
-          </Link>
-        </div>
+      <div className="flex items-center gap-3 pt-2">
+        <Link href="/dashboard">
+          <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/60 h-7 px-3">
+            Dashboard
+          </Button>
+        </Link>
+        <span className="w-px h-3 bg-border" />
+        <Link href="/sprint-board">
+          <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/60 h-7 px-3">
+            Sprint Board
+          </Button>
+        </Link>
+        <span className="w-px h-3 bg-border" />
+        <Link href="/integrations">
+          <Button variant="ghost" size="sm" className="text-xs text-muted-foreground/60 h-7 px-3">
+            Integrations
+          </Button>
+        </Link>
       </div>
     </div>
   );
