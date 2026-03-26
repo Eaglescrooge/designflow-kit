@@ -64,7 +64,9 @@ export function useAutomateGate() {
     localStorage.setItem(KEYS.unlocked, "true");
     localStorage.setItem(KEYS.userEmail, email);
     localStorage.setItem(KEYS.userRole, role);
+    localStorage.removeItem(KEYS.lockedUntil);
     setUnlocked(true);
+    setLockedUntil(null);
     setShowGate(false);
     if (pendingAction) {
       pendingAction();
@@ -80,6 +82,10 @@ export function useAutomateGate() {
     setPendingAction(null);
   }, []);
 
+  const openGate = useCallback(() => {
+    setShowGate(true);
+  }, []);
+
   return {
     showGate,
     isLocked,
@@ -87,5 +93,6 @@ export function useAutomateGate() {
     checkGate,
     handleUnlocked,
     handleDismissed,
+    openGate,
   };
 }

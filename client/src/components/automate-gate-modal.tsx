@@ -310,9 +310,10 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
 
 interface LockoutScreenProps {
   lockedUntil: number;
+  onUnlockNow?: () => void;
 }
 
-export function LockoutScreen({ lockedUntil }: LockoutScreenProps) {
+export function LockoutScreen({ lockedUntil, onUnlockNow }: LockoutScreenProps) {
   const [remaining, setRemaining] = useState(() => Math.max(0, lockedUntil - Date.now()));
 
   useEffect(() => {
@@ -331,14 +332,29 @@ export function LockoutScreen({ lockedUntil }: LockoutScreenProps) {
       </div>
       <div className="space-y-2">
         <h2 className="font-bold text-xl">Automate UX is paused</h2>
-        <p className="text-muted-foreground text-sm max-w-sm">
+        <p className="text-muted-foreground text-sm max-w-sm leading-relaxed">
           You closed the sign-up without completing it. Access will resume in:
         </p>
       </div>
       <div className="px-8 py-4 rounded-2xl bg-muted border border-border font-mono text-4xl font-bold tracking-widest text-foreground" data-testid="text-lockout-countdown">
         {formatCountdown(remaining)}
       </div>
-      <div className="mt-2 max-w-sm space-y-3">
+
+      {onUnlockNow && (
+        <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
+          Don't want to wait?{" "}
+          <button
+            onClick={onUnlockNow}
+            className="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors"
+            data-testid="button-unlock-now"
+          >
+            Provide your information now
+          </button>{" "}
+          to get immediate access.
+        </p>
+      )}
+
+      <div className="max-w-sm space-y-3">
         <p className="text-sm text-muted-foreground">
           In the meantime, you can still use all other DesignFlow Kit features.
         </p>

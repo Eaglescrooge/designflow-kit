@@ -39,7 +39,7 @@ export default function UXAIAnalysis() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const workflowMethods = uxMethodsByWorkflow["ai-analysis"];
-  const { showGate, isLocked, lockedUntil, checkGate, handleUnlocked, handleDismissed } = useAutomateGate();
+  const { showGate, isLocked, lockedUntil, checkGate, handleUnlocked, handleDismissed, openGate } = useAutomateGate();
   const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
   const [paneOpen, setPaneOpen] = useState(false);
 
@@ -212,7 +212,7 @@ export default function UXAIAnalysis() {
         </div>
       </header>
 
-      {isLocked && lockedUntil && <LockoutScreen lockedUntil={lockedUntil} />}
+      {isLocked && lockedUntil && <LockoutScreen lockedUntil={lockedUntil} onUnlockNow={openGate} />}
       <main className="flex-1 overflow-y-auto" style={{ display: isLocked ? "none" : undefined }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           {messages.length === 0 ? (
