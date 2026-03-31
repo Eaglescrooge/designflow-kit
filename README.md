@@ -1,206 +1,249 @@
-# DesignFlow Kit
+<div align="center">
+    <h1>⚡ DesignFlow Kit</h1>
+    <p><strong>An open-source, AI-powered UX/Product Design Toolkit — from research to handover.</strong></p>
 
-An open-source UX/Product Design toolkit that streamlines your entire design workflow from pre-design research to post-launch testing.
+    <p>
+      <a href="https://github.com/Eaglescrooge/designflow-kit/stargazers"><img src="https://img.shields.io/github/stars/Eaglescrooge/designflow-kit?style=flat-square&color=6366f1" alt="Stars" /></a>
+      <a href="https://github.com/Eaglescrooge/designflow-kit/network/members"><img src="https://img.shields.io/github/forks/Eaglescrooge/designflow-kit?style=flat-square&color=3b82f6" alt="Forks" /></a>
+      <a href="https://github.com/Eaglescrooge/designflow-kit/issues"><img src="https://img.shields.io/github/issues/Eaglescrooge/designflow-kit?style=flat-square" alt="Issues" /></a>
+      <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="MIT License" /></a>
+      <a href="https://github.com/Eaglescrooge/designflow-kit/blob/main/CONTRIBUTING.md"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen?style=flat-square" alt="Contributions Welcome" /></a>
+    </p>
 
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/Eaglescrooge/designflow-kit)](https://github.com/Eaglescrooge/designflow-kit)
-[![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
+    <br />
 
-## Overview
+    <p>
+      <a href="https://designflow-kit.replit.app"><strong>🚀 Live Demo</strong></a> &nbsp;·&nbsp;
+      <a href="https://github.com/Eaglescrooge/designflow-kit/issues/new?template=bug_report.md">Report Bug</a> &nbsp;·&nbsp;
+      <a href="https://github.com/Eaglescrooge/designflow-kit/issues/new?template=feature_request.md">Request Feature</a> &nbsp;·&nbsp;
+      <a href="https://discord.gg/designflow">Discord Community</a>
+    </p>
+  </div>
 
-DesignFlow Kit provides designers with a comprehensive, integrated system covering:
+  ---
 
-- **Pre-Design Phase**: Research tools, persona creation, journey mapping, wireframing, and prototyping
-- **Post-Design Phase**: Design reviews, developer handover, sprint management, usability testing, and documentation
-- **41+ Integrations**: Connect with popular design tools like Figma, Miro, Notion, and more
-- **30 AI Automation Tools**: Leverage AI-powered workflows and custom GPTs for faster design
-- **8 AI-Powered UX Chat Tools**: Interactive ChatGPT-like interfaces for each design phase
-- **Design Sprint Board**: Kanban-style drag-and-drop board with voice recording and AI suggestions
+  ## What is DesignFlow Kit?
 
-## Features
+  DesignFlow Kit is a fully integrated design operations platform that covers the **complete product design lifecycle** — from early user research through to developer handover. It brings AI automation, collaboration tools, and design management into a single, open-source toolkit.
 
-### Mega-Menu Navigation
-Full-width dropdown navigation panels inspired by modern enterprise sites, featuring categorized tool access with a colored sidebar, multi-column layouts for Kits and UX Automation sections.
+  > Built with React, TypeScript, Express, OpenAI GPT-4o, and TailwindCSS.
 
-### Interactive Dashboard
-Track your design deliverables across both pre-design and post-design phases. Progress is automatically saved to your browser's local storage, so you can pick up where you left off.
+  ---
 
-### Design Sprint Board
-A fully interactive kanban-style board with:
-- Drag-and-drop cards across customizable lanes
-- Voice recording with OpenAI Whisper transcription
-- AI-powered card suggestions via GPT-4o
-- Sprint templates (GV Design Sprint, Design Thinking, Double Diamond, and more)
-- Priority levels, labels, and due dates
-- Full localStorage persistence
+  ## ✨ Features
 
-### AI-Powered UX Automation (8 Chat Tools)
-Interactive chat interfaces powered by OpenAI GPT-4o with streaming responses:
-- **UX Research** - Conduct interviews, surveys, and competitive analysis
-- **Create Personas** - Build data-driven user personas
-- **Journey Maps** - Visualize user journeys and flow charts
-- **UX Testing** - Run usability tests and gather feedback
-- **Design Workshops** - Facilitate collaborative design thinking
-- **Wireframes** - Create low-fidelity wireframes and sketches
-- **Information Architecture** - Organize content and navigation
-- **AI-Powered Analysis** - Pattern recognition and auto-insights
+  ### 🤖 8 AI-Powered UX Chat Tools (Automate UX)
 
-Each tool supports chart and graph generation via code blocks in AI responses.
+  Interactive, streaming chat interfaces powered by **OpenAI GPT-4o** — each one specialised for a distinct design phase:
 
-### Pre-Design Kit (10 Tools)
-| Tool | Description |
-|------|-------------|
-| Research Tools | Structured templates for user research and competitive analysis |
-| Synthesize Data | Transform research into actionable insights |
-| Create Personas | Data-driven persona creation toolkit |
-| Journey Maps | Visualize user experiences and touchpoints |
-| Lo-Fi Wireframes | Rapid wireframing for concept validation |
-| UX Testing | Validate early designs with real users |
-| Workshop Tools | Card sorting and design thinking exercises |
-| Design System | Build scalable component libraries |
-| Hi-Fi Wireframes | Production-ready design toolkit |
-| UX Prototype | Interactive prototyping with animations |
+  | Tool | What it does |
+  |------|-------------|
+  | **UX Research** | Interview guides, survey design, competitive analysis |
+  | **Create Personas** | Data-driven personas with empathy maps |
+  | **Journey Maps** | User journeys, flow diagrams, service blueprints |
+  | **UX Testing** | Usability tests, A/B test plans, heuristic reviews |
+  | **Design Workshops** | Facilitation guides, card sorting, design sprints |
+  | **Wireframes** | Lo-fi wireframe specs and component breakdowns |
+  | **Information Architecture** | Site maps, navigation hierarchies, content models |
+  | **AI-Powered Analysis** | Pattern recognition, auto-insights, sentiment analysis |
 
-### Post-Design Kit (7 Tools)
-| Tool | Description |
-|------|-------------|
-| Design Review | Structured feedback collection framework |
-| Design Shipping | Automated asset management and versioning |
-| Dev Handover | Seamless design-to-development workflow |
-| Sprint Board | Agile design sprint management |
-| Usability Testing | Post-launch testing with A/B testing and analytics |
-| Process Docs | Documentation automation |
-| Metrics Dashboard | Track design impact with KPIs |
+  Each tool supports **inline chart and graph generation** from AI responses and an auto-saving **Saved Prompts sidebar** so you never lose a great prompt.
 
-### Integrations
-Connect DesignFlow Kit with 41+ popular tools including:
-- **Design**: Figma, Sketch, Adobe XD, Framer
-- **Research**: Typeform, UserTesting, Hotjar, Maze
-- **Collaboration**: Miro, Notion, Slack, Jira
-- **Development**: GitHub, Zeplin, Storybook
+  **Gate system**: After 3 free prompts, email + OTP verification (via Resend) unlocks unlimited access. Completing sign-up assigns you a designer role and personalises your experience.
 
-### UX Automation Tools
-30 AI-powered design tools organized by category:
-- **Custom GPTs**: Design-focused ChatGPT integrations
-- **Wireframing**: AI-assisted layout generation
-- **UI Generation**: Automated UI design tools
-- **Prototyping & Code**: Design-to-code solutions
-- **Research & Testing**: AI research assistants
-- **Design Systems**: Automated documentation tools
-- **Copywriting**: AI writing assistants
+  ---
 
-## Tech Stack
+  ### 📊 Interactive Dashboard
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **UI Components**: shadcn/ui (Radix primitives)
-- **Font**: Plus Jakarta Sans (geometric sans-serif)
-- **Routing**: Wouter
-- **State Management**: TanStack React Query
-- **Data Persistence**: Browser localStorage
-- **Build Tool**: Vite
-- **Backend**: Node.js, Express, TypeScript
-- **AI Integration**: OpenAI GPT-4o (streaming SSE), Whisper (audio transcription)
+  Track design deliverables across both pre-design and post-design phases. Progress persists in **localStorage** so you pick up exactly where you left off — no account required.
 
-## Quick Start
+  ---
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
+  ### 🗂 Design Sprint Board
 
-### Installation
+  A fully featured Kanban board with:
 
-```bash
-# Clone the repository
-git clone https://github.com/Eaglescrooge/designflow-kit.git
+  - **Drag-and-drop** cards across customisable lanes
+  - **Voice recording** with OpenAI Whisper transcription
+  - **AI card suggestions** via GPT-4o
+  - Sprint templates: GV Design Sprint, Design Thinking, Double Diamond, and more
+  - Priority levels, labels, and due dates
+  - Full **localStorage persistence**
 
-# Navigate to the project
-cd designflow-kit
+  ---
 
-# Install dependencies
-npm install
+  ### 🧩 Pre-Design Kit — 10 Tools
 
-# Start the development server
-npm run dev
-```
+  | Tool | Description |
+  |------|-------------|
+  | Research Tools | Structured templates for user research |
+  | Synthesize Data | Transform research into actionable insights |
+  | Create Personas | Data-driven persona toolkit |
+  | Journey Maps | Visualise experiences and touchpoints |
+  | Lo-Fi Wireframes | Rapid wireframing for concept validation |
+  | UX Testing | Validate early designs with real users |
+  | Workshop Tools | Card sorting and design thinking exercises |
+  | Design System | Build scalable component libraries |
+  | Hi-Fi Wireframes | Production-ready design toolkit |
+  | UX Prototype | Interactive prototyping with animations |
 
-The application will be available at `http://localhost:5000`.
+  ---
 
-### Environment Variables
-- `SESSION_SECRET` - Session secret for Express (auto-generated if not set)
-- OpenAI API key is managed via Replit AI Integrations for the chat tools and voice transcription
+  ### 🚀 Post-Design Kit — 7 Tools
 
-## Documentation
+  | Tool | Description |
+  |------|-------------|
+  | Design Review | Structured feedback collection framework |
+  | Design Shipping | Automated asset management and versioning |
+  | Dev Handover | Seamless design-to-development workflow |
+  | Sprint Board | Agile design sprint management |
+  | Usability Testing | Post-launch testing with A/B analytics |
+  | Process Docs | Documentation automation |
+  | Metrics Dashboard | Track design impact with KPIs |
 
-| Document | Description |
-|----------|-------------|
-| [User Guide](docs/user-guide.md) | How to use the dashboard and track progress |
-| [Developer Guide](docs/developer-guide.md) | Architecture, data models, and extending the toolkit |
-| [Integrations](docs/integrations.md) | Complete list of supported integrations |
-| [UX Automation](docs/ux-automation.md) | AI tools and custom GPTs |
-| [Contributing](CONTRIBUTING.md) | Guidelines for contributing |
+  ---
 
-## Project Structure
+  ### 🔌 41+ Integrations
 
-```
-designflow-kit/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # UI components (shadcn/ui)
-│   │   ├── pages/          # Route components
-│   │   │   ├── home.tsx              # Landing page with mega-menu nav
-│   │   │   ├── dashboard.tsx         # Design deliverables tracker
-│   │   │   ├── sprint-board.tsx      # Kanban sprint board
-│   │   │   ├── automate-ux.tsx       # AI tool selection page
-│   │   │   ├── ux-research.tsx       # AI chat - UX Research
-│   │   │   ├── ux-personas.tsx       # AI chat - Personas
-│   │   │   ├── ux-journey-maps.tsx   # AI chat - Journey Maps
-│   │   │   ├── ux-testing.tsx        # AI chat - UX Testing
-│   │   │   ├── ux-workshops.tsx      # AI chat - Workshops
-│   │   │   ├── ux-wireframes.tsx     # AI chat - Wireframes
-│   │   │   ├── ux-information-architecture.tsx  # AI chat - IA
-│   │   │   ├── ux-ai-analysis.tsx    # AI chat - AI Analysis
-│   │   │   ├── tool-detail.tsx       # Individual tool pages
-│   │   │   ├── integration-detail.tsx # Integration API docs
-│   │   │   └── docs.tsx              # Documentation page
-│   │   ├── hooks/          # Custom React hooks
-│   │   └── lib/            # Utilities and data
-│   │       ├── data.ts               # Tool and integration data
-│   │       └── sprint-board-data.ts  # Sprint board templates
-├── server/                 # Express backend
-│   ├── index.ts            # Server entry point
-│   ├── routes.ts           # API routes (transcription, AI chat)
-│   └── storage.ts          # Data access layer
-├── shared/                 # Shared code
-│   └── schema.ts           # Database schema and types
-└── docs/                   # Documentation
-```
+  Connect DesignFlow Kit with the tools your team already uses:
 
-## Contributing
+  **Design** — Figma, Sketch, Adobe XD, Framer, InVision  
+  **Collaboration** — Notion, Miro, FigJam, Confluence, Whimsical  
+  **Project Management** — Jira, Linear, Asana, Trello, ClickUp  
+  **Communication** — Slack, Microsoft Teams, Loom, Zoom  
+  **Development** — GitHub, GitLab, Storybook, Zeplin, Abstract  
+  **Analytics** — Hotjar, Maze, FullStory, Amplitude, Mixpanel  
+  **Productivity** — Airtable, Coda, Google Workspace, Dropbox, Zapier
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+  ---
 
-### Ways to Contribute
-- Report bugs and request features
-- Improve documentation
-- Add new tool integrations
-- Enhance UI/UX
-- Add new AI-powered design workflows
+  ## 🛠 Tech Stack
 
-## License
+  | Layer | Technology |
+  |-------|------------|
+  | Frontend | React 18, TypeScript, Vite |
+  | Routing | Wouter |
+  | Styling | Tailwind CSS, shadcn/ui (Radix UI) |
+  | State | TanStack React Query |
+  | Backend | Node.js, Express |
+  | AI | OpenAI GPT-4o (streaming), Whisper (voice) |
+  | Email | Resend (OTP verification) |
+  | Persistence | Browser localStorage |
+  | Fonts | Inter, Space Grotesk |
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+  ---
 
-## Community
+  ## 🚀 Getting Started
 
-- [GitHub Discussions](https://github.com/Eaglescrooge/designflow-kit/discussions)
-- [LinkedIn](https://www.linkedin.com/company/designflowkit/)
-- [Discord Community](https://discord.gg/designflow)
-- [Twitter/X](https://twitter.com/designflowkit)
+  ### Prerequisites
 
-## Acknowledgments
+  - Node.js 18+
+  - An OpenAI API key
+  - A Resend API key (for OTP email — free at [resend.com](https://resend.com))
 
-Built with love by designers, for designers. Special thanks to all our contributors who help make DesignFlow Kit better every day.
+  ### Local Setup
 
----
+  ```bash
+  # Clone the repository
+  git clone https://github.com/Eaglescrooge/designflow-kit.git
+  cd designflow-kit
 
-**[Get Started](https://designflow-kit.replit.app)** | **[View Demo](https://designflow-kit.replit.app)** | **[Star on GitHub](https://github.com/Eaglescrooge/designflow-kit)**
+  # Install dependencies
+  npm install
+
+  # Set your environment variables
+  cp .env.example .env
+  # Add your OPENAI_API_KEY and RESEND_API_KEY
+
+  # Start the dev server
+  npm run dev
+  ```
+
+  The app will be available at `http://localhost:5000`.
+
+  ---
+
+  ## 📁 Project Structure
+
+  ```
+  designflow-kit/
+  ├── client/                     # React frontend
+  │   └── src/
+  │       ├── components/         # UI components (shadcn/ui + custom)
+  │       │   ├── automate-gate-modal.tsx   # OTP gate modal
+  │       │   ├── saved-prompts-pane.tsx    # Prompts sidebar
+  │       │   └── ui/             # shadcn/ui primitives
+  │       ├── hooks/              # Custom React hooks
+  │       │   ├── use-automate-gate.ts      # Gate + lockout logic
+  │       │   └── use-saved-prompts.ts      # Prompt persistence
+  │       ├── pages/              # Route components
+  │       │   ├── home.tsx        # Landing page
+  │       │   ├── dashboard.tsx   # Progress dashboard
+  │       │   ├── sprint-board.tsx # Kanban sprint board
+  │       │   ├── ux-research.tsx # AI chat — Research
+  │       │   ├── ux-personas.tsx # AI chat — Personas
+  │       │   ├── ux-journey-maps.tsx
+  │       │   ├── ux-testing.tsx
+  │       │   ├── ux-workshops.tsx
+  │       │   ├── ux-wireframes.tsx
+  │       │   ├── ux-information-architecture.tsx
+  │       │   ├── ux-ai-analysis.tsx
+  │       │   ├── integrations.tsx
+  │       │   └── integration-detail.tsx
+  │       └── lib/
+  │           ├── data.ts         # Tool and integration data
+  │           └── sprint-board-data.ts
+  ├── server/
+  │   ├── index.ts                # Express entry point
+  │   ├── routes.ts               # API routes (AI chat, OTP, transcription)
+  │   └── storage.ts              # Data access layer
+  ├── shared/
+  │   └── schema.ts               # Drizzle ORM schema + Zod types
+  └── README.md
+  ```
+
+  ---
+
+  ## 🤝 Contributing
+
+  Contributions are welcome! Here's how to get involved:
+
+  1. **Fork** the repository
+  2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
+  3. **Commit** your changes: `git commit -m 'Add amazing feature'`
+  4. **Push** to your branch: `git push origin feature/amazing-feature`
+  5. **Open a Pull Request**
+
+  ### Ways to Contribute
+
+  - 🐛 Report bugs and request features via [Issues](https://github.com/Eaglescrooge/designflow-kit/issues)
+  - 📖 Improve documentation
+  - 🔌 Add new tool integrations
+  - 🎨 Enhance UI/UX
+  - 🤖 Add new AI-powered design workflows
+
+  Please read our [Contributing Guide](CONTRIBUTING.md) for full details.
+
+  ---
+
+  ## 📄 License
+
+  Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+
+  ---
+
+  ## 💬 Community
+
+  - [GitHub Discussions](https://github.com/Eaglescrooge/designflow-kit/discussions)
+  - [Discord](https://discord.gg/designflow)
+  - [LinkedIn](https://www.linkedin.com/company/designflowkit/)
+  - [Twitter / X](https://twitter.com/designflowkit)
+
+  ---
+
+  <div align="center">
+    <p>If DesignFlow Kit is useful to you, please consider giving it a ⭐ — it helps others discover the project.</p>
+    <br />
+    <strong><a href="https://designflow-kit.replit.app">Live Demo</a> · <a href="https://github.com/Eaglescrooge/designflow-kit">GitHub</a> · <a href="https://github.com/Eaglescrooge/designflow-kit/stargazers">Star the repo</a></strong>
+  </div>
+  
