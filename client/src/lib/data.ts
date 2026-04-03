@@ -49,7 +49,7 @@ export const preKitTools: Tool[] = [
     ],
     youtubeId: "WpzmOH0hrEM",
     signupUrl: "https://www.typeform.com/",
-    signupLabel: "Evaluate UX Process"
+    signupLabel: "Evaluate UX"
   },
   {
     id: "synthesize",
@@ -299,7 +299,7 @@ export const postKitTools: Tool[] = [
     ],
     youtubeId: "GGbLLHCOWuM",
     signupUrl: "https://trello.com/",
-    signupLabel: "Evaluate UX Process"
+    signupLabel: "Evaluate UX"
   },
   {
     id: "usability",
@@ -1099,7 +1099,7 @@ const murals = await response.json();`,
     ],
     youtubeId: "BySFuXgG-ow",
     signupUrl: "https://storybook.js.org/",
-    signupLabel: "Evaluate UX Process",
+    signupLabel: "Evaluate UX",
     usedIn: ["Design System"],
     apiDocs: {
       authMethod: "No authentication - Storybook runs locally or is self-hosted",

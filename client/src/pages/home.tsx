@@ -163,7 +163,7 @@ function Navigation() {
             </a>
             <Link href="/dashboard">
               <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
-                Evaluate UX Process
+                Evaluate UX
               </Button>
             </Link>
             <Button 
@@ -196,7 +196,7 @@ function Navigation() {
               </div>
               <Link href="/dashboard" onClick={() => setMegaMenuOpen(null)}>
                 <Button variant="outline" className="mt-6 border-primary-foreground/30 text-primary-foreground bg-transparent backdrop-blur-sm gap-2" data-testid="button-mega-get-started">
-                  Evaluate UX Process <ArrowRight className="w-4 h-4" />
+                  Evaluate UX <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
@@ -376,7 +376,7 @@ function Navigation() {
                 </a>
                 <Link href="/dashboard" className="flex-1">
                   <Button size="sm" className="w-full" data-testid="button-get-started-mobile">
-                    Evaluate UX Process
+                    Evaluate UX
                   </Button>
                 </Link>
               </div>
@@ -443,7 +443,7 @@ function HeroSection() {
             <div className="flex flex-wrap gap-4">
               <Link href="/dashboard">
                 <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-blue-500 border-0 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" data-testid="button-get-started-hero">
-                  Evaluate UX Process
+                  Evaluate UX
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
@@ -831,7 +831,7 @@ function GettingStartedSection() {
           <div className="space-y-6">
             <Badge variant="outline">Quick Start</Badge>
             <h2 className="font-serif text-3xl lg:text-4xl font-bold tracking-tight" data-testid="text-getting-started-title">
-              Evaluate UX Process in minutes
+              Evaluate UX in minutes
             </h2>
             <p className="text-lg text-muted-foreground">
               Clone the repo, install dependencies, and start building. AI-powered chat tools, 

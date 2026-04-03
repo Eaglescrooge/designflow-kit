@@ -74,7 +74,7 @@ DesignFlow Kit organizes your design process into two main phases:
 The dashboard is your central hub for tracking design deliverables.
 
 ### Accessing the Dashboard
-1. Click **"Evaluate UX Process"** from the landing page
+1. Click **"Evaluate UX"** from the landing page
 2. Or navigate directly to /dashboard
 
 ### Dashboard Actions

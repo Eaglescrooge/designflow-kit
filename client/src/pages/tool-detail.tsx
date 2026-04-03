@@ -147,7 +147,7 @@ export default function ToolDetail() {
             {/* Sign Up CTA */}
             <Card className="sticky top-24">
               <CardContent className="p-6 space-y-4">
-                <h3 className="font-semibold text-lg">Evaluate UX Process with {tool.title}</h3>
+                <h3 className="font-semibold text-lg">Evaluate UX with {tool.title}</h3>
                 <p className="text-sm text-muted-foreground">
                   Sign up for the recommended tool to start using this workflow in your projects.
                 </p>

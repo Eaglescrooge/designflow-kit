@@ -341,7 +341,7 @@ export function AutomateGateModal({ open, onUnlocked, onDismissed }: AutomateGat
                 onClick={handleComplete}
                 data-testid="button-gate-complete"
               >
-                Evaluate UX Process
+                Evaluate UX
                 <Sparkles className="w-4 h-4" />
               </Button>
             </>
