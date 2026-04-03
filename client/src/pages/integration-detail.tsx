@@ -219,7 +219,7 @@ export default function IntegrationDetail() {
                 data-testid="link-signup"
               >
                 <Button>
-                  Get Started
+                  Evaluate UX Process
                   <ExternalLink className="w-4 h-4 ml-2" />
                 </Button>
               </a>
