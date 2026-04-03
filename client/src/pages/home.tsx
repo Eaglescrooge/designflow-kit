@@ -443,7 +443,7 @@ function HeroSection() {
             <div className="flex flex-wrap gap-4">
               <Link href="/dashboard">
                 <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-blue-500 border-0 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" data-testid="button-get-started-hero">
-                  Get Started Free
+                  Evaluate UX Process
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
