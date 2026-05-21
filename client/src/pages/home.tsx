@@ -32,7 +32,8 @@ import {
   FileText,
   Search,
   Layers,
-  GitFork
+  GitFork,
+  BarChart2
 } from "lucide-react";
 import { SiGithub, SiLinkedin, SiInstagram, SiFigma, SiMiro, SiNotion, SiJira, SiSlack, SiStorybook, SiAdobe, SiAsana, SiTrello } from "react-icons/si";
 import { useState, useRef, useEffect, type MouseEvent } from "react";
@@ -161,9 +162,9 @@ function Navigation() {
                 <span>Star</span>
               </Button>
             </a>
-            <Link href="/dashboard">
+            <Link href="/automate-ux">
               <Button size="sm" className="hidden sm:flex" data-testid="button-get-started-nav">
-                Evaluate UX
+                Automate UX
               </Button>
             </Link>
             <Button 
@@ -194,9 +195,9 @@ function Navigation() {
                   Complete toolkit covering every phase of the design process, from initial research to developer handover.
                 </p>
               </div>
-              <Link href="/dashboard" onClick={() => setMegaMenuOpen(null)}>
+              <Link href="/automate-ux" onClick={() => setMegaMenuOpen(null)}>
                 <Button variant="outline" className="mt-6 border-primary-foreground/30 text-primary-foreground bg-transparent backdrop-blur-sm gap-2" data-testid="button-mega-get-started">
-                  Evaluate UX <ArrowRight className="w-4 h-4" />
+                  Automate UX <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
             </div>
@@ -254,6 +255,15 @@ function Navigation() {
                     >
                       <Box className="w-4 h-4 flex-shrink-0" />
                       Dashboard
+                    </Link>
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setMegaMenuOpen(null)}
+                      className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                      data-testid="mega-link-track-ux"
+                    >
+                      <BarChart2 className="w-4 h-4 flex-shrink-0" />
+                      Track UX Flow
                     </Link>
                   </div>
                 </div>
@@ -343,6 +353,14 @@ function Navigation() {
               >
                 <Zap className="w-4 h-4" /> Post-Kit
               </a>
+              <Link
+                href="/dashboard"
+                className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors flex items-center gap-2"
+                onClick={() => setMobileMenuOpen(false)}
+                data-testid="link-mobile-nav-track-ux"
+              >
+                <BarChart2 className="w-4 h-4" /> Track UX Flow
+              </Link>
               <div className="border-t border-border my-1" />
               {navLinks.map((link) => (
                 link.href.startsWith('/') ? (
@@ -374,9 +392,9 @@ function Navigation() {
                     GitHub
                   </Button>
                 </a>
-                <Link href="/dashboard" className="flex-1">
+                <Link href="/automate-ux" className="flex-1">
                   <Button size="sm" className="w-full" data-testid="button-get-started-mobile">
-                    Evaluate UX
+                    Automate UX
                   </Button>
                 </Link>
               </div>
@@ -441,9 +459,9 @@ function HeroSection() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Link href="/dashboard">
+              <Link href="/automate-ux">
                 <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-blue-500 border-0 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30" data-testid="button-get-started-hero">
-                  Evaluate UX
+                  Automate UX
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                 </Button>
               </Link>
