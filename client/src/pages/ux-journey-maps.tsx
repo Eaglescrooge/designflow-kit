@@ -48,7 +48,7 @@ export default function UXJourneyMaps() {
   const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
   const [paneOpen, setPaneOpen] = useState(false);
   const [toolsPaneOpen, setToolsPaneOpen] = useState(false);
-  const { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave } = useSaveSession({
+  const { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave, resumeUrl } = useSaveSession({
     messages, toolId: "journey-maps", toolPath: "/automate-ux/journey-maps", toolLabel: "Journey Maps", onRestored: setMessages,
   });
 

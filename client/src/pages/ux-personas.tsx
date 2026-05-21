@@ -48,7 +48,7 @@ export default function UXPersonas() {
   const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
   const [paneOpen, setPaneOpen] = useState(false);
   const [toolsPaneOpen, setToolsPaneOpen] = useState(false);
-  const { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave } = useSaveSession({
+  const { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave, resumeUrl } = useSaveSession({
     messages, toolId: "personas", toolPath: "/automate-ux/personas", toolLabel: "Create Personas", onRestored: setMessages,
   });
 
