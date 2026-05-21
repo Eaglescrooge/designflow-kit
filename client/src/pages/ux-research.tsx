@@ -262,6 +262,18 @@ export default function UXResearch() {
             </div>
           )}
         </div>
+        {messages.length === 0 && (
+          <div className="flex justify-center pb-6">
+            <button
+              onClick={() => setToolsPaneOpen(true)}
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
+              data-testid="button-open-tools-panel"
+            >
+              <FlaskConical className="w-3.5 h-3.5" />
+              <span>Research tools</span>
+            </button>
+          </div>
+        )}
       </main>
 
       <div className="shrink-0 pb-4 pt-2 px-4" style={{ display: isLocked ? "none" : undefined }}>
@@ -275,16 +287,6 @@ export default function UXResearch() {
               </button>
             </div>
           )}
-          <div className="flex justify-center mb-1.5" style={{ paddingTop: "150px" }}>
-            <button
-              onClick={() => setToolsPaneOpen(true)}
-              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
-              data-testid="button-open-tools-panel"
-            >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>Research tools</span>
-            </button>
-          </div>
           <div className="relative flex items-end gap-2 rounded-2xl border border-border bg-muted/30 px-3 py-2 focus-within:border-border focus-within:ring-1 focus-within:ring-ring/20">
             <input
               ref={fileInputRef}
