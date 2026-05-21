@@ -22,6 +22,8 @@ import {
   FlaskConical
 } from "lucide-react";
 import { ResearchToolsPanel } from "@/components/research-tools-panel";
+import { SaveSessionModal, SaveSessionBanner } from "@/components/save-session-modal";
+import { useSaveSession } from "@/hooks/use-save-session";
 
 interface Message {
   id: string;
@@ -45,6 +47,9 @@ export default function UXPersonas() {
   const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
   const [paneOpen, setPaneOpen] = useState(false);
   const [toolsPaneOpen, setToolsPaneOpen] = useState(false);
+  const { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave } = useSaveSession({
+    messages, toolId: "personas", toolPath: "/automate-ux/personas", toolLabel: "Create Personas", onRestored: setMessages,
+  });
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -353,6 +358,8 @@ export default function UXPersonas() {
         onClose={() => setToolsPaneOpen(false)}
         currentQuery={input.trim() || undefined}
       />
+      {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
+      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Create Personas" />
     </div>
   );
 }

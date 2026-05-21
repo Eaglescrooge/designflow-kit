@@ -135,6 +135,50 @@ export async function registerRoutes(
     return handleUXChat(req, res, systemPrompts, openai);
   });
 
+  // Save session
+  app.post("/api/sessions/save", async (req: Request, res: Response) => {
+    try {
+      const { email, toolId, toolPath, toolLabel, messages } = req.body;
+      if (!email || !toolId || !messages) {
+        return res.status(400).json({ error: "Missing required fields" });
+      }
+      const session = await storage.saveSession({ email, toolId, toolPath, toolLabel, messages });
+      const host = `${req.protocol}://${req.get("host")}`;
+      const resumeUrl = `${host}${toolPath}?resume=${session.token}`;
+      // Send email
+      const apiKey = process.env.RESEND_API_KEY;
+      if (apiKey) {
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            from: "DesignFlow Kit <onboarding@resend.dev>",
+            to: [email],
+            subject: `Resume your ${toolLabel} session — DesignFlow Kit`,
+            html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:32px 24px">
+              <h2 style="font-size:20px;font-weight:700;margin-bottom:8px">Your session is saved ✓</h2>
+              <p style="color:#6b7280;font-size:14px;margin-bottom:24px">Click the button below to resume your <strong>${toolLabel}</strong> session exactly where you left off.</p>
+              <a href="${resumeUrl}" style="display:inline-block;background:#111827;color:#fff;text-decoration:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:600">Resume session →</a>
+              <p style="color:#9ca3af;font-size:12px;margin-top:24px">Or copy this link:<br/><span style="word-break:break-all">${resumeUrl}</span></p>
+              <p style="color:#d1d5db;font-size:11px;margin-top:16px">DesignFlow Kit · Open-source UX toolkit</p>
+            </div>`,
+          }),
+        }).catch(() => {});
+      }
+      res.json({ token: session.token, resumeUrl });
+    } catch (err) {
+      console.error("Save session error:", err);
+      res.status(500).json({ error: "Failed to save session" });
+    }
+  });
+
+  // Load session
+  app.get("/api/sessions/:token", async (req: Request, res: Response) => {
+    const session = await storage.getSession(req.params.token);
+    if (!session) return res.status(404).json({ error: "Session not found" });
+    res.json(session);
+  });
+
   // Audio transcription endpoint
   app.post("/api/transcribe", upload.single("audio"), async (req: Request, res: Response) => {
     try {
