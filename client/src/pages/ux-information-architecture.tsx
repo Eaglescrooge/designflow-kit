@@ -213,7 +213,7 @@ export default function UXInformationArchitecture() {
       </header>
 
       {isLocked && lockedUntil && <LockoutScreen lockedUntil={lockedUntil} onUnlockNow={openGate} />}
-      <main className="flex-1 overflow-y-auto" style={{ display: isLocked ? "none" : undefined }}>
+      <main className="flex-1" style={{ display: isLocked ? "none" : undefined }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center min-h-[calc(100vh-180px)]">
