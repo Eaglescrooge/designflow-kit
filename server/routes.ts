@@ -179,6 +179,22 @@ export async function registerRoutes(
     res.json(session);
   });
 
+  // Admin: list all sessions
+  app.get("/api/admin/sessions", async (req: Request, res: Response) => {
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    const key = req.query.key as string | undefined;
+    if (!adminPassword || key !== adminPassword) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    try {
+      const sessions = await storage.getAllSessions();
+      res.json(sessions);
+    } catch (err) {
+      console.error("Admin sessions error:", err);
+      res.status(500).json({ error: "Failed to fetch sessions" });
+    }
+  });
+
   // Audio transcription endpoint
   app.post("/api/transcribe", upload.single("audio"), async (req: Request, res: Response) => {
     try {

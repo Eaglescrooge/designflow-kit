@@ -21,6 +21,7 @@ import UXInformationArchitecture from "@/pages/ux-information-architecture";
 import UXAIAnalysis from "@/pages/ux-ai-analysis";
 import SprintBoard from "@/pages/sprint-board";
 import Integrations from "@/pages/integrations";
+import AdminDashboard from "@/pages/admin";
 
 function Router() {
   return (
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/automate-ux/information-architecture" component={UXInformationArchitecture} />
       <Route path="/automate-ux/ai-analysis" component={UXAIAnalysis} />
       <Route path="/integrations" component={Integrations} />
+      <Route path="/admin" component={AdminDashboard} />
       <Route path="/tool/:id" component={ToolDetail} />
       <Route path="/integration/:id" component={IntegrationDetail} />
       <Route component={NotFound} />
