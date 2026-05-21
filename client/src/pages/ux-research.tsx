@@ -275,7 +275,7 @@ export default function UXResearch() {
               </button>
             </div>
           )}
-          <div className="flex justify-end mb-1.5">
+          <div className="flex justify-center mb-1.5" style={{ paddingTop: "150px" }}>
             <button
               onClick={() => setToolsPaneOpen(true)}
               className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
