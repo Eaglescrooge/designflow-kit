@@ -21,7 +21,8 @@ import {
   LayoutList,
   FlaskConical
 } from "lucide-react";
-import { ResearchToolsPanel } from "@/components/research-tools-panel";
+import { WorkflowToolsPanel } from "@/components/workflow-tools-panel";
+import { AI_ANALYSIS_TOOLS, AI_ANALYSIS_CATEGORIES } from "@/lib/workflow-tools-data";
 import { SaveSessionModal, SaveSessionBanner } from "@/components/save-session-modal";
 import { useSaveSession } from "@/hooks/use-save-session";
 
@@ -274,8 +275,8 @@ export default function UXAIAnalysis() {
               className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
               data-testid="button-open-tools-panel"
             >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>Research tools</span>
+              <Brain className="w-3.5 h-3.5" />
+              <span>Analysis tools</span>
             </button>
           </div>
         )}
@@ -353,9 +354,13 @@ export default function UXAIAnalysis() {
         onSelect={handleMethodSelect}
         icon={Brain}
       />
-      <ResearchToolsPanel
+      <WorkflowToolsPanel
         open={toolsPaneOpen}
         onClose={() => setToolsPaneOpen(false)}
+        title="Analysis Tools"
+        subtitle="AI-powered synthesis & insights"
+        tools={AI_ANALYSIS_TOOLS}
+        categories={AI_ANALYSIS_CATEGORIES}
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}

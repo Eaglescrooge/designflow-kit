@@ -21,7 +21,8 @@ import {
   LayoutList,
   FlaskConical
 } from "lucide-react";
-import { ResearchToolsPanel } from "@/components/research-tools-panel";
+import { WorkflowToolsPanel } from "@/components/workflow-tools-panel";
+import { IA_TOOLS, IA_CATEGORIES } from "@/lib/workflow-tools-data";
 import { SaveSessionModal, SaveSessionBanner } from "@/components/save-session-modal";
 import { useSaveSession } from "@/hooks/use-save-session";
 
@@ -274,8 +275,8 @@ export default function UXInformationArchitecture() {
               className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
               data-testid="button-open-tools-panel"
             >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>Research tools</span>
+              <GitBranch className="w-3.5 h-3.5" />
+              <span>Plan IA with AI</span>
             </button>
           </div>
         )}
@@ -353,9 +354,13 @@ export default function UXInformationArchitecture() {
         onSelect={handleMethodSelect}
         icon={GitBranch}
       />
-      <ResearchToolsPanel
+      <WorkflowToolsPanel
         open={toolsPaneOpen}
         onClose={() => setToolsPaneOpen(false)}
+        title="IA Tools"
+        subtitle="Sitemaps & navigation validation"
+        tools={IA_TOOLS}
+        categories={IA_CATEGORIES}
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}

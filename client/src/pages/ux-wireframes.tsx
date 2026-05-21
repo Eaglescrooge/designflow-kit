@@ -21,7 +21,8 @@ import {
   LayoutList,
   FlaskConical
 } from "lucide-react";
-import { ResearchToolsPanel } from "@/components/research-tools-panel";
+import { WorkflowToolsPanel } from "@/components/workflow-tools-panel";
+import { WIREFRAMES_TOOLS, WIREFRAMES_CATEGORIES } from "@/lib/workflow-tools-data";
 import { SaveSessionModal, SaveSessionBanner } from "@/components/save-session-modal";
 import { useSaveSession } from "@/hooks/use-save-session";
 
@@ -274,8 +275,8 @@ export default function UXWireframes() {
               className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
               data-testid="button-open-tools-panel"
             >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>Research tools</span>
+              <PenTool className="w-3.5 h-3.5" />
+              <span>Wireframe with AI</span>
             </button>
           </div>
         )}
@@ -353,9 +354,13 @@ export default function UXWireframes() {
         onSelect={handleMethodSelect}
         icon={PenTool}
       />
-      <ResearchToolsPanel
+      <WorkflowToolsPanel
         open={toolsPaneOpen}
         onClose={() => setToolsPaneOpen(false)}
+        title="Wireframing Tools"
+        subtitle="AI & lo-fi tools to sketch your flows"
+        tools={WIREFRAMES_TOOLS}
+        categories={WIREFRAMES_CATEGORIES}
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
