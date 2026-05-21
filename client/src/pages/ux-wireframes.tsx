@@ -18,8 +18,10 @@ import {
   FileText,
   PenTool,
   Loader2,
-  LayoutList
+  LayoutList,
+  FlaskConical
 } from "lucide-react";
+import { ResearchToolsPanel } from "@/components/research-tools-panel";
 
 interface Message {
   id: string;
@@ -42,6 +44,7 @@ export default function UXWireframes() {
   const { showGate, isLocked, lockedUntil, checkGate, handleUnlocked, handleDismissed, openGate } = useAutomateGate();
   const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
   const [paneOpen, setPaneOpen] = useState(false);
+  const [toolsPaneOpen, setToolsPaneOpen] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -259,6 +262,18 @@ export default function UXWireframes() {
             </div>
           )}
         </div>
+        {messages.length === 0 && (
+          <div className="flex justify-center pb-6">
+            <button
+              onClick={() => setToolsPaneOpen(true)}
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
+              data-testid="button-open-tools-panel"
+            >
+              <FlaskConical className="w-3.5 h-3.5" />
+              <span>Research tools</span>
+            </button>
+          </div>
+        )}
       </main>
 
       <div className="shrink-0 pb-4 pt-2 px-4" style={{ display: isLocked ? "none" : undefined }}>
@@ -332,6 +347,11 @@ export default function UXWireframes() {
         methods={workflowMethods.methods}
         onSelect={handleMethodSelect}
         icon={PenTool}
+      />
+      <ResearchToolsPanel
+        open={toolsPaneOpen}
+        onClose={() => setToolsPaneOpen(false)}
+        currentQuery={input.trim() || undefined}
       />
     </div>
   );
