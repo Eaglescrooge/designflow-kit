@@ -269,10 +269,10 @@ export default function UXResearch() {
           <div className="flex items-center justify-center mb-2">
             <button
               onClick={() => setToolsPaneOpen(true)}
-              className="flex items-center gap-1.5 text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
               data-testid="button-open-tools-panel"
             >
-              <FlaskConical className="w-3 h-3" />
+              <FlaskConical className="w-3.5 h-3.5" />
               <span>Research tools</span>
             </button>
           </div>
