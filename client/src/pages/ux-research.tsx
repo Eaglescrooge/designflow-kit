@@ -18,8 +18,10 @@ import {
   FileText,
   Search,
   Loader2,
-  LayoutList
+  LayoutList,
+  FlaskConical,
 } from "lucide-react";
+import { ResearchToolsPanel } from "@/components/research-tools-panel";
 
 interface Message {
   id: string;
@@ -42,6 +44,7 @@ export default function UXResearch() {
   const { showGate, isLocked, lockedUntil, checkGate, handleUnlocked, handleDismissed, openGate } = useAutomateGate();
   const { prompts, savePrompt, deletePrompt, clearAll } = useSavedPrompts();
   const [paneOpen, setPaneOpen] = useState(false);
+  const [toolsPaneOpen, setToolsPaneOpen] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -198,6 +201,16 @@ export default function UXResearch() {
                 variant="ghost"
                 size="icon"
                 className="h-8 w-8 relative"
+                onClick={() => setToolsPaneOpen(true)}
+                title="Research Tools"
+                data-testid="button-open-tools-panel"
+              >
+                <FlaskConical className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 relative"
                 onClick={() => setPaneOpen(true)}
                 data-testid="button-open-saved-pane"
               >
@@ -263,6 +276,30 @@ export default function UXResearch() {
 
       <div className="shrink-0 pb-4 pt-2 px-4" style={{ display: isLocked ? "none" : undefined }}>
         <div className="max-w-3xl mx-auto">
+          {input.trim() && (
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <a
+                href={`https://www.perplexity.ai/search?q=${encodeURIComponent(input.trim())}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="button-perplexity-search"
+              >
+                <button className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-teal-500/30 text-teal-600 dark:text-teal-400 bg-teal-500/5 hover:bg-teal-500/10 transition-colors">
+                  🔍 <span>Search with Perplexity</span>
+                </button>
+              </a>
+              <a
+                href={`https://www.figma.com/community/plugin/1189158575928509194/QoQo`}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-testid="button-qoqo-quick"
+              >
+                <button className="flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border border-violet-500/30 text-violet-600 dark:text-violet-400 bg-violet-500/5 hover:bg-violet-500/10 transition-colors">
+                  🧠 <span>Try in QoQo</span>
+                </button>
+              </a>
+            </div>
+          )}
           {uploadedFile && (
             <div className="flex items-center gap-2 mb-2 mx-1 px-3 py-1.5 bg-muted/60 rounded-lg w-fit">
               <FileText className="w-3.5 h-3.5 text-muted-foreground" />
@@ -340,6 +377,11 @@ export default function UXResearch() {
         onDelete={deletePrompt}
         onClearAll={clearAll}
         onSelectPrompt={(p) => { setInput(p.content.replace(/^\[.*?\]\s*/, "")); setPaneOpen(false); }}
+      />
+      <ResearchToolsPanel
+        open={toolsPaneOpen}
+        onClose={() => setToolsPaneOpen(false)}
+        currentQuery={input.trim() || undefined}
       />
     </div>
   );
