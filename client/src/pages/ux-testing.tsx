@@ -364,7 +364,7 @@ export default function UXTesting() {
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
-      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="UX Testing" />
+      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="UX Testing" resumeUrl={resumeUrl} />
     </div>
   );
 }

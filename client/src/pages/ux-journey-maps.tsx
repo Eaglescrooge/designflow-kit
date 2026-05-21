@@ -364,7 +364,7 @@ export default function UXJourneyMaps() {
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
-      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Journey Maps" />
+      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Journey Maps" resumeUrl={resumeUrl} />
     </div>
   );
 }

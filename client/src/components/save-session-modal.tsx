@@ -1,18 +1,20 @@
 import { useState } from "react";
-import { X, BookmarkCheck, Loader2, Mail } from "lucide-react";
+import { X, BookmarkCheck, Loader2, Mail, Copy, Check, Link } from "lucide-react";
 
 interface SaveSessionModalProps {
   open: boolean;
   onClose: () => void;
   onSave: (email: string) => Promise<void>;
   toolLabel: string;
+  resumeUrl?: string | null;
 }
 
-export function SaveSessionModal({ open, onClose, onSave, toolLabel }: SaveSessionModalProps) {
+export function SaveSessionModal({ open, onClose, onSave, toolLabel, resumeUrl }: SaveSessionModalProps) {
   const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
 
   if (!open) return null;
 
@@ -34,6 +36,14 @@ export function SaveSessionModal({ open, onClose, onSave, toolLabel }: SaveSessi
     }
   }
 
+  function handleCopy() {
+    if (!resumeUrl) return;
+    navigator.clipboard.writeText(resumeUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
@@ -47,17 +57,45 @@ export function SaveSessionModal({ open, onClose, onSave, toolLabel }: SaveSessi
         </button>
 
         {saved ? (
-          <div className="text-center py-4">
-            <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-              <BookmarkCheck className="w-6 h-6 text-green-500" />
+          <div className="py-2">
+            <div className="flex flex-col items-center text-center mb-5">
+              <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
+                <BookmarkCheck className="w-6 h-6 text-green-500" />
+              </div>
+              <h3 className="font-semibold text-base mb-1">Session saved!</h3>
+              <p className="text-sm text-muted-foreground">
+                We attempted to send a link to{" "}
+                <span className="font-medium text-foreground">{email}</span>.
+              </p>
             </div>
-            <h3 className="font-semibold text-base mb-1">Session saved!</h3>
-            <p className="text-sm text-muted-foreground">
-              We've sent a resume link to <span className="font-medium text-foreground">{email}</span>. Use it anytime to pick up right where you left off.
-            </p>
+
+            {resumeUrl && (
+              <div className="mb-4">
+                <p className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1.5">
+                  <Link className="w-3 h-3" />
+                  Your resume link — copy it now
+                </p>
+                <div className="flex items-center gap-2 bg-muted/60 border border-border rounded-xl px-3 py-2">
+                  <span className="text-xs text-muted-foreground truncate flex-1 font-mono">
+                    {resumeUrl}
+                  </span>
+                  <button
+                    onClick={handleCopy}
+                    className="shrink-0 p-1 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+                    data-testid="button-copy-resume-url"
+                  >
+                    {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+                <p className="text-[11px] text-muted-foreground/50 mt-1.5">
+                  Paste this link in any browser to pick up right where you left off.
+                </p>
+              </div>
+            )}
+
             <button
               onClick={onClose}
-              className="mt-5 w-full py-2 rounded-xl bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
+              className="w-full py-2 rounded-xl bg-foreground text-background text-sm font-medium hover:opacity-90 transition-opacity"
               data-testid="button-save-modal-done"
             >
               Got it
@@ -102,12 +140,12 @@ export function SaveSessionModal({ open, onClose, onSave, toolLabel }: SaveSessi
                 data-testid="button-save-session-submit"
               >
                 {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-                {saving ? "Saving…" : "Send me the resume link"}
+                {saving ? "Saving…" : "Save & get resume link"}
               </button>
             </form>
 
             <p className="text-[11px] text-muted-foreground/50 text-center mt-3">
-              We'll email you a private link. No account required.
+              We'll show you a link to copy — and try to email it too.
             </p>
           </>
         )}

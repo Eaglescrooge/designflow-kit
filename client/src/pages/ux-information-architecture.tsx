@@ -364,7 +364,7 @@ export default function UXInformationArchitecture() {
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
-      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Information Architecture" />
+      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Information Architecture" resumeUrl={resumeUrl} />
     </div>
   );
 }

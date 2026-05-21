@@ -364,7 +364,7 @@ export default function UXPersonas() {
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
-      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Create Personas" />
+      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="Create Personas" resumeUrl={resumeUrl} />
     </div>
   );
 }

@@ -364,7 +364,7 @@ export default function UXAIAnalysis() {
         currentQuery={input.trim() || undefined}
       />
       {showBanner && <SaveSessionBanner onOpen={openModal} onDismiss={dismissBanner} />}
-      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="AI Analysis" />
+      <SaveSessionModal open={showModal} onClose={() => setShowModal(false)} onSave={handleSave} toolLabel="AI Analysis" resumeUrl={resumeUrl} />
     </div>
   );
 }

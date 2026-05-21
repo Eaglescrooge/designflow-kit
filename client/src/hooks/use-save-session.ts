@@ -17,6 +17,7 @@ interface UseSaveSessionOptions {
 export function useSaveSession({ messages, toolId, toolPath, toolLabel, onRestored }: UseSaveSessionOptions) {
   const [showBanner, setShowBanner] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [resumeUrl, setResumeUrl] = useState<string | null>(null);
   const promptedRef = useRef(false);
 
   useEffect(() => {
@@ -62,6 +63,10 @@ export function useSaveSession({ messages, toolId, toolPath, toolLabel, onRestor
       }),
     });
     if (!res.ok) throw new Error("Failed to save");
+    const data = await res.json();
+    if (data.resumeUrl) {
+      setResumeUrl(data.resumeUrl);
+    }
   }
 
   function openModal() {
@@ -73,5 +78,5 @@ export function useSaveSession({ messages, toolId, toolPath, toolLabel, onRestor
     setShowBanner(false);
   }
 
-  return { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave };
+  return { showBanner, showModal, setShowModal, openModal, dismissBanner, handleSave, resumeUrl };
 }
