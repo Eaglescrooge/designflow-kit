@@ -266,16 +266,6 @@ export default function UXResearch() {
 
       <div className="shrink-0 pb-4 pt-2 px-4" style={{ display: isLocked ? "none" : undefined }}>
         <div className="max-w-3xl mx-auto">
-          <div className="flex items-center justify-center mb-2">
-            <button
-              onClick={() => setToolsPaneOpen(true)}
-              className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
-              data-testid="button-open-tools-panel"
-            >
-              <FlaskConical className="w-3.5 h-3.5" />
-              <span>Research tools</span>
-            </button>
-          </div>
           {uploadedFile && (
             <div className="flex items-center gap-2 mb-2 mx-1 px-3 py-1.5 bg-muted/60 rounded-lg w-fit">
               <FileText className="w-3.5 h-3.5 text-muted-foreground" />
@@ -285,7 +275,18 @@ export default function UXResearch() {
               </button>
             </div>
           )}
-          <div className="relative flex items-end gap-2 rounded-2xl border border-border bg-muted/30 px-3 py-2 focus-within:border-border focus-within:ring-1 focus-within:ring-ring/20">
+          <div className="relative rounded-2xl border border-border bg-muted/30 focus-within:border-border focus-within:ring-1 focus-within:ring-ring/20">
+            <div className="flex items-center justify-center pt-2 pb-0.5">
+              <button
+                onClick={() => setToolsPaneOpen(true)}
+                className="flex items-center gap-1.5 text-xs px-3 py-1 rounded-full border border-border text-muted-foreground hover:text-foreground hover:bg-muted hover:border-foreground/20 transition-all"
+                data-testid="button-open-tools-panel"
+              >
+                <FlaskConical className="w-3 h-3" />
+                <span>Research tools</span>
+              </button>
+            </div>
+            <div className="flex items-end gap-2 px-3 py-2">
             <input
               ref={fileInputRef}
               type="file"
@@ -325,6 +326,7 @@ export default function UXResearch() {
                 <ArrowUp className="w-4 h-4" />
               )}
             </button>
+            </div>
           </div>
           <p className="text-[11px] text-muted-foreground/50 text-center mt-2">
             AI can make mistakes. Verify important information.
